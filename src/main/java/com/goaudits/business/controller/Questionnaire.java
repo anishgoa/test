@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.goaudits.business.entity.Choice;
 import com.goaudits.business.entity.Group;
+import com.goaudits.business.entity.Previewchoice;
 import com.goaudits.business.entity.Question;
+import com.goaudits.business.entity.QuestionOrder;
+import com.goaudits.business.entity.Questionimage;
 import com.goaudits.business.entity.S3;
 import com.goaudits.business.entity.Section;
+import com.goaudits.business.entity.Tag;
 import com.goaudits.business.service.QuestionnaireService;
 import com.goaudits.business.util.GoAuditsException;
 import com.goaudits.business.service.S3Service;
@@ -219,5 +222,110 @@ public class Questionnaire {
 			return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
+
+	@RequestMapping(value = "/question/changechoice", method = RequestMethod.POST)
+	public ResponseEntity<?> changeConditinalChoice(@RequestBody Question question) {
+
+		if (QuestionnaireService.isConditionalChoiceExist(question)) {
+			return new ResponseEntity<>(new GoAuditsException("Response already exists"), HttpStatus.CONFLICT);
+		}
+
+		try {
+			QuestionnaireService.changeConditionalChoice(question);
+			List<Question> QuestionList = new ArrayList<Question>();
+			QuestionList.add(question);
+			return new ResponseEntity<List<Question>>(QuestionList, HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+
+	@RequestMapping(value = "/question/image", method = RequestMethod.POST)
+	public ResponseEntity<?> getQuestionImage(@RequestBody Question question) {
+		try {
+			List<Questionimage> questionImagelist = QuestionnaireService.getQuestionImage(question);
+			return new ResponseEntity<List<Questionimage>>(questionImagelist, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+
+	@RequestMapping(value = "/question/order", method = RequestMethod.POST)
+	public ResponseEntity<?> questionOrder(@RequestBody QuestionOrder questionOrder) {
+
+		if (QuestionnaireService.isAudit(questionOrder.getGuid(), questionOrder.getClient_id(),
+				questionOrder.getAudit_type_id())
+				&& questionOrder.getDraggroup_id() != questionOrder.getDropgroup_id()) {
+			return new ResponseEntity<>(new GoAuditsException("Audits are existing so you can't change the order"),
+					HttpStatus.CONFLICT);
+		} else {
+			try {
+				QuestionnaireService.orderQuestions(questionOrder);
+				List<QuestionOrder> qOrderList = new ArrayList<QuestionOrder>();
+				qOrderList.add(questionOrder);
+				return new ResponseEntity<List<QuestionOrder>>(qOrderList, HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+			}
+		}
+	}
+	
+	
+	@RequestMapping(value = "/customchoice/add", method = RequestMethod.POST)
+	public ResponseEntity<?> addCustomchoice(@RequestBody List<Choice> choice) {
+		if (QuestionnaireService.isCustomChoiceExist(choice)) {
+			return new ResponseEntity<>(new GoAuditsException("choices cannot be added, already exists"),
+					HttpStatus.CONFLICT);
+		}
+		try {
+			int choice_pat_id = QuestionnaireService.addCustomChoice(choice);			
+			choice.get(0).setChoice_pat_id(choice_pat_id);
+			return new ResponseEntity<List<Choice>>(choice, HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+	@RequestMapping(value = "/question/delete", method = RequestMethod.POST)
+	public ResponseEntity<?> deleteQuestion(@RequestBody Question question) {
+	
+		// if (auditConfigService.isAudit(question.getGuid(),
+		// question.getClient_id(), question.getAudit_type_id())) {
+		// return new ResponseEntity(new GoAuditsException(
+		// "Audits are existing so you can't delete Question"),
+		// HttpStatus.CONFLICT);
+		// }
+		try {
+			QuestionnaireService.deleteQuestion(question);
+			List<Question> QuestionList = new ArrayList<Question>();
+			QuestionList.add(question);
+
+			return new ResponseEntity<List<Question>>(QuestionList, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+	
+	@RequestMapping(value = "/tag/list/{client_id}/{audit_group_id}/{audit_type_id}", method = RequestMethod.POST)
+	public ResponseEntity<List<Tag>> getTag(@RequestBody Tag tag) {
+	
+		List<Tag> taglist = QuestionnaireService.getAllTags(tag);
+	
+		return new ResponseEntity<List<Tag>>(taglist, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/preview/list", method = RequestMethod.GET)
+	public ResponseEntity<List<Previewchoice>> getPreview(@RequestBody Previewchoice previchoice) {
+		List<Previewchoice> previewchoicelist = QuestionnaireService.getPreviewchoice(previchoice);
+		return new ResponseEntity<List<Previewchoice>>(previewchoicelist, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/question/audit", method = RequestMethod.GET)
+	public ResponseEntity<?> getQuestionauditcount(@RequestBody Question question) {
+		int audits_count = QuestionnaireService.getQuestionAudit(question);
+		List<Question> QuestionList = new ArrayList<Question>();
+		QuestionList.get(0).setAudits_count(audits_count);
+		return new ResponseEntity<List<Question>>(QuestionList, HttpStatus.OK);
+	}
+
 
 }

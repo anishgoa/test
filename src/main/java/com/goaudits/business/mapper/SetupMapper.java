@@ -18,6 +18,7 @@ import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
+import com.goaudits.business.entity.PreTemplates;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.User;
 
@@ -146,7 +147,6 @@ public interface SetupMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	int addScoreRange(ScoreRange sc);
 
-	
 	@Select(value = "{CALL SP_GA_GETEMAILDIST_DET_PV3( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER} )}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<EmailTemplate> getEmailTemplates(EmailTemplate emailtemplate);
@@ -154,5 +154,21 @@ public interface SetupMapper {
 	@Insert(value = "{ CALL SP_GA_UPDATE_EMAILDIST_DET( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER }, #{audit_type_id, mode=IN, jdbcType=INTEGER },"
 			+ "#{to_email, mode=IN, jdbcType=VARCHAR },#{cc_email, mode=IN, jdbcType=VARCHAR },#{email_sub, mode=IN, jdbcType=VARCHAR },#{email_body, mode=IN, jdbcType=VARCHAR } )}")
 	void updateEmailTemplate(EmailTemplate emailTemplate);
+
+	@Select("SELECT COMPANY_CLONE FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1")
+	String getCompanyCloneFlag(String guid);
+
+	@Select("SELECT COUNT(*) FROM GA_AUDITTYPE_MT WHERE GUID=#{guid} AND FIND_IN_SET(CLIENT_ID,#{client_id})")
+	int ispreTemplateExistCompany(PreTemplates preTemplates);
+
+	@Select("SELECT GROUP_CONCAT(CM.CLIENT_NAME SEPARATOR ' ,') FROM GA_AUDITTYPE_MT AT,GA_CLIENT_MT CM WHERE CM.GUID=AT.GUID AND CM.CLIENT_ID=AT.CLIENT_ID AND CM.GUID=#{guid} AND FIND_IN_SET(CM.CLIENT_ID,#{client_id})")
+	String getClientnamesExistingCompany(PreTemplates preTemplates);
+
+	@Transactional(rollbackFor = Exception.class)
+	@Insert(value = "CALL SP_SETUP_CLONE_COMPANY(#{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{pre_client_id, mode=IN, jdbcType=INTEGER})")
+	int cloneCompanies(PreTemplates preTemplates);
+
+	@Select("SELECT GPS_LOCATION_FILTER_ENABLED FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1 LIMIT 1")
+	boolean getGpsFlag(String guid);
 
 }

@@ -21,6 +21,7 @@ public class Company {
 	private int drag_index;
 	private int drop_index;
 	private boolean image_required=true;
+	private boolean company_clone;
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
 
 	public List<ActionPlanAssignee> getActionlist() {
@@ -141,6 +142,14 @@ public class Company {
 
 	public void setImage_required(boolean image_required) {
 		this.image_required = image_required;
+	}
+
+	public boolean isCompany_clone() {
+		return company_clone;
+	}
+
+	public void setCompany_clone(boolean company_clone) {
+		this.company_clone = company_clone;
 	}
 
 

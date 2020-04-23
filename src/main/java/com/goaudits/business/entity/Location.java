@@ -35,6 +35,7 @@ public class Location implements Serializable {
 	int limit = 10;
 	private String tags;
 	private String postcode;
+	private boolean gps_location_filter_enabled; 
 
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
 	private List<LocationTags> tagslist = new ArrayList<LocationTags>();
@@ -257,6 +258,14 @@ public class Location implements Serializable {
 
 	public void setTagslist(List<LocationTags> tagslist) {
 		this.tagslist = tagslist;
+	}
+
+	public boolean isGps_location_filter_enabled() {
+		return gps_location_filter_enabled;
+	}
+
+	public void setGps_location_filter_enabled(boolean gps_location_filter_enabled) {
+		this.gps_location_filter_enabled = gps_location_filter_enabled;
 	}
 	
 

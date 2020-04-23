@@ -12,6 +12,7 @@ import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
+import com.goaudits.business.entity.PreTemplates;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.mapper.SetupMapper;
 import com.goaudits.business.service.SetupService;
@@ -332,6 +333,41 @@ public class SetupServiceImpl implements SetupService {
 
 		setupmapper.updateEmailTemplate(emailTemplate);
 
+	}
+
+	@Override
+	public String getCompanyCloneFlag(String guid) {
+		
+		return setupmapper.getCompanyCloneFlag(guid);
+	}
+
+	@Override
+	public String checkCompanydata(PreTemplates preTemplates) {
+		String validate = null;
+
+		validate = setupmapper.ispreTemplateExistCompany(preTemplates) + "";
+		String clients = setupmapper.getClientnamesExistingCompany(preTemplates);
+		validate = validate + "---@%" + clients;
+		return validate;
+	}
+
+	@Override
+	public int cloneCompanies(PreTemplates preTemplates) {
+		String clientIds[] = preTemplates.getClient_id().split(",");
+
+		for (int i = 0; i < clientIds.length; i++) {
+
+			preTemplates.setClient_id(clientIds[i]);
+			setupmapper.cloneCompanies(preTemplates);
+
+		}
+
+		return 1;
+	}
+
+	@Override
+	public boolean getGpsFlag(String guid) {
+		return setupmapper.getGpsFlag(guid);
 	}
 
 }

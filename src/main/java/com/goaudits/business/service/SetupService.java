@@ -9,6 +9,7 @@ import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
+import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.ScoreRange;
 
 public interface SetupService {
@@ -78,5 +79,11 @@ public interface SetupService {
 	public int cloneCompanies(PreTemplates preTemplates);
 
 	public boolean getGpsFlag(String guid);
+
+	public List<Report> getReports(Report report);
+
+	public int updateReport(Report report);
+
+	public List<Report> getReporttemplates(String guid);
 	
 }

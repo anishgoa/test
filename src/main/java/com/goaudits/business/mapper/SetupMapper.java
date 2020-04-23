@@ -19,6 +19,7 @@ import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
+import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.User;
 
@@ -170,5 +171,19 @@ public interface SetupMapper {
 
 	@Select("SELECT GPS_LOCATION_FILTER_ENABLED FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1 LIMIT 1")
 	boolean getGpsFlag(String guid);
+
+	@Select(value = "{ CALL SP_GA_GETREPORTADMIN_DET_PV4( #{guid, mode=IN, jdbcType=BINARY}, #{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER} ) }")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Report> getReports(Report report);
+
+	@Insert(value = "{ CALL SP_GA_UPDATE_REPORTCONFIG_DET_PV2( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER}, "
+			+ "#{audit_type_id, mode=IN, jdbcType=INTEGER}, #{template_id, mode=IN, jdbcType=INTEGER}, #{description, mode=IN, jdbcType=VARCHAR}, #{report_logo, mode=IN, jdbcType=VARCHAR}, #{confidentiality, mode=IN, jdbcType=VARCHAR},#{client_displayname, mode=IN, jdbcType=VARCHAR},"
+			+ "#{active,mode=IN,jdbcType=BOOLEAN},#{leftlogobi,mode=IN,jdbcType=VARCHAR} ) }")
+	@Options(statementType = StatementType.CALLABLE)
+	int UpdateReport(Report report);
+
+	@Select(value = "{ CALL SP_GA_GETTEMPLATE_DETAILS( #{guid, mode=IN, jdbcType=BINARY} )}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Report> getReportTemplates(String guid);
 
 }

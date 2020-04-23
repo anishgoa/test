@@ -19,6 +19,7 @@ import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
+import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.service.SetupService;
 import com.goaudits.business.util.GoAuditsException;
@@ -297,6 +298,30 @@ public class SetupController {
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 
 		}
+	}
+
+	@RequestMapping(value = "/report/list", method = RequestMethod.POST)
+	public ResponseEntity<?> getAllReports(@RequestBody Report report) {
+		List<Report> reportList = setupservice.getReports(report);
+		return new ResponseEntity<List<Report>>(reportList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/report/update", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateReport(@RequestBody Report report) {
+		try {
+			setupservice.updateReport(report);
+			List<Report> reportList = new ArrayList<Report>();
+			reportList.add(report);
+			return new ResponseEntity<List<Report>>(reportList, HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+
+	@RequestMapping(value = "/reporttemplate/list/{guid}", method = RequestMethod.GET)
+	public ResponseEntity<List<Report>> getReporttemplates(@PathVariable("guid") String guid) {
+		List<Report> reportList = setupservice.getReporttemplates(guid);
+		return new ResponseEntity<List<Report>>(reportList, HttpStatus.OK);
 	}
 
 }

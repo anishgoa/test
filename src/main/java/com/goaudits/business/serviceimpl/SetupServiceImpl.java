@@ -13,6 +13,7 @@ import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
+import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.mapper.SetupMapper;
 import com.goaudits.business.service.SetupService;
@@ -337,7 +338,7 @@ public class SetupServiceImpl implements SetupService {
 
 	@Override
 	public String getCompanyCloneFlag(String guid) {
-		
+
 		return setupmapper.getCompanyCloneFlag(guid);
 	}
 
@@ -368,6 +369,76 @@ public class SetupServiceImpl implements SetupService {
 	@Override
 	public boolean getGpsFlag(String guid) {
 		return setupmapper.getGpsFlag(guid);
+	}
+
+	@Override
+	public List<Report> getReports(Report report) {
+
+		List<Report> reportlist = setupmapper.getReports(report);
+		byte[] images = null;
+		byte[] images1 = null;
+		for (Report rt : reportlist) {
+
+			images = rt.getReport_logo();
+			// System.out.println(images);
+			if (images == null) {
+				rt.setReportlogo(null);
+				rt.setReport_logo(null);
+			} else {
+				rt.setReport_logo(null);
+
+				rt.setReportlogo("data:image/png;base64," + Utils.ConvertToBase64(images));
+				// System.out.println(rt.getReportlogo());
+			}
+
+			images1 = rt.getLeftlogobi();
+			// System.out.println(images);
+			if (images1 == null) {
+				rt.setLeftlogo(null);
+				rt.setLeftlogobi(null);
+			} else {
+				rt.setLeftlogobi(null);
+
+				rt.setLeftlogo("data:image/png;base64," + Utils.ConvertToBase64(images1));
+				// System.out.println(rt.getReportlogo());
+			}
+
+		}
+
+		return reportlist;
+	}
+
+	@Override
+	public int updateReport(Report report) {
+		byte[] byteimage = null;
+		String[] imagesrc = null;
+
+		if (report.getReportlogo() != null && !(report.getReportlogo().trim().isEmpty())) {
+			imagesrc = report.getReportlogo().split(",");
+			try {
+				byteimage = Utils.Base64ToBytes(imagesrc[1]);
+				report.setReport_logo(byteimage);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		if (report.getLeftlogo() != null && !(report.getLeftlogo().trim().isEmpty())) {
+			imagesrc = report.getLeftlogo().split(",");
+			try {
+				byteimage = Utils.Base64ToBytes(imagesrc[1]);
+				report.setLeftlogobi(byteimage);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return setupmapper.UpdateReport(report);
+	}
+
+	@Override
+	public List<Report> getReporttemplates(String guid) {
+		return setupmapper.getReportTemplates(guid);
 	}
 
 }

@@ -4,8 +4,12 @@ import java.util.List;
 
 import com.goaudits.business.entity.Choice;
 import com.goaudits.business.entity.Group;
+import com.goaudits.business.entity.Previewchoice;
 import com.goaudits.business.entity.Question;
+import com.goaudits.business.entity.QuestionOrder;
+import com.goaudits.business.entity.Questionimage;
 import com.goaudits.business.entity.Section;
+import com.goaudits.business.entity.Tag;
 
 public interface QuestionnaireService {
 
@@ -42,6 +46,28 @@ public interface QuestionnaireService {
 	boolean choiceChangeConditional(Question question);
 
 	boolean updateQuestion(List<Question> question);
+
+	boolean isConditionalChoiceExist(Question question);
+
+	int changeConditionalChoice(Question question);
+
+	List<Questionimage> getQuestionImage(Question question);
+
+	boolean isAudit(String guid, int client_id, int audit_type_id);
+
+	int orderQuestions(QuestionOrder questionOrder);
+
+	boolean isCustomChoiceExist(List<Choice> choice);
+
+	int addCustomChoice(List<Choice> choice);
+
+	int deleteQuestion(Question question);
+
+	List<Tag> getAllTags(Tag tag);
+
+	List<Previewchoice> getPreviewchoice(Previewchoice previchoice);
+
+	int getQuestionAudit(Question question);
 
 
 

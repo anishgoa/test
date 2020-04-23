@@ -4,14 +4,16 @@ import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.goaudits.business.entity.Choice;
 import com.goaudits.business.entity.Group;
+import com.goaudits.business.entity.Previewchoice;
 import com.goaudits.business.entity.Question;
+import com.goaudits.business.entity.QuestionOrder;
 import com.goaudits.business.entity.Questionimage;
 import com.goaudits.business.entity.Section;
+import com.goaudits.business.entity.Tag;
 import com.goaudits.business.mapper.QuestionnaireMapper;
 import com.goaudits.business.service.QuestionnaireService;
 import com.goaudits.business.util.Constants;
@@ -154,7 +156,6 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		for (Question ques : questionlist) {
 			ques.setAudit_group_id(1);
 
-		
 			qno = questionnairemapper.generateqno(ques);
 
 			int mainqno = ques.getQuestion_no();
@@ -204,9 +205,9 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			if (ques.isConditionalflag()) {
 				ques.setSub_question_no(qno);
 
-				questionnairemapper.addConditinalQuestion(ques.getGuid(), ques.getClient_id(),
-						ques.getAudit_type_id(), mainqno, ques.getConditional_choice_pat_id(),
-						ques.getConditional_choiceid(), ques.getSub_question_no());
+				questionnairemapper.addConditinalQuestion(ques.getGuid(), ques.getClient_id(), ques.getAudit_type_id(),
+						mainqno, ques.getConditional_choice_pat_id(), ques.getConditional_choiceid(),
+						ques.getSub_question_no());
 				// ques.setIs_parent_question(true);
 				ques.setIs_sub_question(true);
 
@@ -214,7 +215,6 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 			questionnairemapper.addCustomChoiceorUpdate(ques);
 
-		
 			List<Questionimage> qimagelist = ques.getQuestimagelist();
 
 			for (Questionimage qimage : qimagelist) {
@@ -260,14 +260,13 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		return questionnairemapper.choiceChangeConditional(question) > 0 ? true : false;
 	}
 
-	@Override	
+	@Override
 	public boolean updateQuestion(List<Question> questionlist) {
 		for (Question ques : questionlist) {
 			ques.setAudit_group_id(1);
 
 			List<Choice> choicelists = ques.getChoiceList();
 			for (Choice choice : choicelists) {
-			
 
 				questionnairemapper.addquestscores(ques.getGuid(), ques.getClient_id(), 1, ques.getAudit_type_id(),
 						ques.getQuestion_no(), ques.getChoice_pat_id(), choice.getChoice_id(),
@@ -312,7 +311,6 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 				}
 
-
 				List<Questionimage> qimagelist = ques.getQuestimagelist();
 
 				for (Questionimage qimage : qimagelist) {
@@ -349,12 +347,115 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 					}
 				}
 
-
 			}
 
 		}
 		return true;
 
+	}
+
+	@Override
+	public boolean isConditionalChoiceExist(Question question) {
+		return questionnairemapper.isConditionalExist(question) > 0 ? true : false;
+	}
+
+	@Override
+	public int changeConditionalChoice(Question question) {
+		return questionnairemapper.changeConditionalChoice(question);
+	}
+
+	@Override
+	public List<Questionimage> getQuestionImage(Question question) {
+		List<Questionimage> questionimglist = questionnairemapper.getquestionImage(question);
+		for (Questionimage qimg : questionimglist) {
+			byte[] images;
+			images = qimg.getBinaryimage();
+
+			if (images == null) {
+				qimg.setImage("");
+
+			} else {
+				qimg.setImage("data:image/png;base64," + Utils.ConvertToBase64(images));
+			}
+		}
+
+		return questionimglist;
+	}
+
+	@Override
+	public boolean isAudit(String guid, int client_id, int audit_type_id) {
+		return ((questionnairemapper.checkAudit(guid, client_id, audit_type_id)) > 0 ? true : false);
+	}
+
+	@Override
+	public int orderQuestions(QuestionOrder questionOrder) {
+		return questionnairemapper.questionOrder(questionOrder);
+	}
+
+	@Override
+	public boolean isCustomChoiceExist(List<Choice> choices) {
+		int i = 0;
+		String choice_pattern = "";
+		String choice_type = "";
+		String guid=choices.get(0).getGuid();
+		for (Choice cho : choices) {
+
+			choice_type = cho.getChoice_type();
+			if (i++ == choices.size() - 1) {
+				choice_pattern = choice_pattern + cho.getChoice_text();
+			} else {
+				choice_pattern = choice_pattern + cho.getChoice_text() + ",";
+			}
+		}
+
+		return (questionnairemapper.ischoicePatternExits(guid, choice_pattern, choice_type)) > 0 ? true : false;	}
+
+	@Override
+	public int addCustomChoice(List<Choice> choices) {
+		int i = 0;
+		String choice_pattern = "";
+		String choice_type = "";
+		int choice_pat_id = 0;
+		String guid=choices.get(0).getGuid();
+		choice_pat_id = questionnairemapper.generateChoicepatid(guid);
+		for (Choice cho : choices) {
+			cho.setChoice_pat_id(choice_pat_id);
+			choice_type = cho.getChoice_type();
+			if (i++ == choices.size() - 1) {
+				choice_pattern = choice_pattern + cho.getChoice_text();
+				// choice_pattern=choice_pattern+"ZERO";
+			} else {
+				choice_pattern = choice_pattern + cho.getChoice_text() + ",";
+			}
+
+			questionnairemapper.addCustomChoice(cho);
+		}
+
+		questionnairemapper.addExtraChoice(guid, choice_pat_id);
+		questionnairemapper.addCustomChoicepattern(guid, choice_pat_id, choice_pattern, choice_type);
+
+		return choice_pat_id;
+	}
+
+	@Override
+	public int deleteQuestion(Question question) {
+		return questionnairemapper.deleteQuestion(question);
+
+	}
+
+	@Override
+	public List<Tag> getAllTags(Tag tag) {
+		return questionnairemapper.getAllTags(tag);
+	}
+
+	@Override
+	public List<Previewchoice> getPreviewchoice(Previewchoice previchoice) {
+		return questionnairemapper.getPreviewchoice(previchoice);
+	}
+
+	@Override
+	public int getQuestionAudit(Question question) {
+		return questionnairemapper.getQuestionAudit(question);
 	}
 
 }

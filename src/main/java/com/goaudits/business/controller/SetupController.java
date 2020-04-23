@@ -18,6 +18,7 @@ import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
+import com.goaudits.business.entity.PreTemplates;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.service.SetupService;
 import com.goaudits.business.util.GoAuditsException;
@@ -83,6 +84,29 @@ public class SetupController {
 		}
 		return new ResponseEntity<>(new GoAuditsException("Company cannot be updated, already exists"),
 				HttpStatus.CONFLICT);
+	}
+
+	@RequestMapping(value = "/getcompanycloneflag/{guid}", method = RequestMethod.GET)
+	public ResponseEntity<?> getCompanycloneFlag(@PathVariable("guid") String guid) {
+		String flag = setupservice.getCompanyCloneFlag(guid);
+		Company cmp = new Company();
+		cmp.setCompany_clone(Boolean.parseBoolean(flag));
+		List<Company> companyList = new ArrayList<Company>();
+		companyList.add(cmp);
+		return new ResponseEntity<List<Company>>(companyList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/clonecompany", method = RequestMethod.POST)
+	public ResponseEntity<?> cloneCompanies(@RequestBody PreTemplates PreTemplates) {
+
+		String valid[] = setupservice.checkCompanydata(PreTemplates).split("---@%");
+		if (Integer.parseInt(valid[0]) > 0) {
+			return new ResponseEntity<>(new GoAuditsException(valid[1]), HttpStatus.CONFLICT);
+		} else {
+			setupservice.cloneCompanies(PreTemplates);
+			return new ResponseEntity<String>(HttpStatus.CREATED);
+		}
+
 	}
 
 	@RequestMapping(value = "/company/assignees", method = RequestMethod.POST)
@@ -172,6 +196,17 @@ public class SetupController {
 				HttpStatus.CONFLICT);
 	}
 
+	@RequestMapping(value = "getgpsflag/{guid}", method = RequestMethod.GET)
+	public ResponseEntity<?> Locflag(@PathVariable("guid") String guid, Location location) {
+
+		boolean gpsFilterFlag = setupservice.getGpsFlag(guid);
+
+		List<Location> locationList = new ArrayList<Location>();
+		location.setGps_location_filter_enabled(gpsFilterFlag);
+		locationList.add(location);
+		return new ResponseEntity<List<Location>>(locationList, HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/location/tags/{guid}/{uid}/{clientid}/{store_id}", method = RequestMethod.GET)
 	public ResponseEntity<List<LocationTags>> getTagsBasedonLocation(@PathVariable("guid") String guid,
 			@PathVariable("uid") String uid, @PathVariable("clientid") String clientid,
@@ -254,7 +289,6 @@ public class SetupController {
 
 	@RequestMapping(value = "/emailtemplate/update", method = RequestMethod.POST)
 	public ResponseEntity<?> updateEmailTemplate(@RequestBody EmailTemplate emailTemplate) {
-
 		try {
 			setupservice.updateEmailTemplate(emailTemplate);
 			List<EmailTemplate> emailList = new ArrayList<EmailTemplate>();
@@ -263,7 +297,6 @@ public class SetupController {
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 
 		}
-
 	}
 
 }

@@ -114,6 +114,7 @@ public class Question implements Serializable {
 	private String image;
 	private int image_id;
 	private String qcomments;
+	private int audits_count;
     byte[] binaryimage;
 	private List<Choice> choiceList = new ArrayList<Choice>();
 	private List<Choice> sublist = new ArrayList<Choice>();
@@ -1001,6 +1002,14 @@ public class Question implements Serializable {
 
 	public void setBinaryimage(byte[] binaryimage) {
 		this.binaryimage = binaryimage;
+	}
+
+	public int getAudits_count() {
+		return audits_count;
+	}
+
+	public void setAudits_count(int audits_count) {
+		this.audits_count = audits_count;
 	}
 
 	

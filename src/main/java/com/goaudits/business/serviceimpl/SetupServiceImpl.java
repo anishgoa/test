@@ -8,13 +8,17 @@ import org.springframework.stereotype.Service;
 
 import com.goaudits.business.entity.ActionPlanAssignee;
 import com.goaudits.business.entity.AuditName;
+import com.goaudits.business.entity.Choice;
 import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.EmailTemplate;
+import com.goaudits.business.entity.Group;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
+import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.ScoreRange;
+import com.goaudits.business.entity.Section;
 import com.goaudits.business.mapper.SetupMapper;
 import com.goaudits.business.service.SetupService;
 import com.goaudits.business.util.Utils;
@@ -187,7 +191,7 @@ public class SetupServiceImpl implements SetupService {
 
 	@Override
 	public List<LocationTags> getTagsBasedonLocation(String guid, String uid, String clientid, String store_id) {
-		return setupmapper.getTagsBasedonLocation(guid, uid, store_id);
+		return setupmapper.getTagsBasedonLocation(guid, uid,clientid, store_id);
 	}
 
 	@Override
@@ -439,6 +443,78 @@ public class SetupServiceImpl implements SetupService {
 	@Override
 	public List<Report> getReporttemplates(String guid) {
 		return setupmapper.getReportTemplates(guid);
+	}
+
+	@Override
+	public List<Company> getPreexistingTemplates() {
+		return setupmapper.getPreexistingTemplates();
+	}
+
+	@Override
+	public List<AuditName> getPreAuditnames(int client_id) {
+		return setupmapper.getPreAuditnames(client_id);
+	}
+
+	@Override
+	public List<AuditName> getAllPreAuditnames() {
+		return setupmapper.getPreAuditnamesList();
+	}
+
+	@Override
+	public int getPretempletQuestionscount(int client_id, int audit_type_id) {
+		return setupmapper.getPretempletQuestionscount(client_id,audit_type_id);
+	}
+
+	@Override
+	public List<Section> getPretempletQuestions(Section section) {
+		List<Section> Sectionlist = setupmapper.getPreSections(section);
+		Group group = new Group();
+		for (Section sec : Sectionlist) {
+
+			group.setGuid(sec.getGuid());
+			group.setClient_id(sec.getClient_id());
+			group.setAudit_group_id(1);
+			group.setAudit_type_id(sec.getAudit_type_id());
+			group.setSection_id(sec.getSection_id());
+			group.setActive(true);
+			List<Group> Grouplist = setupmapper.getallGroups(group);
+
+			for (Group grp : Grouplist) {
+				group.setGroup_id(grp.getGroup_id());
+				List<Question> QuestionList = setupmapper.getallQuestions(group);
+
+				for (Question ques : QuestionList) {
+					List<Choice> choicelist = setupmapper.getchoicesforquestion(group.getGuid(),
+							ques.getClient_id(), ques.getAudit_group_id(), ques.getAudit_type_id(),
+							ques.getQuestion_no(), ques.getChoice_pat_id());
+					ques.getChoiceList().addAll(choicelist);
+
+				}
+				grp.getQuestionList().addAll(QuestionList);
+			}
+
+			sec.getGroupList().addAll(Grouplist);
+		}
+
+		return Sectionlist;	
+		
+	}
+
+	@Override
+	public String PreTemplates(PreTemplates preTemplates) {
+		String validate = null;
+
+		validate = setupmapper.ispreTemplateExist(preTemplates) + "";
+		String clients = setupmapper.getClientnamesExisting(preTemplates);
+		validate = validate + "---@%" + clients;
+		return validate;
+	}
+
+	@Override
+	public int createPreTemplate(PreTemplates preTemplates) {
+		
+		return setupmapper.createPreTemplate(preTemplates);
+		
 	}
 
 }

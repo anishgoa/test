@@ -11,6 +11,7 @@ import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
 import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.ScoreRange;
+import com.goaudits.business.entity.Section;
 
 public interface SetupService {
 
@@ -85,5 +86,19 @@ public interface SetupService {
 	public int updateReport(Report report);
 
 	public List<Report> getReporttemplates(String guid);
+
+	public List<Company> getPreexistingTemplates();
+
+	public List<AuditName> getPreAuditnames(int client_id);
+
+	public List<AuditName> getAllPreAuditnames();
+
+	public int getPretempletQuestionscount(int client_id, int audit_type_id);
+
+	public List<Section> getPretempletQuestions(Section section);
+
+	public String PreTemplates(PreTemplates preTemplates);
+
+	public int createPreTemplate(PreTemplates preTemplates);
 	
 }

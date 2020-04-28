@@ -30,6 +30,7 @@ public class UserPrinciple implements UserDetails {
     private boolean portalAccess;
     private boolean analyticsAccess;
     private int auditsCount;
+    
 
 	private Collection<? extends GrantedAuthority> authorities;
 
@@ -41,6 +42,7 @@ public class UserPrinciple implements UserDetails {
 		this.active=active;
 		this.password = password;
 	}
+	
 
 	public static UserPrinciple build(User user) {
 		// List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->

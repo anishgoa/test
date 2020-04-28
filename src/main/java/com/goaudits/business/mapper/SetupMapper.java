@@ -11,17 +11,20 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.mapping.StatementType;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.goaudits.business.entity.ActionPlanAssignee;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.EmailTemplate;
+import com.goaudits.business.entity.Group;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
+import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.ScoreRange;
+import com.goaudits.business.entity.Section;
 import com.goaudits.business.entity.User;
+import com.goaudits.business.entity.Choice;
 
 @Mapper
 public interface SetupMapper {
@@ -95,7 +98,7 @@ public interface SetupMapper {
 
 	@Select(value = "{ CALL SP_GA_GETTAGSFORLOCATION_DET( #{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{store_id, mode=IN, jdbcType=INTEGER} )}")
 	@Options(statementType = StatementType.CALLABLE)
-	List<LocationTags> getTagsBasedonLocation(@Param("guid") String guid, @Param("uid") String uid,
+	List<LocationTags> getTagsBasedonLocation(@Param("guid") String guid, @Param("uid") String uid,@Param("client_id") String client_id,
 			@Param("store_id") String store_id);
 
 	@Select("SELECT * FROM GA_AUDITTYPE_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_NAME=#{audit_type_name}")
@@ -185,5 +188,45 @@ public interface SetupMapper {
 	@Select(value = "{ CALL SP_GA_GETTEMPLATE_DETAILS( #{guid, mode=IN, jdbcType=BINARY} )}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<Report> getReportTemplates(String guid);
+
+	@Select("SELECT * FROM GA_CLIENT_MT WHERE GUID=(SELECT GUID FROM GA_USERDET_MT WHERE USER_NAME='templates@goaudits.com') AND ACTIVE=1")
+	List<Company> getPreexistingTemplates();
+
+	@Select(value = "{CALL GA_SP_APP_GET_AUDITNAMES_INDUSTRIES(0, #{client_id, mode=IN, jdbcType=INTEGER})}")
+	List<AuditName> getPreAuditnames(int client_id);
+
+	@Select("{CALL GA_SP_PORTAL_GET_AUDITNAMES_INDUSTRIES()}")
+	List<AuditName> getPreAuditnamesList();
+
+	@Select("SELECT COUNT(*) FROM GA_QUESTION_MT WHERE GUID=(SELECT GUID FROM GA_USERDET_MT WHERE USER_NAME='templates@goaudits.com') AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND ACTIVE=1")
+	int getPretempletQuestionscount(@Param("client_id") int client_id, @Param("audit_type_id") int audit_type_id);
+
+	@Select("SELECT * FROM GA_SECTION_MT WHERE GUID=(SELECT GUID FROM GA_USERDET_MT WHERE USER_NAME='templates@goaudits.com') AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id}")
+	List<Section> getPreSections(Section section);
+
+	@Select(value = "{CALL SP_GA_GETGROUP_DET_PV2(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
+			+ "#{section_id, mode=IN, jdbcType=INTEGER})}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Group> getallGroups(Group group);
+
+	@Select(value = "{CALL SP_GA_GETQUESTION_DET_PV2( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER},#{audit_group_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER}, #{section_id, mode=IN, jdbcType=INTEGER}, #{group_id, mode=IN, jdbcType=INTEGER},#{active, mode=IN, jdbcType=BOOLEAN} )}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Question> getallQuestions(Group group);
+
+	@Select(value = "{ CALL SP_GA_GETCHOICESBASEDONPATID_DET_PV2(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{audit_group_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER}, #{question_no, mode=IN, jdbcType=INTEGER},#{choice_pat_id, mode=IN, jdbcType=INTEGER} ) }")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Choice> getchoicesforquestion(@Param("guid") String guid, @Param("client_id") int client_id,
+			@Param("audit_group_id") int audit_group_id, @Param("audit_type_id") int audit_type_id,
+			@Param("question_no") int question_no, @Param("choice_pat_id") int choice_pat_id);
+
+	@Select("SELECT COUNT(*) FROM GA_AUDITTYPE_MT WHERE GUID=#{guid} AND FIND_IN_SET(CLIENT_ID,#{client_id}) AND AUDIT_TYPE_NAME=#{pre_audit_type_name}")
+	String ispreTemplateExist(PreTemplates preTemplates);
+
+	@Select("SELECT GROUP_CONCAT(CM.CLIENT_NAME SEPARATOR ' ,') FROM GA_AUDITTYPE_MT AT,GA_CLIENT_MT CM WHERE CM.GUID=AT.GUID AND CM.CLIENT_ID=AT.CLIENT_ID AND AT.GUID=#{guid} AND FIND_IN_SET(AT.CLIENT_ID,#{client_id}) AND AT.AUDIT_TYPE_NAME=#{pre_audit_type_name}")
+	String getClientnamesExisting(PreTemplates preTemplates);
+
+	@Transactional(rollbackFor = Exception.class)
+	@Insert(value = "CALL SP_SETUP_DEFAULT_TEMPLATEADMIN_MT_PV2(#{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=VARCHAR}, #{pre_client_id, mode=IN, jdbcType=INTEGER}, #{pre_audit_type_id, mode=IN, jdbcType=INTEGER})")
+	int createPreTemplate(PreTemplates preTemplates);
 
 }

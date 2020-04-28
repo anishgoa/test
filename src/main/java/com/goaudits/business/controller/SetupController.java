@@ -21,6 +21,7 @@ import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
 import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.ScoreRange;
+import com.goaudits.business.entity.Section;
 import com.goaudits.business.service.SetupService;
 import com.goaudits.business.util.GoAuditsException;
 
@@ -105,7 +106,10 @@ public class SetupController {
 			return new ResponseEntity<>(new GoAuditsException(valid[1]), HttpStatus.CONFLICT);
 		} else {
 			setupservice.cloneCompanies(PreTemplates);
-			return new ResponseEntity<String>(HttpStatus.CREATED);
+			List<PreTemplates> preList=new ArrayList<PreTemplates>();
+			
+			preList.add(PreTemplates);
+			return new ResponseEntity<List<PreTemplates>>(preList,HttpStatus.CREATED);
 		}
 
 	}
@@ -141,7 +145,7 @@ public class SetupController {
 //	@RequestMapping(value = "/location/updateassignees", method = RequestMethod.POST)
 //	public ResponseEntity<?> getLocationUpdateAssignees(@RequestBody List<ActionPlanAssignee> assignees) {
 //
-//		int assigneeUpdated = setupservice.updateLocationAssignee(assignees);
+//		int a2ssigneeUpdated = setupservice.updateLocationAssignee(assignees);
 //		return new ResponseEntity<Integer>(assigneeUpdated, HttpStatus.OK);
 //	}
 //
@@ -239,7 +243,7 @@ public class SetupController {
 		}
 	}
 
-	@RequestMapping(value = "/audittype/order", method = RequestMethod.POST)
+	@RequestMapping(value = "/auditname/order", method = RequestMethod.POST)
 	public ResponseEntity<?> reOrderAuditName(@RequestBody AuditName auditname) {
 		setupservice.addAuditNameOrder(auditname);
 		List<AuditName> auditNameList = new ArrayList<AuditName>();
@@ -257,6 +261,7 @@ public class SetupController {
 				auditNameList.add(auditname);
 				return new ResponseEntity<List<AuditName>>(auditNameList, HttpStatus.OK);
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 				return new ResponseEntity<>(new GoAuditsException("Something went wrong"),
 						HttpStatus.EXPECTATION_FAILED);
 			}
@@ -293,6 +298,7 @@ public class SetupController {
 		try {
 			setupservice.updateEmailTemplate(emailTemplate);
 			List<EmailTemplate> emailList = new ArrayList<EmailTemplate>();
+			emailList.add(emailTemplate);
 			return new ResponseEntity<List<EmailTemplate>>(emailList, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
@@ -323,5 +329,63 @@ public class SetupController {
 		List<Report> reportList = setupservice.getReporttemplates(guid);
 		return new ResponseEntity<List<Report>>(reportList, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/templateslist", method = RequestMethod.GET)
+	public ResponseEntity<List<Company>> getPreexistingtemplates() {
+		List<Company> templateslist = setupservice.getPreexistingTemplates();
+		return new ResponseEntity<List<Company>>(templateslist, HttpStatus.OK);
+	}
+	@RequestMapping(value = "/preclient/{client_id}", method = RequestMethod.GET)
+	public ResponseEntity<List<AuditName>> getPreAuditnames(@PathVariable int client_id) {
+		List<AuditName> auditnamelist = setupservice.getPreAuditnames(client_id);
+		return new ResponseEntity<List<AuditName>>(auditnamelist, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/preclient/all", method = RequestMethod.GET)
+	public ResponseEntity<List<AuditName>> getPreAuditnamesAll() {
+		List<AuditName> auditnamelist = setupservice.getAllPreAuditnames();
+		return new ResponseEntity<List<AuditName>>(auditnamelist, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/prequestion/count/{client_id}/{audit_type_id}", method = RequestMethod.GET)
+	public ResponseEntity<?> getPreQuestionscount(@PathVariable int client_id, @PathVariable int audit_type_id) {
+
+		int count = setupservice.getPretempletQuestionscount(client_id, audit_type_id);
+		Company cmp=new Company();
+		cmp.setCount(count);
+		List<Company> companyList=new ArrayList<Company>();
+		companyList.add(cmp);
+		return new ResponseEntity<List<Company>>(companyList, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/prequestion/{client_id}/{audit_type_id}", method = RequestMethod.GET)
+	public ResponseEntity<List<Section>> getPreQuestions(@PathVariable int client_id, @PathVariable int audit_type_id) {
+		Section section = new Section();
+		section.setClient_id(client_id);
+		section.setAudit_type_id(audit_type_id);
+		List<Section> sectionlist = setupservice.getPretempletQuestions(section);
+		return new ResponseEntity<List<Section>>(sectionlist, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/pretemplate/add", method = RequestMethod.POST)
+	public ResponseEntity<?> addpreTemplate(@RequestBody PreTemplates PreTemplates) {
+		
+		String valid[] = setupservice.PreTemplates(PreTemplates).split("---@%");
+		if (Integer.parseInt(valid[0]) > 0) {
+			return new ResponseEntity<>(new GoAuditsException("Template cannot be created, already exists"),
+					HttpStatus.CONFLICT);
+		}
+		try {
+			setupservice.createPreTemplate(PreTemplates);
+			List<PreTemplates> templatesList=new ArrayList<PreTemplates>();
+			templatesList.add(PreTemplates);
+			return new ResponseEntity<List<PreTemplates>>(templatesList, HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+
+
+	
 
 }

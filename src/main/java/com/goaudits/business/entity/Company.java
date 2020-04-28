@@ -22,6 +22,7 @@ public class Company {
 	private int drop_index;
 	private boolean image_required=true;
 	private boolean company_clone;
+	private int count;
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
 
 	public List<ActionPlanAssignee> getActionlist() {
@@ -150,6 +151,14 @@ public class Company {
 
 	public void setCompany_clone(boolean company_clone) {
 		this.company_clone = company_clone;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 

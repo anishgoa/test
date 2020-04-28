@@ -45,6 +45,7 @@ public class AuditName implements Serializable {
     private int drop_index;
     private boolean image_required = true;
     private boolean hide_signature_app;
+    private int count;
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
 
 	public int getDrag_index() {
@@ -317,6 +318,14 @@ public class AuditName implements Serializable {
 
 	public void setImage_required(boolean image_required) {
 		this.image_required = image_required;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 	
 	

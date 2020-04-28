@@ -74,7 +74,7 @@ public class Questionnaire {
 			}
 		}
 		return new ResponseEntity<>(new GoAuditsException("Section cannot be updated, already exists"),
-				HttpStatus.NOT_FOUND);
+				HttpStatus.CONFLICT);
 	}
 
 	@RequestMapping(value = "/section/delete", method = RequestMethod.POST)
@@ -157,7 +157,7 @@ public class Questionnaire {
 		return new ResponseEntity<List<Choice>>(choicepatternlist, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/question/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/question/list", method = RequestMethod.POST)
 	public ResponseEntity<List<Group>> getQuestions(Group group) {
 		List<Group> grouplist = QuestionnaireService.getQuestions(group);
 		return new ResponseEntity<List<Group>>(grouplist, HttpStatus.OK);
@@ -305,7 +305,7 @@ public class Questionnaire {
 		}
 	}
 	
-	@RequestMapping(value = "/tag/list/{client_id}/{audit_group_id}/{audit_type_id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/tag/list", method = RequestMethod.POST)
 	public ResponseEntity<List<Tag>> getTag(@RequestBody Tag tag) {
 	
 		List<Tag> taglist = QuestionnaireService.getAllTags(tag);
@@ -313,13 +313,13 @@ public class Questionnaire {
 		return new ResponseEntity<List<Tag>>(taglist, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/preview/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/preview/list", method = RequestMethod.POST)
 	public ResponseEntity<List<Previewchoice>> getPreview(@RequestBody Previewchoice previchoice) {
 		List<Previewchoice> previewchoicelist = QuestionnaireService.getPreviewchoice(previchoice);
 		return new ResponseEntity<List<Previewchoice>>(previewchoicelist, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/question/audit", method = RequestMethod.GET)
+	@RequestMapping(value = "/question/audit", method = RequestMethod.POST)
 	public ResponseEntity<?> getQuestionauditcount(@RequestBody Question question) {
 		int audits_count = QuestionnaireService.getQuestionAudit(question);
 		List<Question> QuestionList = new ArrayList<Question>();

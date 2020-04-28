@@ -54,7 +54,7 @@ public interface QuestionnaireMapper {
 	@Select("SELECT * FROM GA_GROUP_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND SECTION_ID=#{section_id} AND GROUP_NAME=#{group_name} ")
 	Group isGroupExist(Group group);
 
-	@Select("SELECT * FROM GA_GROUP_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND SECTION_ID=#{section_id} AND GROUP_ID!={group_id} AND GROUP_NAME=#{group_name} ")
+	@Select("SELECT * FROM GA_GROUP_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND SECTION_ID=#{section_id} AND GROUP_ID!=#{group_id} AND GROUP_NAME=#{group_name} ")
 	int isGroupExistInDB(Group group);
 
 	@Select(value = "{ CALL SP_GA_GETALLCHOICES_PV2( #{guid, mode=IN, jdbcType=BINARY} ) }")
@@ -63,7 +63,7 @@ public interface QuestionnaireMapper {
 
 	@Select(value = "{ CALL SP_GA_GETCHOICESFORUSER( #{guid, mode=IN, jdbcType=BINARY},#{choicepatid, mode=IN, jdbcType=INTEGER} ) }")
 	@Options(statementType = StatementType.CALLABLE)
-	List<Choice> getChoicesforPattern(String guid, int choice);
+	List<Choice> getChoicesforPattern(@Param("guid") String guid,@Param("choicepatid") int choicepatid);
 
 	@Select(value = "{CALL SP_GA_GETGROUP_DET_PV2(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
 			+ "#{section_id, mode=IN, jdbcType=INTEGER})}")

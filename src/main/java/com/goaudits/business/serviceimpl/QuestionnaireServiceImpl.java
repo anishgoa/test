@@ -26,6 +26,40 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	QuestionnaireMapper questionnairemapper;
 
 	@Override
+	public List<Section> getUserQuestions(Section section) {
+		List<Section> Sectionlist = questionnairemapper.getUserSections(section);
+		Group group = new Group();
+		for (Section sec : Sectionlist) {
+
+			group.setGuid(sec.getGuid());
+			group.setClient_id(sec.getClient_id());
+			group.setAudit_group_id(1);
+			group.setAudit_type_id(sec.getAudit_type_id());
+			group.setSection_id(sec.getSection_id());
+			group.setActive(true);
+			List<Group> Grouplist = questionnairemapper.getallGroupspre(group);
+
+			for (Group grp : Grouplist) {
+				group.setGroup_id(grp.getGroup_id());
+				List<Question> QuestionList = questionnairemapper.getallQuestions(group);
+
+				for (Question ques : QuestionList) {
+					List<Choice> choicelist = questionnairemapper.getchoicesforquestion(group.getGuid(),
+							ques.getClient_id(), ques.getAudit_group_id(), ques.getAudit_type_id(),
+							ques.getQuestion_no(), ques.getChoice_pat_id());
+					ques.getChoiceList().addAll(choicelist);
+
+				}
+				grp.getQuestionList().addAll(QuestionList);
+			}
+
+			sec.getGroupList().addAll(Grouplist);
+		}
+
+		return Sectionlist;
+	}
+
+	@Override
 	public List<Section> getSections(Section section) {
 
 		return questionnairemapper.getSections(section);
@@ -106,42 +140,48 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	}
 
 	@Override
-	public List<Group> getQuestions(Group group) {
-		List<Group> Grouplist = questionnairemapper.getallGroups(group);
+	public List<Section> getQuestions(Section sec) {
 
-		for (Group grp : Grouplist) {
-			group.setGroup_id(grp.getGroup_id());
-			List<Question> QuestionList = questionnairemapper.getallQuestions(group);
+		List<Section> Sectionlist = questionnairemapper.getSectionList(sec);
 
-			for (Question ques : QuestionList) {
-				List<Choice> choicelist = questionnairemapper.getchoicesforquestion(group.getGuid(),
-						ques.getClient_id(), ques.getAudit_group_id(), ques.getAudit_type_id(), ques.getQuestion_no(),
-						ques.getChoice_pat_id());
-				ques.getChoiceList().addAll(choicelist);
+		for (Section secl : Sectionlist) {
 
-				List<Choice> chlist = questionnairemapper.getParentChoice(ques);
-				for (Choice c : chlist) {
-					ques.setConditional_choiceid(Integer.parseInt(c.getChoice_id()));
-					List<Question> QuestionList1 = questionnairemapper.getallsubQuestions(ques);
-					for (Question ques1 : QuestionList1) {
+			List<Group> Grouplist = questionnairemapper.getallGroups(secl);
+			for (Group grp : Grouplist) {
+				grp.setGroup_id(grp.getGroup_id());
+				List<Question> QuestionList = questionnairemapper.getallQuestions(grp);
 
-						List<Choice> choicelist4 = questionnairemapper.getchoicesforquestion(group.getGuid(),
-								ques1.getClient_id(), ques1.getAudit_group_id(), ques1.getAudit_type_id(),
-								ques1.getQuestion_no(), ques1.getChoice_pat_id());
-						ques1.getChoiceList().addAll(choicelist4);
+				for (Question ques : QuestionList) {
+					List<Choice> choicelist = questionnairemapper.getchoicesforquestion(grp.getGuid(),
+							ques.getClient_id(), ques.getAudit_group_id(), ques.getAudit_type_id(),
+							ques.getQuestion_no(), ques.getChoice_pat_id());
+					ques.getChoiceList().addAll(choicelist);
+
+					List<Choice> chlist = questionnairemapper.getParentChoice(ques);
+					for (Choice c : chlist) {
+						ques.setConditional_choiceid(Integer.parseInt(c.getChoice_id()));
+						List<Question> QuestionList1 = questionnairemapper.getallsubQuestions(ques);
+						for (Question ques1 : QuestionList1) {
+
+							List<Choice> choicelist4 = questionnairemapper.getchoicesforquestion(secl.getGuid(),
+									ques1.getClient_id(), ques1.getAudit_group_id(), ques1.getAudit_type_id(),
+									ques1.getQuestion_no(), ques1.getChoice_pat_id());
+							ques1.getChoiceList().addAll(choicelist4);
+						}
+
+						c.getQuestionlist().addAll(QuestionList1);
+
 					}
 
-					c.getQuestionlist().addAll(QuestionList1);
+					ques.getSublist().addAll(chlist);
 
 				}
-
-				ques.getSublist().addAll(chlist);
-
+				grp.getQuestionList().addAll(QuestionList);
 			}
-			grp.getQuestionList().addAll(QuestionList);
+			secl.getGroupList().addAll(Grouplist);
 		}
 
-		return Grouplist;
+		return Sectionlist;
 	}
 
 	@Override
@@ -397,7 +437,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		int i = 0;
 		String choice_pattern = "";
 		String choice_type = "";
-		String guid=choices.get(0).getGuid();
+		String guid = choices.get(0).getGuid();
 		for (Choice cho : choices) {
 
 			choice_type = cho.getChoice_type();
@@ -408,7 +448,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			}
 		}
 
-		return (questionnairemapper.ischoicePatternExits(guid, choice_pattern, choice_type)) > 0 ? true : false;	}
+		return (questionnairemapper.ischoicePatternExits(guid, choice_pattern, choice_type)) > 0 ? true : false;
+	}
 
 	@Override
 	public int addCustomChoice(List<Choice> choices) {
@@ -416,7 +457,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		String choice_pattern = "";
 		String choice_type = "";
 		int choice_pat_id = 0;
-		String guid=choices.get(0).getGuid();
+		String guid = choices.get(0).getGuid();
 		choice_pat_id = questionnairemapper.generateChoicepatid(guid);
 		for (Choice cho : choices) {
 			cho.setChoice_pat_id(choice_pat_id);

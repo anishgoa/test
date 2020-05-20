@@ -23,11 +23,11 @@ public interface SetupService {
 
 	public boolean isCompanyExists(Company company);
 
-	public String addCompany(Company company);
+	public Company addCompany(Company company);
 
 	public boolean isCompanyExistInDB(Company company);
 
-	public String updateCompany(Company company);
+	public Company updateCompany(Company company);
 
 	public void companyReOrder(Company company);
 
@@ -43,13 +43,13 @@ public interface SetupService {
 
 	public boolean isAuditNameExist(AuditName auditname);
 
-	public String addAuditName(AuditName auditname);
+	public AuditName addAuditName(AuditName auditname);
 
 	public void addAuditNameOrder(AuditName auditname);
 
 	public boolean isAuditNameExistInDB(AuditName auditname);
 
-	public String updateAuditName(AuditName auditname);
+	public AuditName updateAuditName(AuditName auditname);
 
 	public List<ActionPlanAssignee> getCompanyAssigneeList(Company company);
 
@@ -100,5 +100,8 @@ public interface SetupService {
 	public String PreTemplates(PreTemplates preTemplates);
 
 	public int createPreTemplate(PreTemplates preTemplates);
+
+	public int cloneAuditName(PreTemplates preTemplates);
+
 	
 }

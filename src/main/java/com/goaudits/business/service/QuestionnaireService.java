@@ -37,7 +37,7 @@ public interface QuestionnaireService {
 
 	List<Choice> getchoicepatterens(String guid);
 
-	List<Group> getQuestions(Group group);
+	List<Section> getQuestions(Section sec);
 
 	boolean isConditionalChoiceQuestionExist(List<Question> question);
 
@@ -68,6 +68,8 @@ public interface QuestionnaireService {
 	List<Previewchoice> getPreviewchoice(Previewchoice previchoice);
 
 	int getQuestionAudit(Question question);
+
+	List<Section> getUserQuestions(Section section);
 
 
 

@@ -10,6 +10,8 @@ import com.goaudits.business.entity.ActionPlanAssignee;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.Choice;
 import com.goaudits.business.entity.Company;
+import com.goaudits.business.entity.EmailMessage;
+import com.goaudits.business.entity.EmailSubject;
 import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.Group;
 import com.goaudits.business.entity.Location;
@@ -17,8 +19,10 @@ import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
 import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.Report;
+import com.goaudits.business.entity.ReportImage;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.Section;
+import com.goaudits.business.mapper.QuestionnaireMapper;
 import com.goaudits.business.mapper.SetupMapper;
 import com.goaudits.business.service.SetupService;
 import com.goaudits.business.util.Utils;
@@ -57,7 +61,7 @@ public class SetupServiceImpl implements SetupService {
 	}
 
 	@Override
-	public String addCompany(Company company) {
+	public Company addCompany(Company company) {
 
 		byte[] clientimage = null;
 		String[] imagesrc = null;
@@ -72,16 +76,16 @@ public class SetupServiceImpl implements SetupService {
 			}
 		}
 
-		String client_id = setupmapper.addOrUpdateCompany(company);
+		Company compy = setupmapper.addOrUpdateCompany(company);
 		List<ActionPlanAssignee> actionlist = company.getActionlist();
 
 		for (ActionPlanAssignee act : actionlist) {
 
 			act.setGuid(company.getGuid());
-			act.setClient_id(client_id);
+			act.setClient_id(compy.getClient_id());
 			setupmapper.insertActionemailforCompany(act);
 		}
-		return client_id;
+		return compy;
 	}
 
 	@Override
@@ -92,7 +96,7 @@ public class SetupServiceImpl implements SetupService {
 	}
 
 	@Override
-	public String updateCompany(Company company) {
+	public Company updateCompany(Company company) {
 
 		byte[] clientimage = null;
 		String[] imagesrc = null;
@@ -107,17 +111,17 @@ public class SetupServiceImpl implements SetupService {
 			}
 		}
 
-		String client_id = setupmapper.addOrUpdateCompany(company);
+		Company compy = setupmapper.addOrUpdateCompany(company);
 
 		List<ActionPlanAssignee> actionlist = company.getActionlist();
 		setupmapper.deleteActionemailCompany(company.getGuid(), company.getClient_id());
 		for (ActionPlanAssignee act : actionlist) {
 
 			act.setGuid(company.getGuid());
-			act.setClient_id(client_id);
+			act.setClient_id(compy.getClient_id());
 			setupmapper.insertActionemailforCompany(act);
 		}
-		return client_id;
+		return compy;
 	}
 
 	@Override
@@ -191,7 +195,7 @@ public class SetupServiceImpl implements SetupService {
 
 	@Override
 	public List<LocationTags> getTagsBasedonLocation(String guid, String uid, String clientid, String store_id) {
-		return setupmapper.getTagsBasedonLocation(guid, uid,clientid, store_id);
+		return setupmapper.getTagsBasedonLocation(guid, uid, clientid, store_id);
 	}
 
 	@Override
@@ -201,18 +205,18 @@ public class SetupServiceImpl implements SetupService {
 	}
 
 	@Override
-	public String addAuditName(AuditName auditname) {
-		String audit_type_id = setupmapper.insertUpdateAuditName(auditname);
+	public AuditName addAuditName(AuditName auditname) {
+		AuditName AudName = setupmapper.insertUpdateAuditName(auditname);
 
 		List<ActionPlanAssignee> actionlist = auditname.getActionlist();
 		for (ActionPlanAssignee act : actionlist) {
 
 			act.setGuid(auditname.getGuid());
 			act.setClient_id(auditname.getClient_id());
-			act.setAudit_type_id(audit_type_id);
+			act.setAudit_type_id(AudName.getAudit_type_id());
 			setupmapper.insertActionemailAuditName(act);
 		}
-		return audit_type_id;
+		return AudName;
 	}
 
 	@Override
@@ -226,18 +230,18 @@ public class SetupServiceImpl implements SetupService {
 	}
 
 	@Override
-	public String updateAuditName(AuditName auditname) {
+	public AuditName updateAuditName(AuditName auditname) {
 
-		String audit_type_id = setupmapper.insertUpdateAuditName(auditname);
+		AuditName AudName = setupmapper.insertUpdateAuditName(auditname);
 		List<ActionPlanAssignee> actionlist = auditname.getActionlist();
 		setupmapper.deleteActionemailAuditName(auditname);
 		for (ActionPlanAssignee act : actionlist) {
 			act.setGuid(auditname.getGuid());
 			act.setClient_id(auditname.getClient_id());
-			act.setAudit_type_id(audit_type_id);
+			act.setAudit_type_id(AudName.getAudit_type_id());
 			setupmapper.insertActionemailAuditName(act);
 		}
-		return audit_type_id;
+		return AudName;
 	}
 
 	@Override
@@ -330,7 +334,15 @@ public class SetupServiceImpl implements SetupService {
 	@Override
 	public List<EmailTemplate> getEmailTemplates(EmailTemplate emailtemplate) {
 
-		return setupmapper.getEmailTemplates(emailtemplate);
+		List<EmailTemplate> emailList = setupmapper.getEmailTemplates(emailtemplate);
+		for (EmailTemplate e : emailList) {
+			List<EmailSubject> emailSubList = setupmapper.getEmailSubject(emailtemplate);
+			e.getEmailSubjectList().addAll(emailSubList);
+			List<EmailMessage> emailMsgList = setupmapper.getEmailMessage(emailtemplate);
+			e.getEmailMessageList().addAll(emailMsgList);
+		}
+
+		return emailList;
 	}
 
 	@Override
@@ -436,13 +448,21 @@ public class SetupServiceImpl implements SetupService {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return setupmapper.UpdateReport(report);
 	}
 
 	@Override
 	public List<Report> getReporttemplates(String guid) {
-		return setupmapper.getReportTemplates(guid);
+		
+		List<Report> ReportList= setupmapper.getReportTemplates(guid);
+		for(Report r:ReportList) {
+		List<ReportImage>	imageList=setupmapper.getReportImages(r.getTemplate_id());
+		r.getReportImageList().addAll(imageList);
+		
+		}
+		
+		return ReportList;
 	}
 
 	@Override
@@ -462,7 +482,7 @@ public class SetupServiceImpl implements SetupService {
 
 	@Override
 	public int getPretempletQuestionscount(int client_id, int audit_type_id) {
-		return setupmapper.getPretempletQuestionscount(client_id,audit_type_id);
+		return setupmapper.getPretempletQuestionscount(client_id, audit_type_id);
 	}
 
 	@Override
@@ -484,9 +504,9 @@ public class SetupServiceImpl implements SetupService {
 				List<Question> QuestionList = setupmapper.getallQuestions(group);
 
 				for (Question ques : QuestionList) {
-					List<Choice> choicelist = setupmapper.getchoicesforquestion(group.getGuid(),
-							ques.getClient_id(), ques.getAudit_group_id(), ques.getAudit_type_id(),
-							ques.getQuestion_no(), ques.getChoice_pat_id());
+					List<Choice> choicelist = setupmapper.getchoicesforquestion(group.getGuid(), ques.getClient_id(),
+							ques.getAudit_group_id(), ques.getAudit_type_id(), ques.getQuestion_no(),
+							ques.getChoice_pat_id());
 					ques.getChoiceList().addAll(choicelist);
 
 				}
@@ -496,8 +516,8 @@ public class SetupServiceImpl implements SetupService {
 			sec.getGroupList().addAll(Grouplist);
 		}
 
-		return Sectionlist;	
-		
+		return Sectionlist;
+
 	}
 
 	@Override
@@ -512,9 +532,23 @@ public class SetupServiceImpl implements SetupService {
 
 	@Override
 	public int createPreTemplate(PreTemplates preTemplates) {
-		
+
 		return setupmapper.createPreTemplate(preTemplates);
-		
+
+	}
+
+	@Override
+	public int cloneAuditName(PreTemplates preTemplates) {
+		String clientIds[] = preTemplates.getClient_id().split(",");
+
+		for (int i = 0; i < clientIds.length; i++) {
+
+			preTemplates.setClient_id(clientIds[i]);
+			setupmapper.cloneAuditName(preTemplates);
+
+		}
+
+		return 1;
 	}
 
 }

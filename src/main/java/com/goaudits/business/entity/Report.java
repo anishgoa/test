@@ -1,6 +1,8 @@
 package com.goaudits.business.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -32,7 +34,8 @@ public class Report implements Serializable{
     private String template_params_id;
     private String leftlogo;
     private byte[] leftlogobi;
-    
+    private String template_descrition;
+    List<ReportImage> reportImageList=new ArrayList<ReportImage>();
 	public String getTemplate_desc() {
 		return template_desc;
 	}
@@ -175,6 +178,30 @@ public class Report implements Serializable{
 	}
 	public void setLeftlogobi(byte[] leftlogobi) {
 		this.leftlogobi = leftlogobi;
+	}
+	/**
+	 * @return the template_descrition
+	 */
+	public String getTemplate_descrition() {
+		return template_descrition;
+	}
+	/**
+	 * @param template_descrition the template_descrition to set
+	 */
+	public void setTemplate_descrition(String template_descrition) {
+		this.template_descrition = template_descrition;
+	}
+	/**
+	 * @return the reportImageList
+	 */
+	public List<ReportImage> getReportImageList() {
+		return reportImageList;
+	}
+	/**
+	 * @param reportImageList the reportImageList to set
+	 */
+	public void setReportImageList(List<ReportImage> reportImageList) {
+		this.reportImageList = reportImageList;
 	}
 
 

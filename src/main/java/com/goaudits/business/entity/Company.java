@@ -24,6 +24,8 @@ public class Company {
 	private boolean company_clone;
 	private int count;
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
+	private List<AuditName> audarry = new ArrayList<AuditName>();
+
 
 	public List<ActionPlanAssignee> getActionlist() {
 		return actionlist;
@@ -159,6 +161,14 @@ public class Company {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public List<AuditName> getAudarry() {
+		return audarry;
+	}
+
+	public void setAudarry(List<AuditName> audarry) {
+		this.audarry = audarry;
 	}
 
 

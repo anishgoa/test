@@ -47,6 +47,8 @@ public class AuditName implements Serializable {
     private boolean hide_signature_app;
     private int count;
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
+	private List<Location> strarry = new ArrayList<Location>();
+
 
 	public int getDrag_index() {
 		return drag_index;
@@ -326,6 +328,14 @@ public class AuditName implements Serializable {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public List<Location> getStrarry() {
+		return strarry;
+	}
+
+	public void setStrarry(List<Location> strarry) {
+		this.strarry = strarry;
 	}
 	
 	

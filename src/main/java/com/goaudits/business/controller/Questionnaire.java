@@ -34,6 +34,14 @@ public class Questionnaire {
 
 	@Autowired
 	private S3Service s3Service;
+	
+	@RequestMapping(value = "/prequestionaudit", method = RequestMethod.POST)
+	public ResponseEntity<List<Section>> getPreQuestionsaudit(@RequestBody Section section) {
+		
+		List<Section> sectionlist = QuestionnaireService.getUserQuestions(section);
+		return new ResponseEntity<List<Section>>(sectionlist, HttpStatus.OK);
+
+	}
 
 	@RequestMapping(value = "/section/list", method = RequestMethod.POST)
 	public ResponseEntity<List<Section>> getSection(@RequestBody Section section) {
@@ -158,9 +166,9 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/question/list", method = RequestMethod.POST)
-	public ResponseEntity<List<Group>> getQuestions(Group group) {
-		List<Group> grouplist = QuestionnaireService.getQuestions(group);
-		return new ResponseEntity<List<Group>>(grouplist, HttpStatus.OK);
+	public ResponseEntity<List<Section>> getQuestions(@RequestBody Section sec) {
+		List<Section> grouplist = QuestionnaireService.getQuestions(sec);
+		return new ResponseEntity<List<Section>>(grouplist, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/question/add", method = RequestMethod.POST)

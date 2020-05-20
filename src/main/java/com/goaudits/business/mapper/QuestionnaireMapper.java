@@ -30,7 +30,7 @@ public interface QuestionnaireMapper {
 	@Select("SELECT * FROM GA_SECTION_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND SECTION_NAME=#{section_name} ")
 	Section isSectionExist(Section section);
 
-	@Insert(value = "{ CALL SP_GA_UPDATE_SECTION_DETV2( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER},#{audit_group_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER },"
+	@Select(value = "{ CALL SP_GA_UPDATE_SECTION_DETV2( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER},#{audit_group_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER },"
 			+ "#{section_id, mode=IN, jdbcType=INTEGER },#{section_name, mode=IN, jdbcType=VARCHAR }, #{active, mode=IN, jdbcType=BOOLEAN },#{section_help, mode=IN, jdbcType=VARCHAR },#{help_color, mode=IN, jdbcType=VARCHAR },#{is_help_bold, mode=IN, jdbcType=BOOLEAN },#{is_help_italic, mode=IN, jdbcType=BOOLEAN },#{help_text_position, mode=IN, jdbcType=BOOLEAN} )}")
 	int addOrUpdateSection(Section section);
 
@@ -46,7 +46,7 @@ public interface QuestionnaireMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	int deleteGroup(Group group);
 
-	@Insert(value = "{CALL SP_GA_UPDATE_GROUP_DET(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
+	@Select(value = "{CALL SP_GA_UPDATE_GROUP_DET(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
 			+ "#{section_id, mode=IN, jdbcType=INTEGER},#{group_id, mode=IN, jdbcType=INTEGER},#{group_name, mode=IN, jdbcType=VARCHAR},#{active, mode=IN, jdbcType=BOOLEAN})}")
 	@Options(statementType = StatementType.CALLABLE)
 	int addOrUpdateGroup(Group group);
@@ -65,10 +65,17 @@ public interface QuestionnaireMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	List<Choice> getChoicesforPattern(@Param("guid") String guid,@Param("choicepatid") int choicepatid);
 
+	
 	@Select(value = "{CALL SP_GA_GETGROUP_DET_PV2(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
 			+ "#{section_id, mode=IN, jdbcType=INTEGER})}")
 	@Options(statementType = StatementType.CALLABLE)
-	List<Group> getallGroups(Group group);
+	List<Group> getallGroupspre(Group grp);
+
+	
+	@Select(value = "{CALL SP_GA_GETGROUP_DET_PV2(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
+			+ "#{section_id, mode=IN, jdbcType=INTEGER})}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Group> getallGroups(Section sec);
 
 	@Select(value = "{CALL SP_GA_GETQUESTION_DET_PV2( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER},#{audit_group_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER}, #{section_id, mode=IN, jdbcType=INTEGER}, #{group_id, mode=IN, jdbcType=INTEGER},#{active, mode=IN, jdbcType=BOOLEAN} )}")
 	@Options(statementType = StatementType.CALLABLE)
@@ -192,4 +199,9 @@ public interface QuestionnaireMapper {
 	@Select("SELECT COUNT(*) FROM GA_QUESTION_DT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND SECTION_ID=#{section_id} AND GROUP_ID=#{group_id} AND QUESTION_NO=#{question_no}")
 	int getQuestionAudit(Question question);
 
+	@Select("SELECT * FROM GA_SECTION_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id}")
+	List<Section> getUserSections(Section section);
+
+	@Select("SELECT * FROM GA_SECTION_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id}")
+	List<Section> getSectionList(Section sec);
 }

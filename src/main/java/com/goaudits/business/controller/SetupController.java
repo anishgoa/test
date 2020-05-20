@@ -59,12 +59,15 @@ public class SetupController {
 					HttpStatus.CONFLICT);
 		} else {
 			try {
-				String client_id = setupservice.addCompany(company);
+				Company comp = setupservice.addCompany(company);
 				List<Company> companyList = new ArrayList<Company>();
-				company.setClient_id(client_id);
+				company.setClient_id(comp.getClient_id());
+				company.setLogo(comp.getLogo());
 				companyList.add(company);
 				return new ResponseEntity<List<Company>>(companyList, HttpStatus.CREATED);
 			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e.getMessage());
 				return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
 			}
 		}
@@ -75,9 +78,8 @@ public class SetupController {
 
 		if (!setupservice.isCompanyExistInDB(company)) {
 			try {
-				String client_id = setupservice.updateCompany(company);
+				setupservice.updateCompany(company);
 				List<Company> companyList = new ArrayList<Company>();
-				company.setClient_id(client_id);
 				companyList.add(company);
 				return new ResponseEntity<List<Company>>(companyList, HttpStatus.OK);
 			} catch (Exception e) {
@@ -106,10 +108,10 @@ public class SetupController {
 			return new ResponseEntity<>(new GoAuditsException(valid[1]), HttpStatus.CONFLICT);
 		} else {
 			setupservice.cloneCompanies(PreTemplates);
-			List<PreTemplates> preList=new ArrayList<PreTemplates>();
-			
+			List<PreTemplates> preList = new ArrayList<PreTemplates>();
+
 			preList.add(PreTemplates);
-			return new ResponseEntity<List<PreTemplates>>(preList,HttpStatus.CREATED);
+			return new ResponseEntity<List<PreTemplates>>(preList, HttpStatus.CREATED);
 		}
 
 	}
@@ -233,12 +235,15 @@ public class SetupController {
 					HttpStatus.CONFLICT);
 		}
 		try {
-			String audit_type_id = setupservice.addAuditName(auditname);
-			auditname.setAudit_type_id(audit_type_id);
+			AuditName AudName = setupservice.addAuditName(auditname);
+			auditname.setAudit_type_id(AudName.getAudit_type_id());
+			auditname.setLogo(AudName.getLogo());
 			List<AuditName> auditNameList = new ArrayList<AuditName>();
 			auditNameList.add(auditname);
 			return new ResponseEntity<List<AuditName>>(auditNameList, HttpStatus.CREATED);
 		} catch (Exception e) {
+			e.printStackTrace();
+
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -255,8 +260,8 @@ public class SetupController {
 	public ResponseEntity<?> updateAuditName(@RequestBody AuditName auditname) {
 		if (!setupservice.isAuditNameExistInDB(auditname)) {
 			try {
-				String audit_type_id = setupservice.updateAuditName(auditname);
-				auditname.setAudit_type_id(audit_type_id);
+				AuditName AudName = setupservice.updateAuditName(auditname);
+				auditname.setAudit_type_id(AudName.getAudit_type_id());
 				List<AuditName> auditNameList = new ArrayList<AuditName>();
 				auditNameList.add(auditname);
 				return new ResponseEntity<List<AuditName>>(auditNameList, HttpStatus.OK);
@@ -269,6 +274,28 @@ public class SetupController {
 		return new ResponseEntity<>(new GoAuditsException("Auditname cannot be updated, already exists"),
 				HttpStatus.NOT_FOUND);
 	}
+
+	@RequestMapping(value = "/cloneauditname", method = RequestMethod.POST)
+	public ResponseEntity<?> cloneAuditname(@RequestBody PreTemplates PreTemplates) {
+
+		String valid[] = setupservice.PreTemplates(PreTemplates).split("---@%");
+		if (PreTemplates.isValidate() && Integer.parseInt(valid[0]) > 0) {
+
+			return new ResponseEntity(new GoAuditsException(valid[1]), HttpStatus.CONFLICT);
+		} else {
+			try {
+				setupservice.cloneAuditName(PreTemplates);
+				List<PreTemplates> preList = new ArrayList<PreTemplates>();
+
+				preList.add(PreTemplates);
+				return new ResponseEntity<List<PreTemplates>>(preList, HttpStatus.CREATED);
+			} catch (Exception e) {
+				return new ResponseEntity(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+			}
+		}
+	}
+	
+	
 
 	@RequestMapping(value = "/getscorerange/{guid}/{client_id}/{audit_type_id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getScoreRange(@PathVariable String guid, @PathVariable String client_id,
@@ -287,9 +314,7 @@ public class SetupController {
 	public ResponseEntity<?> getEmailTemplates(@RequestBody EmailTemplate emailtemplate) {
 
 		List<EmailTemplate> emailTemplateList = setupservice.getEmailTemplates(emailtemplate);
-		if (emailTemplateList.isEmpty()) {
-			return new ResponseEntity<>(new GoAuditsException("Email templates are not found"), HttpStatus.NOT_FOUND);
-		}
+	
 		return new ResponseEntity<List<EmailTemplate>>(emailTemplateList, HttpStatus.OK);
 	}
 
@@ -329,12 +354,13 @@ public class SetupController {
 		List<Report> reportList = setupservice.getReporttemplates(guid);
 		return new ResponseEntity<List<Report>>(reportList, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/templateslist", method = RequestMethod.GET)
 	public ResponseEntity<List<Company>> getPreexistingtemplates() {
 		List<Company> templateslist = setupservice.getPreexistingTemplates();
 		return new ResponseEntity<List<Company>>(templateslist, HttpStatus.OK);
 	}
+
 	@RequestMapping(value = "/preclient/{client_id}", method = RequestMethod.GET)
 	public ResponseEntity<List<AuditName>> getPreAuditnames(@PathVariable int client_id) {
 		List<AuditName> auditnamelist = setupservice.getPreAuditnames(client_id);
@@ -346,18 +372,18 @@ public class SetupController {
 		List<AuditName> auditnamelist = setupservice.getAllPreAuditnames();
 		return new ResponseEntity<List<AuditName>>(auditnamelist, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/prequestion/count/{client_id}/{audit_type_id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getPreQuestionscount(@PathVariable int client_id, @PathVariable int audit_type_id) {
 
 		int count = setupservice.getPretempletQuestionscount(client_id, audit_type_id);
-		Company cmp=new Company();
+		Company cmp = new Company();
 		cmp.setCount(count);
-		List<Company> companyList=new ArrayList<Company>();
+		List<Company> companyList = new ArrayList<Company>();
 		companyList.add(cmp);
 		return new ResponseEntity<List<Company>>(companyList, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/prequestion/{client_id}/{audit_type_id}", method = RequestMethod.GET)
 	public ResponseEntity<List<Section>> getPreQuestions(@PathVariable int client_id, @PathVariable int audit_type_id) {
 		Section section = new Section();
@@ -366,10 +392,10 @@ public class SetupController {
 		List<Section> sectionlist = setupservice.getPretempletQuestions(section);
 		return new ResponseEntity<List<Section>>(sectionlist, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/pretemplate/add", method = RequestMethod.POST)
 	public ResponseEntity<?> addpreTemplate(@RequestBody PreTemplates PreTemplates) {
-		
+
 		String valid[] = setupservice.PreTemplates(PreTemplates).split("---@%");
 		if (Integer.parseInt(valid[0]) > 0) {
 			return new ResponseEntity<>(new GoAuditsException("Template cannot be created, already exists"),
@@ -377,15 +403,12 @@ public class SetupController {
 		}
 		try {
 			setupservice.createPreTemplate(PreTemplates);
-			List<PreTemplates> templatesList=new ArrayList<PreTemplates>();
+			List<PreTemplates> templatesList = new ArrayList<PreTemplates>();
 			templatesList.add(PreTemplates);
 			return new ResponseEntity<List<PreTemplates>>(templatesList, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
-
-
-	
 
 }

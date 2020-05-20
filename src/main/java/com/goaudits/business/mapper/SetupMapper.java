@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.goaudits.business.entity.ActionPlanAssignee;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.Company;
+import com.goaudits.business.entity.EmailMessage;
+import com.goaudits.business.entity.EmailSubject;
 import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.Group;
 import com.goaudits.business.entity.Location;
@@ -21,6 +23,7 @@ import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
 import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.Report;
+import com.goaudits.business.entity.ReportImage;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.Section;
 import com.goaudits.business.entity.User;
@@ -53,7 +56,7 @@ public interface SetupMapper {
 	@Transactional(rollbackFor = Exception.class)
 	@Select(value = "{ CALL SP_GA_UPDATE_CLIENT_DET_PV3( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{client_name, mode=IN, jdbcType=VARCHAR },"
 			+ "#{submit_button_text, mode=IN, jdbcType=VARCHAR }, #{logo, mode=IN, jdbcType=LONGVARCHAR }, #{active, mode=IN, jdbcType=BOOLEAN },#{logo_binary, mode=IN, jdbcType=BOOLEAN },#{uid, mode=IN, jdbcType=BINARY},#{short_name,mode=IN, jdbcType=VARCHAR} )}")
-	String addOrUpdateCompany(Company company);
+	Company addOrUpdateCompany(Company company);
 
 	@Select("SELECT count(*) FROM GA_CLIENT_MT WHERE GUID=#{guid} AND CLIENT_NAME=#{client_name} AND CLIENT_ID!=#{client_id}")
 	int getEditCompanyCount(Company company);
@@ -98,8 +101,8 @@ public interface SetupMapper {
 
 	@Select(value = "{ CALL SP_GA_GETTAGSFORLOCATION_DET( #{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{store_id, mode=IN, jdbcType=INTEGER} )}")
 	@Options(statementType = StatementType.CALLABLE)
-	List<LocationTags> getTagsBasedonLocation(@Param("guid") String guid, @Param("uid") String uid,@Param("client_id") String client_id,
-			@Param("store_id") String store_id);
+	List<LocationTags> getTagsBasedonLocation(@Param("guid") String guid, @Param("uid") String uid,
+			@Param("client_id") String client_id, @Param("store_id") String store_id);
 
 	@Select("SELECT * FROM GA_AUDITTYPE_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_NAME=#{audit_type_name}")
 	AuditName getAuditnameDetailsByCompany(@Param("guid") String guid, @Param("client_id") String client_id,
@@ -110,7 +113,7 @@ public interface SetupMapper {
 			+ "#{audit_type_name, mode=IN, jdbcType=VARCHAR },#{logo, mode=IN, jdbcType=LONGVARCHAR }, #{active, mode=IN, jdbcType=BOOLEAN },#{uid,mode=IN,jdbcType=BOOLEAN},"
 			+ "#{signature1_label, mode=IN, jdbcType=VARCHAR },#{signature2_label, mode=IN, jdbcType=VARCHAR },#{signature3_label, mode=IN, jdbcType=VARCHAR },#{sign1_flag,mode=IN,jdbcType=BOOLEAN},#{sign2_flag,mode=IN,jdbcType=BOOLEAN},#{sign3_flag,mode=IN,jdbcType=BOOLEAN},"
 			+ "#{is_man_sign1,mode=IN,jdbcType=BOOLEAN},#{is_man_sign2,mode=IN,jdbcType=BOOLEAN},#{is_man_sign3,mode=IN,jdbcType=BOOLEAN},#{person_seen,mode=IN,jdbcType=VARCHAR},#{person_seen_mandatory,mode=IN,jdbcType=BOOLEAN},#{showif_optional,mode=IN,jdbcType=BOOLEAN},#{audit_type_title,mode=IN,jdbcType=VARCHAR},#{hide_signature_app,mode=IN,jdbcType=BOOLEAN})}")
-	String insertUpdateAuditName(AuditName auditname);
+	AuditName insertUpdateAuditName(AuditName auditname);
 
 	@Update(value = "{CALL SP_GA_UPDATE_AUDITTYPE_ORDER_DET(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{drag_index, mode=IN, jdbcType=INTEGER},"
 			+ "#{drop_index, mode=IN, jdbcType=INTEGER})}")
@@ -228,5 +231,20 @@ public interface SetupMapper {
 	@Transactional(rollbackFor = Exception.class)
 	@Insert(value = "CALL SP_SETUP_DEFAULT_TEMPLATEADMIN_MT_PV2(#{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=VARCHAR}, #{pre_client_id, mode=IN, jdbcType=INTEGER}, #{pre_audit_type_id, mode=IN, jdbcType=INTEGER})")
 	int createPreTemplate(PreTemplates preTemplates);
+
+	@Transactional(rollbackFor = Exception.class)
+	@Insert(value = "CALL SP_SETUP_CLONE_AUDITNAME(#{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{pre_client_id, mode=IN, jdbcType=INTEGER},"
+			+ " #{pre_audit_type_id, mode=IN, jdbcType=INTEGER},#{pre_audit_type_name, mode=IN, jdbcType=VARCHAR})")
+	int cloneAuditName(PreTemplates preTemplates);
+
+	@Select("SELECT VARIABLE_NAME as subject_name,VARIABLE_VALUE as subject_variables  FROM GA_EMAILDIST_VARIABLE_MT WHERE VARIABLE_TYPE=1 AND ACTIVE=1 ")
+	List<EmailSubject> getEmailSubject(EmailTemplate emailtemplate);
+
+	@Select(value = "{ CALL SP_GA_GETEMAILMESSAGEVARIABLES_DET(#{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER} ) }")
+	@Options(statementType = StatementType.CALLABLE)
+	List<EmailMessage> getEmailMessage(EmailTemplate emailtemplate);
+
+	@Select("SELECT * FROM GA_REPORTMPLIMAGE_MT WHERE TEMPLATE_ID=#{template_id}")
+	List<ReportImage> getReportImages(int template_id);
 
 }

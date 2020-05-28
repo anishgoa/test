@@ -7,10 +7,8 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 @Repository
-//@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
-public class Choice  implements Serializable {
+public class Choice {
 
-	private static final long serialVersionUID = 1L;
 	
 	String guid;
 	int choice_pat_id;
@@ -31,6 +29,8 @@ public class Choice  implements Serializable {
 	String short_text;
 	String image_mandatory;
 	String comment_mandatory;
+	int created_choice_id;
+	boolean is_custom;
 	
 	private List<Question> questionlist = new ArrayList<Question>();
 	
@@ -153,6 +153,30 @@ public class Choice  implements Serializable {
 	}
 	public void setComment_mandatory(String comment_mandatory) {
 		this.comment_mandatory = comment_mandatory;
+	}
+	/**
+	 * @return the created_choice_id
+	 */
+	public int getCreated_choice_id() {
+		return created_choice_id;
+	}
+	/**
+	 * @param created_choice_id the created_choice_id to set
+	 */
+	public void setCreated_choice_id(int created_choice_id) {
+		this.created_choice_id = created_choice_id;
+	}
+	/**
+	 * @return the is_custom
+	 */
+	public boolean isIs_custom() {
+		return is_custom;
+	}
+	/**
+	 * @param is_custom the is_custom to set
+	 */
+	public void setIs_custom(boolean is_custom) {
+		this.is_custom = is_custom;
 	}
 	
 	

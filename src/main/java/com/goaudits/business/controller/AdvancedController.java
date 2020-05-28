@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Personseen;
 import com.goaudits.business.entity.Tag;
+import com.goaudits.business.entity.User;
 import com.goaudits.business.service.AdvancedService;
 import com.goaudits.business.util.GoAuditsException;
 
@@ -52,8 +54,6 @@ public class AdvancedController {
 		pseenList.add(pseen);
 		return new ResponseEntity<List<Personseen>>(pseenList, HttpStatus.OK);
 	}
-	
-
 
 	@RequestMapping(value = "/editpersonseen", method = RequestMethod.POST)
 	public ResponseEntity<?> editPersonSenn(@RequestBody Personseen pseen) {
@@ -73,14 +73,14 @@ public class AdvancedController {
 		return new ResponseEntity<List<Personseen>>(pseenList, HttpStatus.OK);
 	}
 
-	
 	@RequestMapping(value = "/reporttag/list", method = RequestMethod.POST)
 	public ResponseEntity<?> getReportTag(@RequestBody LocationTags tag) {
 
-		List<LocationTags> tagsList =  advancedservice.getReportTag(tag);
+		List<LocationTags> tagsList = advancedservice.getReportTag(tag);
 
 		return new ResponseEntity<List<LocationTags>>(tagsList, HttpStatus.OK);
 	}
+
 	@RequestMapping(value = "addtagcategory", method = RequestMethod.POST)
 	public ResponseEntity<?> addCategory(@RequestBody LocationTags loct) {
 
@@ -120,6 +120,55 @@ public class AdvancedController {
 		int addTag = advancedservice.addTag(loct);
 
 		return new ResponseEntity<Integer>(addTag, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/workflow", method = RequestMethod.POST)
+	public ResponseEntity<List<AuditWorkFlow>> getWorkFlowList(@RequestBody AuditWorkFlow workflow) {
+		List<AuditWorkFlow> workflowlist = advancedservice.getAuditWorkflowList(workflow);
+		return new ResponseEntity<List<AuditWorkFlow>>(workflowlist, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/getadmins", method = RequestMethod.POST)
+	public ResponseEntity<List<User>> geAdminList(@RequestBody AuditWorkFlow AuditWorkFlow) {
+		if (AuditWorkFlow.getStore_id() == "" || AuditWorkFlow.getStore_id().isEmpty()) {
+			AuditWorkFlow.setStore_id("0");
+		}
+
+		if (AuditWorkFlow.getAudit_type_id() == "" || AuditWorkFlow.getAudit_type_id().isEmpty()) {
+			AuditWorkFlow.setAudit_type_id("0");
+		}
+		List<User> adminlist = advancedservice.getAdminlist(AuditWorkFlow);
+		return new ResponseEntity<List<User>>(adminlist, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/workflow/add", method = RequestMethod.POST)
+	public ResponseEntity<?> addScheduleaudit(@RequestBody AuditWorkFlow AuditWorkFlow) {
+
+		int workflow = advancedservice.addWorkFlow(AuditWorkFlow);
+
+		List<AuditWorkFlow> wrkFlwList = new ArrayList<AuditWorkFlow>();
+		wrkFlwList.add(AuditWorkFlow);
+		return new ResponseEntity<List<AuditWorkFlow>>(wrkFlwList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/workflow/edit", method = RequestMethod.POST)
+	public ResponseEntity<?> editScheduleaudit(@RequestBody AuditWorkFlow AuditWorkFlow) {
+
+		int workflow = advancedservice.editWorkFlow(AuditWorkFlow);
+
+		List<AuditWorkFlow> wrkFlwList = new ArrayList<AuditWorkFlow>();
+		wrkFlwList.add(AuditWorkFlow);
+		return new ResponseEntity<List<AuditWorkFlow>>(wrkFlwList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/workflow/delete", method = RequestMethod.POST)
+	public ResponseEntity<?> deleteScheduleaudit(@RequestBody AuditWorkFlow AuditWorkFlow) {
+
+		int workflow = advancedservice.deleteWorkFlow(AuditWorkFlow);
+
+		List<AuditWorkFlow> wrkFlwList = new ArrayList<AuditWorkFlow>();
+		wrkFlwList.add(AuditWorkFlow);
+		return new ResponseEntity<List<AuditWorkFlow>>(wrkFlwList, HttpStatus.OK);
 	}
 
 }

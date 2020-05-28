@@ -19,6 +19,7 @@ import com.goaudits.business.entity.QuestionOrder;
 import com.goaudits.business.entity.Questionimage;
 import com.goaudits.business.entity.Section;
 import com.goaudits.business.entity.Tag;
+import com.goaudits.business.entity.User;
 
 @Mapper
 public interface QuestionnaireMapper {
@@ -54,7 +55,7 @@ public interface QuestionnaireMapper {
 	@Select("SELECT * FROM GA_GROUP_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND SECTION_ID=#{section_id} AND GROUP_NAME=#{group_name} ")
 	Group isGroupExist(Group group);
 
-	@Select("SELECT * FROM GA_GROUP_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND SECTION_ID=#{section_id} AND GROUP_ID!=#{group_id} AND GROUP_NAME=#{group_name} ")
+	@Select("SELECT COUNT(*) FROM GA_GROUP_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND SECTION_ID=#{section_id} AND GROUP_ID!=#{group_id} AND GROUP_NAME=#{group_name} ")
 	int isGroupExistInDB(Group group);
 
 	@Select(value = "{ CALL SP_GA_GETALLCHOICES_PV2( #{guid, mode=IN, jdbcType=BINARY} ) }")
@@ -173,10 +174,10 @@ public interface QuestionnaireMapper {
 	@Select(value = "{CALL SP_GA_GETGENERATEDCHOICEPATID_DET ( #{guid, mode=IN, jdbcType=BINARY})}")
 	int generateChoicepatid(String guid);
 
-	@Insert(value = "{CALL SP_GA_UPDATECUSTOMCHOICE_DET ( #{guid, mode=IN, jdbcType=BINARY}, #{choice_pat_id, mode=IN, jdbcType=INTEGER},#{choice_text, mode=IN, jdbcType=VARCHAR},#{choice_colour, mode=IN, jdbcType=VARCHAR})}")
+	@Select(value = "{CALL SP_GA_UPDATECUSTOMCHOICE_DET ( #{guid, mode=IN, jdbcType=BINARY}, #{choice_pat_id, mode=IN, jdbcType=INTEGER},#{choice_text, mode=IN, jdbcType=VARCHAR},#{choice_colour, mode=IN, jdbcType=VARCHAR})}")
 	int addCustomChoice(Choice cho);
 
-	@Insert("INSERT INTO GA_CHOICETYPE_MT_V2(GUID,CHOICE_PAT_ID,CHOICE_ID,CHOICE_TEXT,CHOICE_COLOUR,LAST_MODIFIED) VALUES (#{guid}, #{choice_pat_id} ,0,'Zero','000',now() )")
+	@Insert("REPLACE INTO GA_CHOICETYPE_MT_V2(GUID,CHOICE_PAT_ID,CHOICE_ID,CHOICE_TEXT,CHOICE_COLOUR,LAST_MODIFIED) VALUES (#{guid}, #{choice_pat_id} ,0,'Zero','000',now() )")
 	int addExtraChoice(@Param("guid") String guid, @Param("choice_pat_id") int choice_pat_id);
 
 	@Insert(value = "{CALL SP_GA_UPDATECUSTOMPATTERN_DET ( #{guid, mode=IN, jdbcType=BINARY}, #{choice_pat_id, mode=IN, jdbcType=INTEGER},#{choice_pattern, mode=IN, jdbcType=VARCHAR},#{choice_type, mode=IN, jdbcType=VARCHAR})}")
@@ -204,4 +205,16 @@ public interface QuestionnaireMapper {
 
 	@Select("SELECT * FROM GA_SECTION_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id}")
 	List<Section> getSectionList(Section sec);
+
+	@Select("SELECT FIRST_NAME,LAST_NAME,USER_NAME,UID FROM GA_USERDET_MT WHERE GUID=#{guid}  AND ACTIVE=1")
+	List<User> getAdminslist(String guid);
+
+	@Select("SELECT ENABLE_CLOUDINARY FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1")
+	String getCloudinaryFlag(String guid);
+
+	@Select("SELECT CHOICE_PAT_ID FROM GA_CHOICEPAT_MT_V2 WHERE GUID=#{guid} AND CHOICE_PATTERN=#{choice_pattern} AND CHOICE_TYPE=#{choice_type} LIMIT 1")
+	int getChoicePatId(@Param("guid")String guid,@Param("choice_pattern")String choice_pattern,@Param("choice_type") String choice_type);
+
+	@Select("SELECT CHOICE_ID AS CREATED_CHOICE_ID,CHOICE_TEXT,CHOICE_COLOUR,CHOICE_PAT_ID FROM GA_CHOICETYPE_MT_V2 WHERE GUID=#{guid} AND CHOICE_PAT_ID=#{choicepatid} AND CHOICE_ID!=0")
+	List<Choice> getChoicesforPatternForQues(@Param("guid")String guid,@Param("choicepatid") int choicepatid);
 }

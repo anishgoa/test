@@ -10,6 +10,7 @@ import com.goaudits.business.entity.QuestionOrder;
 import com.goaudits.business.entity.Questionimage;
 import com.goaudits.business.entity.Section;
 import com.goaudits.business.entity.Tag;
+import com.goaudits.business.entity.User;
 
 public interface QuestionnaireService {
 
@@ -70,6 +71,10 @@ public interface QuestionnaireService {
 	int getQuestionAudit(Question question);
 
 	List<Section> getUserQuestions(Section section);
+
+	List<User> getAdminslist(String guid);
+
+	String getCloudinaryFlag(String guid);
 
 
 

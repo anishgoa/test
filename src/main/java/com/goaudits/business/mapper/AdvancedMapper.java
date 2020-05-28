@@ -12,11 +12,13 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.mapping.StatementType;
 
 import com.goaudits.business.entity.AuditName;
+import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Personseen;
 import com.goaudits.business.entity.Tag;
+import com.goaudits.business.entity.User;
 
 @Mapper
 public interface AdvancedMapper {
@@ -83,4 +85,23 @@ public interface AdvancedMapper {
 	
 	@Select("SELECT * FROM GA_TAG_MT WHERE GUID=#{guid} AND CATEGORY_ID=#{category_id}")
 	List<LocationTags> getTagList(@Param("guid") String guid, @Param("category_id") int category_id);
+
+	@Select(value = "{ CALL SP_GA_GETAUDITWORKFLOW_DET( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY},#{type, mode=IN, jdbcType=BOOLEAN})}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<AuditWorkFlow> getAuditWorkflowList(AuditWorkFlow workflow);
+
+	@Select(value = "{ CALL SP_GA_GETADMINLIST_DET( #{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR},#{audit_type_id, mode=IN, jdbcType=VARCHAR},#{store_id, mode=IN, jdbcType=VARCHAR})}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<User> getAdminlist(AuditWorkFlow auditWorkFlow);
+
+	@Insert(value = "{ CALL SP_GA_ADDAUDITWORKFLOW_DET( #{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR},#{store_id, mode=IN, jdbcType=VARCHAR},#{audit_type_id, mode=IN, jdbcType=VARCHAR},#{assignee, mode=IN, jdbcType=VARCHAR}," +
+			"#{workflow_type, mode=IN, jdbcType=BOOLEAN},#{uuid, mode=IN, jdbcType=VARCHAR},#{signature_required, mode=IN, jdbcType=BOOLEAN})}")
+	@Options(statementType = StatementType.CALLABLE)
+	int addAuditWorkFlow(@Param("guid") String guid,@Param("client_id") String client_id,@Param("store_id") String store_id,@Param("audit_type_id") String audit_type_id,@Param("assignee") String assignee,
+			@Param("workflow_type") boolean workflow_type,@Param("uuid") String uuid,@Param("signature_required") boolean signature_required);
+
+	@Delete("DELETE FROM GA_WORKFLOW_DT WHERE UUID=#{uuid}")
+	int deleteAuditWorkFlow(@Param("uuid") String uuid);
+
+	
 }

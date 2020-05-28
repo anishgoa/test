@@ -3,9 +3,11 @@ package com.goaudits.business.service;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Personseen;
 import com.goaudits.business.entity.Tag;
+import com.goaudits.business.entity.User;
 
 public interface AdvancedService {
 
@@ -32,5 +34,16 @@ public interface AdvancedService {
 	int addTagCategory(LocationTags loct);
 
 	List<LocationTags> getReportTag(LocationTags tag);
+
+
+	List<AuditWorkFlow> getAuditWorkflowList(AuditWorkFlow workflow);
+
+	List<User> getAdminlist(AuditWorkFlow auditWorkFlow);
+
+	int addWorkFlow(AuditWorkFlow auditWorkFlow);
+
+	int editWorkFlow(AuditWorkFlow auditWorkFlow);
+
+	int deleteWorkFlow(AuditWorkFlow auditWorkFlow);
 
 }

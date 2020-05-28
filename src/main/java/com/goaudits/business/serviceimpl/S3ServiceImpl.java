@@ -42,24 +42,24 @@ public class S3ServiceImpl implements S3Service {
 		String folderpath = "";
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (s3.getPage().equals("client")) {
-			folderpath = "Companies/" + (String) session.getAttribute("GUID") + "/" + s3.getClient_id() + "/Branding";
+			folderpath = "Companies/" + s3.getGuid() + "/" + s3.getClient_id() + "/Branding";
 			params.put("public_id", s3.getClient_name());
 			params.put("use_filename", true);
 		}
 		if (s3.getPage().equals("auditname")) {
-			folderpath = "Companies/" + (String) session.getAttribute("GUID") + "/" + s3.getClient_id() + "/Branding/"
+			folderpath = "Companies/" + s3.getGuid() + "/" + s3.getClient_id() + "/Branding/"
 					+ s3.getAudit_type_id();
 			params.put("public_id", s3.getAudit_type_name());
 			params.put("use_filename", true);
 		}
 		if (s3.getPage().equals("question")) {
-			folderpath = "Companies/" + (String) session.getAttribute("GUID") + "/" + s3.getClient_id() + "/Branding/"
+			folderpath = "Companies/" + s3.getGuid() + "/" + s3.getClient_id() + "/Branding/"
 					+ s3.getAudit_type_id() + "/Question";
 			params.put("use_filename", false);
 
 		}
 		if (s3.getPage().equals("reportconfig")) {
-			folderpath = "Companies/" + (String) session.getAttribute("GUID") + "/" + s3.getClient_id() + "/Branding/"
+			folderpath = "Companies/" + s3.getGuid() + "/" + s3.getClient_id() + "/Branding/"
 					+ s3.getAudit_type_id() + "/report";
 			params.put("use_filename", true);
 
@@ -67,7 +67,7 @@ public class S3ServiceImpl implements S3Service {
 
 		if (s3.getPage().equals("user")) {
 
-			folderpath = "Companies/" + (String) session.getAttribute("GUID") + "/User";
+			folderpath = "Companies/" + s3.getGuid() + "/User";
 			params.put("use_filename", true);
 		}
 		if (s3.getPage().equals("followup")) {

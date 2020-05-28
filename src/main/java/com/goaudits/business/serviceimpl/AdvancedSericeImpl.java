@@ -7,13 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.goaudits.business.entity.AuditName;
+import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Personseen;
 import com.goaudits.business.entity.Tag;
+import com.goaudits.business.entity.User;
 import com.goaudits.business.mapper.AdvancedMapper;
 import com.goaudits.business.service.AdvancedService;
+import com.goaudits.business.util.Utils;
 
 @Service
 public class AdvancedSericeImpl implements AdvancedService {
@@ -258,5 +261,65 @@ public class AdvancedSericeImpl implements AdvancedService {
 		return tgsCaList;
 
 	}
+
+	@Override
+	public List<AuditWorkFlow> getAuditWorkflowList(AuditWorkFlow workflow) {
+		return advancedmapper.getAuditWorkflowList(workflow);
+	}
+
+	@Override
+	public List<User> getAdminlist(AuditWorkFlow auditWorkFlow) {
+		return advancedmapper.getAdminlist(auditWorkFlow);
+	}
+
+	@Override
+	public int addWorkFlow(AuditWorkFlow auditWorkFlow) {
+
+		String locations[]=auditWorkFlow.getStore_id().split(",");
+		String auditnames[]=auditWorkFlow.getAudit_type_id().split(",");
+		String assignees[]=auditWorkFlow.getAssignee().split(",");
+		for(int i=0;i<locations.length;i++){
+			for(int j=0;j<auditnames.length;j++){
+				for(int k=0;k<assignees.length;k++){
+					String uuid = String.valueOf(Utils.generateUID());
+					auditWorkFlow.setUuid(uuid);	
+					advancedmapper.addAuditWorkFlow(auditWorkFlow.getGuid(),auditWorkFlow.getClient_id(),locations[i],auditnames[j],assignees[k],auditWorkFlow.isWorkflow_type(),auditWorkFlow.getUuid(),auditWorkFlow.isSignature_required());
+				}	
+			}	
+		}
+		return 1;
+
+	}
+
+	@Override
+	public int editWorkFlow(AuditWorkFlow auditWorkFlow) {
+		advancedmapper.deleteAuditWorkFlow(auditWorkFlow.getEdituuid());
+		String locations[]=auditWorkFlow.getStore_id().split(",");
+		String auditnames[]=auditWorkFlow.getAudit_type_id().split(",");
+		String assignees[]=auditWorkFlow.getAssignee().split(",");
+		
+		for(int i=0;i<locations.length;i++){
+			
+			for(int j=0;j<auditnames.length;j++){
+				
+				for(int k=0;k<assignees.length;k++){
+					String uuid = String.valueOf(Utils.generateUID());
+					auditWorkFlow.setUuid(uuid);
+					advancedmapper.addAuditWorkFlow(auditWorkFlow.getGuid(),auditWorkFlow.getClient_id(),locations[i],auditnames[j],assignees[k],auditWorkFlow.isWorkflow_type(),auditWorkFlow.getUuid(),auditWorkFlow.isSignature_required());
+				}
+								
+			}
+			
+		}
+		
+		return 1;
+	}
+
+	@Override
+	public int deleteWorkFlow(AuditWorkFlow auditWorkFlow) {
+		return advancedmapper.deleteAuditWorkFlow(auditWorkFlow.getUuid());
+	}
+
+
 
 }

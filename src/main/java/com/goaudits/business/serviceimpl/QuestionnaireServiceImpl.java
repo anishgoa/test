@@ -1,6 +1,7 @@
 package com.goaudits.business.serviceimpl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import com.goaudits.business.entity.QuestionOrder;
 import com.goaudits.business.entity.Questionimage;
 import com.goaudits.business.entity.Section;
 import com.goaudits.business.entity.Tag;
+import com.goaudits.business.entity.User;
 import com.goaudits.business.mapper.QuestionnaireMapper;
 import com.goaudits.business.service.QuestionnaireService;
 import com.goaudits.business.util.Constants;
@@ -128,9 +130,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	public List<Choice> getchoicepatterens(String guid) {
 		List<Choice> choicelist = questionnairemapper.getChoiceList(guid);
 		for (Choice choices : choicelist) {
-
 			int choice = choices.getChoice_pat_id();
-
 			List<Choice> choicelists = questionnairemapper.getChoicesforPattern(guid, choice);
 
 			choices.getChoiceList().addAll(choicelists);
@@ -149,6 +149,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			List<Group> Grouplist = questionnairemapper.getallGroups(secl);
 			for (Group grp : Grouplist) {
 				grp.setGroup_id(grp.getGroup_id());
+				grp.setActive(sec.isActive());
 				List<Question> QuestionList = questionnairemapper.getallQuestions(grp);
 
 				for (Question ques : QuestionList) {
@@ -208,10 +209,59 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			ques.setQuestion_no(qno);
 			if (ques.getQuestion_type() == 2) {
 				ques.setChoice_pat_id(-1);
+				ques.getChoiceList().clear();
+			}
+			List<Choice> choicelists = null;
+			if (ques.getChoiceList().size() > 0) {
 
+				ques.getChoiceList().get(0).setGuid(ques.getGuid());
+				ques.getChoiceList().get(0).setChoice_type(ques.getVchoice_type());
+				choicelists = addCustomChoice1(ques.getChoiceList());
 			}
 
-			List<Choice> choicelists = ques.getChoiceList();
+			for (Choice choice : choicelists) {
+				ques.setChoice_pat_id(choicelists.get(0).getChoice_pat_id());
+				if (ques.getDefault_choice_id() != null && ques.getDefault_choice_id() != "") {
+					ques.setDefault_choice_id(choice.getCreated_choice_id() + "");
+				}
+
+				if (ques.getEmail_choices() != null && ques.getEmail_choices() != "") {
+					ques.setEmail_choices(
+							ques.getEmail_choices().replace(choice.getChoice_id(), choice.getCreated_choice_id() + ""));
+				}
+
+				if (ques.getAction_choices() != null && ques.getAction_choices() != "") {
+					try {
+						ques.setAction_choices(ques.getAction_choices().replace(choice.getChoice_id(),
+								choice.getCreated_choice_id() + ""));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+				if (ques.getComment_choices() != null && ques.getComment_choices() != "") {
+					ques.setComment_choices(ques.getComment_choices().replace(choice.getChoice_id(),
+							choice.getCreated_choice_id() + ""));
+				}
+
+				if (ques.getImage_choices() != null && ques.getImage_choices() != "") {
+					ques.setImage_choices(
+							ques.getImage_choices().replace(choice.getChoice_id(), choice.getCreated_choice_id() + ""));
+				}
+
+				if (ques.getAuto_fail() != null && ques.getAuto_fail() != "") {
+					ques.setAuto_fail(
+							ques.getAuto_fail().replace(choice.getChoice_id(), choice.getCreated_choice_id() + ""));
+				}
+
+				if (ques.getCritical_email_list() != null && ques.getCritical_email_list() != "") {
+					ques.setCritical_email_list(ques.getCritical_email_list().replace(choice.getChoice_id(),
+							choice.getCreated_choice_id() + ""));
+				}
+
+				choice.setChoice_id(choice.getCreated_choice_id() + "");
+			}
+
 			for (Choice choice : choicelists) {
 				// System.out.println(choice.getChoice_id()+"score
 				// :"+choice.getDefault_score_percent());
@@ -295,6 +345,62 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		return qno;
 	}
 
+	public List<Choice> addCustomChoice1(List<Choice> choices) {
+		int i = 0;
+		String choice_pattern = "";
+		String choice_type = "";
+		int choice_pat_id = 0;
+		String guid = choices.get(0).getGuid();
+
+		if (isCustomChoiceExist(choices)) {
+			for (Choice cho : choices) {
+				cho.setGuid(guid);
+				choice_type = choices.get(0).getChoice_type();
+				if (i++ == choices.size() - 1) {
+					choice_pattern = choice_pattern + cho.getChoice_text();
+					// choice_pattern=choice_pattern+"ZERO";
+				} else {
+					choice_pattern = choice_pattern + cho.getChoice_text() + ",";
+				}
+			}
+
+			int choicepatid = questionnairemapper.getChoicePatId(guid, choice_pattern, choice_type);
+//			System.out.println(choicepatid);
+			List<Choice> choiceList = questionnairemapper.getChoicesforPatternForQues(guid, choicepatid);
+			
+			for(Choice chc:choiceList) {
+				for(Choice chs:choices) {
+					if(chc.getChoice_text().equals(chs.getChoice_text())) {
+						chs.setCreated_choice_id(chc.getCreated_choice_id());
+						chs.setChoice_pat_id(chc.getChoice_pat_id());
+					}
+				}
+			}
+			
+			return choices;
+		} else {
+			choice_pat_id = questionnairemapper.generateChoicepatid(guid);
+			for (Choice cho : choices) {
+				cho.setChoice_pat_id(choice_pat_id);
+				cho.setGuid(guid);
+				choice_type = choices.get(0).getChoice_type();
+				if (i++ == choices.size() - 1) {
+					choice_pattern = choice_pattern + cho.getChoice_text();
+					// choice_pattern=choice_pattern+"ZERO";
+				} else {
+					choice_pattern = choice_pattern + cho.getChoice_text() + ",";
+				}
+
+				cho.setCreated_choice_id(questionnairemapper.addCustomChoice(cho));
+			}
+
+			questionnairemapper.addExtraChoice(guid, choice_pat_id);
+			questionnairemapper.addCustomChoicepattern(guid, choice_pat_id, choice_pattern, choice_type);
+			return choices;
+
+		}
+	}
+
 	@Override
 	public boolean choiceChangeConditional(Question question) {
 		return questionnairemapper.choiceChangeConditional(question) > 0 ? true : false;
@@ -305,7 +411,59 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		for (Question ques : questionlist) {
 			ques.setAudit_group_id(1);
 
-			List<Choice> choicelists = ques.getChoiceList();
+			List<Choice> choicelists = null;
+			if (ques.getChoiceList().size() > 0) {
+
+				ques.getChoiceList().get(0).setGuid(ques.getGuid());
+				ques.getChoiceList().get(0).setChoice_type(ques.getVchoice_type());
+				choicelists = addCustomChoice1(ques.getChoiceList());
+			}
+
+			for (Choice choice : choicelists) {
+				ques.setChoice_pat_id(choicelists.get(0).getChoice_pat_id());
+				if (ques.getDefault_choice_id() != null && ques.getDefault_choice_id() != "") {
+					ques.setDefault_choice_id(choice.getCreated_choice_id() + "");
+				}
+
+				if (ques.getEmail_choices() != null && ques.getEmail_choices() != "") {
+					ques.setEmail_choices(
+							ques.getEmail_choices().replace(choice.getChoice_id(), choice.getCreated_choice_id() + ""));
+				}
+
+				if (ques.getAction_choices() != null && ques.getAction_choices() != "") {
+					try {
+						ques.setAction_choices(ques.getAction_choices().replace(choice.getChoice_id(),
+								choice.getCreated_choice_id() + ""));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+				if (ques.getComment_choices() != null && ques.getComment_choices() != "") {
+					ques.setComment_choices(ques.getComment_choices().replace(choice.getChoice_id(),
+							choice.getCreated_choice_id() + ""));
+				}
+
+				if (ques.getImage_choices() != null && ques.getImage_choices() != "") {
+					ques.setImage_choices(
+							ques.getImage_choices().replace(choice.getChoice_id(), choice.getCreated_choice_id() + ""));
+				}
+
+				if (ques.getAuto_fail() != null && ques.getAuto_fail() != "") {
+					ques.setAuto_fail(
+							ques.getAuto_fail().replace(choice.getChoice_id(), choice.getCreated_choice_id() + ""));
+				}
+
+				if (ques.getCritical_email_list() != null && ques.getCritical_email_list() != "") {
+					ques.setCritical_email_list(ques.getCritical_email_list().replace(choice.getChoice_id(),
+							choice.getCreated_choice_id() + ""));
+				}
+
+				choice.setChoice_id(choice.getCreated_choice_id() + "");
+			}
+
+
+			//			List<Choice> choicelists1 = ques.getChoiceList();
 			for (Choice choice : choicelists) {
 
 				questionnairemapper.addquestscores(ques.getGuid(), ques.getClient_id(), 1, ques.getAudit_type_id(),
@@ -342,7 +500,6 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
-
 						}
 
 						questionnairemapper.deleteQuestionimage(ques.getGuid(), ques.getClient_id(), 1,
@@ -436,11 +593,10 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	public boolean isCustomChoiceExist(List<Choice> choices) {
 		int i = 0;
 		String choice_pattern = "";
-		String choice_type = "";
+		String choice_type = choices.get(0).getChoice_type();
 		String guid = choices.get(0).getGuid();
 		for (Choice cho : choices) {
 
-			choice_type = cho.getChoice_type();
 			if (i++ == choices.size() - 1) {
 				choice_pattern = choice_pattern + cho.getChoice_text();
 			} else {
@@ -497,6 +653,16 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	@Override
 	public int getQuestionAudit(Question question) {
 		return questionnairemapper.getQuestionAudit(question);
+	}
+
+	@Override
+	public List<User> getAdminslist(String guid) {
+		return questionnairemapper.getAdminslist(guid);
+	}
+
+	@Override
+	public String getCloudinaryFlag(String guid) {
+		return questionnairemapper.getCloudinaryFlag(guid);
 	}
 
 }

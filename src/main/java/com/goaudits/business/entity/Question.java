@@ -26,7 +26,7 @@ public class Question implements Serializable {
 	private String question_help;
 	private String question_weight;
 	private boolean active;
-	private int default_choice_id;
+	private String default_choice_id;
 	private boolean ismandatory;
 	private boolean image_mandatory;
 	private boolean comment_mandatory;
@@ -884,11 +884,19 @@ public class Question implements Serializable {
 		this.question_weight = question_weight;
 	}
 
-	public int getDefault_choice_id() {
+
+
+	/**
+	 * @return the default_choice_id
+	 */
+	public String getDefault_choice_id() {
 		return default_choice_id;
 	}
 
-	public void setDefault_choice_id(int default_choice_id) {
+	/**
+	 * @param default_choice_id the default_choice_id to set
+	 */
+	public void setDefault_choice_id(String default_choice_id) {
 		this.default_choice_id = default_choice_id;
 	}
 

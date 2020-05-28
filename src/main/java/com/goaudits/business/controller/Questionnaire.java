@@ -20,6 +20,7 @@ import com.goaudits.business.entity.Questionimage;
 import com.goaudits.business.entity.S3;
 import com.goaudits.business.entity.Section;
 import com.goaudits.business.entity.Tag;
+import com.goaudits.business.entity.User;
 import com.goaudits.business.service.QuestionnaireService;
 import com.goaudits.business.util.GoAuditsException;
 import com.goaudits.business.service.S3Service;
@@ -188,6 +189,7 @@ public class Questionnaire {
 			s3.setClient_id(question.get(0).getClient_id() + "");
 			s3.setAudit_type_id(question.get(0).getAudit_type_id() + "");
 			s3.setQuestion_no(qno + "");
+			s3.setGuid(question.get(0).getGuid());
 			s3.setPage("question");
 			S3 params = s3Service.GetPayload(s3);
 			params.setQuestion_no(qno + "");
@@ -334,6 +336,34 @@ public class Questionnaire {
 		QuestionList.get(0).setAudits_count(audits_count);
 		return new ResponseEntity<List<Question>>(QuestionList, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/users/admin/{guid}", method = RequestMethod.GET)
+	public ResponseEntity<List<User>> getUserslist(@PathVariable("guid") String guid) {
+		List<User> Adminslist = QuestionnaireService.getAdminslist(guid);
+		return new ResponseEntity<List<User>>(Adminslist, HttpStatus.OK);
+	}
 
+
+	@RequestMapping(value = "questionimg/signature", method = RequestMethod.POST)
+	public ResponseEntity<S3> GetQuesImagSig(@RequestBody Question question) {
+		S3 s3 = new S3();
+		s3.setClient_id(question.getClient_id() + "");
+		s3.setAudit_type_id(question.getAudit_type_id() + "");
+		s3.setGuid(question.getGuid());
+		s3.setPage("question");
+		S3 params = s3Service.GetPayload(s3);
+		params.setClient_id(question.getClient_id() + "");
+		params.setAudit_type_id(question.getAudit_type_id() + "");
+		return new ResponseEntity<S3>(params, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value = "getCloudinaryFlag/{guid}", method = RequestMethod.GET)
+	public ResponseEntity<?> getCloudinaryFlag(@PathVariable("guid") String guid) {
+		String cloudflag = QuestionnaireService.getCloudinaryFlag(guid);
+		List<String> flag=new ArrayList<String>();
+		flag.add(cloudflag);
+		return new ResponseEntity<List<String>>(flag, HttpStatus.OK);
+	}
 
 }

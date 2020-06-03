@@ -114,7 +114,7 @@ public interface QuestionnaireMapper {
 			+ "#{question_no, mode=IN, jdbcType=INTEGER},#{choice_pat_id, mode=IN, jdbcType=INTEGER},#{choice_id, mode=IN, jdbcType=INTEGER},#{sub_question_no, mode=IN, jdbcType=INTEGER} ) }")
 	int addConditinalQuestion(@Param("guid") String guid, @Param("client_id") int client_id,
 			@Param("audit_type_id") int audit_type_id, @Param("question_no") int question_no,
-			@Param("choice_pat_id") int choice_pat_id, @Param("choice_id") int choice_id,
+			@Param("choice_pat_id") String choice_pat_id, @Param("choice_id") String choice_id,
 			@Param("sub_question_no") int sub_question_no);
 
 	@Insert(value = "{CALL SP_GA_UPDATE_QUESTIONS_DET_PV4(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"

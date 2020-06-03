@@ -160,7 +160,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 					List<Choice> chlist = questionnairemapper.getParentChoice(ques);
 					for (Choice c : chlist) {
-						ques.setConditional_choiceid(Integer.parseInt(c.getChoice_id()));
+						ques.setConditional_choiceid(c.getChoice_id());
 						List<Question> QuestionList1 = questionnairemapper.getallsubQuestions(ques);
 						for (Question ques1 : QuestionList1) {
 
@@ -258,6 +258,16 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 					ques.setCritical_email_list(ques.getCritical_email_list().replace(choice.getChoice_id(),
 							choice.getCreated_choice_id() + ""));
 				}
+				if (ques.getConditional_choice_pat_id() != null && ques.getConditional_choice_pat_id() != "") {
+					ques.setConditional_choice_pat_id(ques.getConditional_choice_pat_id().replace(choice.getChoice_id(),
+							choice.getCreated_choice_id() + ""));
+				}
+				if (ques.getConditional_choiceid() != null && ques.getConditional_choiceid() != "") {
+					ques.setConditional_choiceid(ques.getConditional_choiceid().replace(choice.getChoice_id(),
+							choice.getCreated_choice_id() + ""));
+				}
+				
+				 
 
 				choice.setChoice_id(choice.getCreated_choice_id() + "");
 			}

@@ -92,8 +92,8 @@ public class Question implements Serializable {
 	private int choice_id;
 	private boolean is_parent_question;
 	private boolean is_sub_question;
-	private int conditional_choice_pat_id;
-	private int conditional_choiceid;
+	private String conditional_choice_pat_id;
+	private String conditional_choiceid;
 	private boolean conditionalflag;
 	private boolean conditionnew;
 	private int oldchoiceid;
@@ -244,19 +244,33 @@ public class Question implements Serializable {
 		this.sublist = sublist;
 	}
 
-	public int getConditional_choice_pat_id() {
+
+
+	/**
+	 * @return the conditional_choice_pat_id
+	 */
+	public String getConditional_choice_pat_id() {
 		return conditional_choice_pat_id;
 	}
 
-	public void setConditional_choice_pat_id(int conditional_choice_pat_id) {
+	/**
+	 * @param conditional_choice_pat_id the conditional_choice_pat_id to set
+	 */
+	public void setConditional_choice_pat_id(String conditional_choice_pat_id) {
 		this.conditional_choice_pat_id = conditional_choice_pat_id;
 	}
 
-	public int getConditional_choiceid() {
+	/**
+	 * @return the conditional_choiceid
+	 */
+	public String getConditional_choiceid() {
 		return conditional_choiceid;
 	}
 
-	public void setConditional_choiceid(int conditional_choiceid) {
+	/**
+	 * @param conditional_choiceid the conditional_choiceid to set
+	 */
+	public void setConditional_choiceid(String conditional_choiceid) {
 		this.conditional_choiceid = conditional_choiceid;
 	}
 

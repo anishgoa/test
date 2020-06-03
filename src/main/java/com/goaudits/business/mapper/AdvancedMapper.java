@@ -56,7 +56,7 @@ public interface AdvancedMapper {
 	@Delete("DELETE FROM GA_PERSONSEEN_MT WHERE GUID=#{guid} AND CLIENT_ID=#{fromclient_id}  AND PERSON_EMAIL=#{fromemail} ")
 	int deletePersonSeen(Personseen p);
 
-	@Insert(value = "{ CALL SP_GA_UPDATETAGS_DET( #{guid, mode=IN, jdbcType=BINARY},#{category_id, mode=IN, jdbcType=INTEGER},#{tag_id, mode=IN, jdbcType=INTEGER},#{tag_name, mode=IN, jdbcType=VARCHAR},#{active, mode=IN, jdbcType=BOOLEAN} )}")
+	@Select(value = "{ CALL SP_GA_UPDATETAGS_DET( #{guid, mode=IN, jdbcType=BINARY},#{category_id, mode=IN, jdbcType=INTEGER},#{tag_id, mode=IN, jdbcType=INTEGER},#{tag_name, mode=IN, jdbcType=VARCHAR},#{active, mode=IN, jdbcType=BOOLEAN} )}")
 	@Options(statementType = StatementType.CALLABLE)
 	int addTags(LocationTags loct);
 
@@ -72,7 +72,7 @@ public interface AdvancedMapper {
 	@Select("SELECT COUNT(*) FROM GA_TAG_CATEGORY_MT WHERE GUID=#{guid} AND CATEGORY_ID!=#{category_id} AND CATEGORY_NAME=#{category_name}")
 	int validateEdCategory(LocationTags tgs);
 
-	@Insert(value = "{ CALL SP_GA_UPDATETAGCATEGORY_DET( #{guid, mode=IN, jdbcType=BINARY},#{category_id, mode=IN, jdbcType=INTEGER},#{category_name, mode=IN, jdbcType=VARCHAR},#{category_desription, mode=IN, jdbcType=VARCHAR},#{active, mode=IN, jdbcType=BOOLEAN},#{category_type_id, mode=IN, jdbcType=INTEGER} )}")
+	@Select(value = "{ CALL SP_GA_UPDATETAGCATEGORY_DET( #{guid, mode=IN, jdbcType=BINARY},#{category_id, mode=IN, jdbcType=INTEGER},#{category_name, mode=IN, jdbcType=VARCHAR},#{category_desription, mode=IN, jdbcType=VARCHAR},#{active, mode=IN, jdbcType=BOOLEAN},#{category_type_id, mode=IN, jdbcType=INTEGER} )}")
 	@Options(statementType = StatementType.CALLABLE)
 	int addTagCategory(LocationTags tgs);
 
@@ -102,6 +102,19 @@ public interface AdvancedMapper {
 
 	@Delete("DELETE FROM GA_WORKFLOW_DT WHERE UUID=#{uuid}")
 	int deleteAuditWorkFlow(@Param("uuid") String uuid);
+
+	@Select("SELECT COUNT(*) FROM GA_LOCATION_TAG_MAP WHERE GUID=#{guid} AND CATEGORY_ID=#{category_id} AND TAG_ID=#{tag_id}")
+	int checkTagsAssigned(LocationTags loct);
+
+	@Delete("DELETE FROM GA_TAG_MT WHERE GUID=#{guid} AND CATEGORY_ID=#{category_id} AND TAG_ID=#{tag_id}")
+	int deleteTag(LocationTags tgs);
+
+	@Select("SELECT COUNT(*) FROM GA_LOCATION_TAG_MAP WHERE GUID=#{guid} AND CATEGORY_ID=#{category_id}")
+	int checkTagsCategoryAssigned(LocationTags loct);
+
+	@Delete(value = "{ CALL SP_GA_DELETETAGCATEGORY_DET( #{guid, mode=IN, jdbcType=BINARY},#{category_id, mode=IN, jdbcType=INTEGER} )}")
+	@Options(statementType = StatementType.CALLABLE)
+	int deleteTagCategory(LocationTags tgs);
 
 	
 }

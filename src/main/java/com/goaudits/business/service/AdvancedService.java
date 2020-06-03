@@ -46,4 +46,12 @@ public interface AdvancedService {
 
 	int deleteWorkFlow(AuditWorkFlow auditWorkFlow);
 
+	boolean CheckTagsAssigned(LocationTags loct);
+
+	int deleteTag(LocationTags loct);
+
+	boolean CheckTagsCategoryAssigned(LocationTags loct);
+
+	int deleteTagCategory(LocationTags loct);
+
 }

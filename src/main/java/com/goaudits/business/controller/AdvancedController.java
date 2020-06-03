@@ -100,6 +100,7 @@ public class AdvancedController {
 		int category_id = advancedservice.addTagCategory(loct);
 		List<LocationTags> TagsList = new ArrayList<LocationTags>();
 		loct.setCategory_id(category_id);
+		TagsList.add(loct);
 		return new ResponseEntity<List<LocationTags>>(TagsList, HttpStatus.OK);
 	}
 
@@ -119,8 +120,37 @@ public class AdvancedController {
 		}
 		int addTag = advancedservice.addTag(loct);
 
-		return new ResponseEntity<Integer>(addTag, HttpStatus.OK);
+		List<LocationTags> TagsList = new ArrayList<LocationTags>();
+		loct.setTag_id(addTag);
+		TagsList.add(loct);
+		return new ResponseEntity<List<LocationTags>>(TagsList, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "deletetag", method = RequestMethod.POST)
+	public ResponseEntity<?> deleteTag(@RequestBody LocationTags loct) {
+
+
+		if (advancedservice.CheckTagsAssigned(loct)) {
+			return new ResponseEntity(new GoAuditsException("Tag already configured to location"), HttpStatus.CONFLICT);
+		}
+
+		int deletetag = advancedservice.deleteTag(loct);
+
+		return new ResponseEntity<Integer>(deletetag, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "deletetagcategory", method = RequestMethod.POST)
+	public ResponseEntity<?> deleteTagCategory(@RequestBody LocationTags loct) {
+
+		if (advancedservice.CheckTagsCategoryAssigned(loct)) {
+			return new ResponseEntity(new GoAuditsException("Tag already configured to location"), HttpStatus.CONFLICT);
+		}
+		int deletetag = advancedservice.deleteTagCategory(loct);
+
+		return new ResponseEntity<Integer>(deletetag, HttpStatus.OK);
+	}
+
+	
 
 	@RequestMapping(value = "/workflow", method = RequestMethod.POST)
 	public ResponseEntity<List<AuditWorkFlow>> getWorkFlowList(@RequestBody AuditWorkFlow workflow) {

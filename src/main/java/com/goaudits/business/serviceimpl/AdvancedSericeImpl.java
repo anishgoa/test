@@ -320,6 +320,30 @@ public class AdvancedSericeImpl implements AdvancedService {
 		return advancedmapper.deleteAuditWorkFlow(auditWorkFlow.getUuid());
 	}
 
+	@Override
+	public boolean CheckTagsAssigned(LocationTags loct) {
+		// TODO Auto-generated method stub
+		return advancedmapper.checkTagsAssigned(loct) > 0 ? true : false;
+	}
+
+	@Override
+	public int deleteTag(LocationTags tgs) {
+		// TODO Auto-generated method stub
+		return advancedmapper.deleteTag(tgs);
+	}
+
+	@Override
+	public boolean CheckTagsCategoryAssigned(LocationTags loct) {
+		// TODO Auto-generated method stub
+		return advancedmapper.checkTagsCategoryAssigned(loct) > 0 ? true : false;
+	}
+
+	@Override
+	public int deleteTagCategory(LocationTags tgs) {
+		// TODO Auto-generated method stub
+		return advancedmapper.deleteTagCategory(tgs);
+	}
+
 
 
 }

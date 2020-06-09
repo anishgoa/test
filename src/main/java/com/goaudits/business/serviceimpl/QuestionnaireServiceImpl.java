@@ -211,7 +211,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 				ques.setChoice_pat_id(-1);
 				ques.getChoiceList().clear();
 			}
-			List<Choice> choicelists = null;
+			List<Choice> choicelists = new ArrayList<Choice>();
 			if (ques.getChoiceList().size() > 0) {
 
 				ques.getChoiceList().get(0).setGuid(ques.getGuid());
@@ -421,7 +421,12 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		for (Question ques : questionlist) {
 			ques.setAudit_group_id(1);
 
-			List<Choice> choicelists = null;
+			if (ques.getQuestion_type() == 2) {
+				ques.setChoice_pat_id(-1);
+				ques.getChoiceList().clear();
+			}
+
+			List<Choice> choicelists = new ArrayList<Choice>();
 			if (ques.getChoiceList().size() > 0) {
 
 				ques.getChoiceList().get(0).setGuid(ques.getGuid());

@@ -14,6 +14,8 @@ import org.apache.ibatis.mapping.StatementType;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.Company;
+import com.goaudits.business.entity.CustomFieldList;
+import com.goaudits.business.entity.Customfields;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Personseen;
@@ -116,5 +118,13 @@ public interface AdvancedMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	int deleteTagCategory(LocationTags tgs);
 
+	@Select(value = "{ CALL SP_GA_GETCUSTOMFIELDS_DET_PV3( #{guid, mode=IN, jdbcType=BINARY}, #{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER} ) }")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Customfields> getAllCustomfields(@Param("guid") String guid,
+			@Param("uid") String uid, @Param("client_id") String client_id);
+
+	@Select(value = "{ CALL GA_SP_PORTAL_GET_CUSTOMFIELDS_MT( #{guid, mode=IN, jdbcType=BINARY}, #{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER} ) }")
+	@Options(statementType = StatementType.CALLABLE)
+	List<CustomFieldList> getCustomFieldsList(AuditName audit);
 	
 }

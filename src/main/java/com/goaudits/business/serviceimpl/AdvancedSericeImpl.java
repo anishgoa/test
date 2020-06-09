@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.Company;
+import com.goaudits.business.entity.CustomFieldList;
+import com.goaudits.business.entity.Customfields;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Personseen;
@@ -343,6 +345,37 @@ public class AdvancedSericeImpl implements AdvancedService {
 		// TODO Auto-generated method stub
 		return advancedmapper.deleteTagCategory(tgs);
 	}
+
+	@Override
+	public List<Customfields> getAllCustomfields(String guid, String uid, String client_id) {
+		List<Customfields> Customfieldslist = advancedmapper.getAllCustomfields(guid, uid, client_id);
+		for (Customfields cf : Customfieldslist) {
+			String label[] = cf.getField_label().split("---");
+			String name[] = cf.getField_name().split("---");
+			String act[] = cf.getActive().split("---");
+			String typ[] = cf.getField_type().split("---");
+			for (int i = 0; i < label.length; i++) {
+				Customfields cfs = new Customfields();
+				cfs.setField_label(label[i]);
+				cfs.setField_name(name[i]);
+				cfs.setField_type(typ[i]);
+				cfs.setActive(act[i]);
+				cf.getCustomfieldslist().add(cfs);
+
+			}
+
+		}
+
+		return Customfieldslist;
+	}
+
+	@Override
+	public List<CustomFieldList> getCustomFieldsList(AuditName audit) {
+		
+		return advancedmapper.getCustomFieldsList(audit);
+	}
+
+
 
 
 

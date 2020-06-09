@@ -3,7 +3,10 @@ package com.goaudits.business.service;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.AuditWorkFlow;
+import com.goaudits.business.entity.CustomFieldList;
+import com.goaudits.business.entity.Customfields;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Personseen;
 import com.goaudits.business.entity.Tag;
@@ -53,5 +56,9 @@ public interface AdvancedService {
 	boolean CheckTagsCategoryAssigned(LocationTags loct);
 
 	int deleteTagCategory(LocationTags loct);
+
+	List<Customfields> getAllCustomfields(String guid, String uid, String client_id);
+
+	List<CustomFieldList> getCustomFieldsList(AuditName audit);
 
 }

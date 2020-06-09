@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.AuditWorkFlow;
+import com.goaudits.business.entity.CustomFieldList;
+import com.goaudits.business.entity.Customfields;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Personseen;
-import com.goaudits.business.entity.Tag;
 import com.goaudits.business.entity.User;
 import com.goaudits.business.service.AdvancedService;
 import com.goaudits.business.util.GoAuditsException;
@@ -125,10 +127,9 @@ public class AdvancedController {
 		TagsList.add(loct);
 		return new ResponseEntity<List<LocationTags>>(TagsList, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "deletetag", method = RequestMethod.POST)
 	public ResponseEntity<?> deleteTag(@RequestBody LocationTags loct) {
-
 
 		if (advancedservice.CheckTagsAssigned(loct)) {
 			return new ResponseEntity(new GoAuditsException("Tag already configured to location"), HttpStatus.CONFLICT);
@@ -149,8 +150,6 @@ public class AdvancedController {
 
 		return new ResponseEntity<Integer>(deletetag, HttpStatus.OK);
 	}
-
-	
 
 	@RequestMapping(value = "/workflow", method = RequestMethod.POST)
 	public ResponseEntity<List<AuditWorkFlow>> getWorkFlowList(@RequestBody AuditWorkFlow workflow) {
@@ -199,6 +198,26 @@ public class AdvancedController {
 		List<AuditWorkFlow> wrkFlwList = new ArrayList<AuditWorkFlow>();
 		wrkFlwList.add(AuditWorkFlow);
 		return new ResponseEntity<List<AuditWorkFlow>>(wrkFlwList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/customfields/list2", method = RequestMethod.POST)
+	public ResponseEntity<List<Customfields>> getAllCustomFields2(@RequestBody AuditName audit) {
+		
+		List<Customfields> customFieldsList = advancedservice.getAllCustomfields(audit.getGuid(), audit.getUid(),audit.getClient_id());
+		if (customFieldsList.isEmpty()) {
+			return new ResponseEntity(new GoAuditsException("No custom fields are found"), HttpStatus.NOT_FOUND);
+		} 
+		return new ResponseEntity<List<Customfields>>(customFieldsList, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/customfields/list", method = RequestMethod.POST)
+	public ResponseEntity<List<CustomFieldList>> getAllCustomFields(@RequestBody AuditName audit) {
+		
+		List<CustomFieldList> customFieldsList = advancedservice.getCustomFieldsList(audit);
+		if (customFieldsList.isEmpty()) {
+			return new ResponseEntity(new GoAuditsException("No custom fields are found"), HttpStatus.NOT_FOUND);
+		} 
+		return new ResponseEntity<List<CustomFieldList>>(customFieldsList, HttpStatus.OK);
 	}
 
 }

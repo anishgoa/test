@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.goaudits.business.entity.ActionPlanSettings;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.Company;
@@ -373,6 +374,45 @@ public class AdvancedSericeImpl implements AdvancedService {
 	public List<CustomFieldList> getCustomFieldsList(AuditName audit) {
 		
 		return advancedmapper.getCustomFieldsList(audit);
+	}
+
+	@Override
+	public List<ActionPlanSettings> getActionPlanSettngs(ActionPlanSettings actionPlanSettings) {
+	
+		return advancedmapper.getActionPlanSettngs(actionPlanSettings);
+	}
+
+	@Override
+	public boolean validateaddActionSts(ActionPlanSettings actionPlanSettings) {
+		return (advancedmapper.validateaddActionSts(actionPlanSettings)) > 0 ? true : false;
+	}
+
+	@Override
+	public int addOrEditActionPlanSettngs(ActionPlanSettings actionPlanSettings) {
+		return advancedmapper.addOrEditActionPlanSettngs(actionPlanSettings);
+	}
+
+	@Override
+	public boolean validateeditActionSts(ActionPlanSettings actionPlanSettings) {
+		
+		return (advancedmapper.validateeditActionSts(actionPlanSettings)) > 0 ? true : false;
+	}
+
+	@Override
+	public boolean isCustomfieldsExist(Customfields customfields) {
+		return advancedmapper.isCustomfieldsExist(customfields) == 1 ? true : false;
+	}
+
+	@Override
+	public int addCustomfields(Customfields customfields) {
+		
+		return advancedmapper.addCustomfields(customfields);
+	}
+
+	@Override
+	public int updateCustomfields(Customfields customfields) {
+	
+		return advancedmapper.addCustomfields(customfields);
 	}
 
 

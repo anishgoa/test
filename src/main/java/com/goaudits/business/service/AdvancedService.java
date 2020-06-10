@@ -3,6 +3,7 @@ package com.goaudits.business.service;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import com.goaudits.business.entity.ActionPlanSettings;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.CustomFieldList;
@@ -60,5 +61,19 @@ public interface AdvancedService {
 	List<Customfields> getAllCustomfields(String guid, String uid, String client_id);
 
 	List<CustomFieldList> getCustomFieldsList(AuditName audit);
+
+	List<ActionPlanSettings> getActionPlanSettngs(ActionPlanSettings actionPlanSettings);
+
+	boolean validateaddActionSts(ActionPlanSettings actionPlanSettings);
+
+	int addOrEditActionPlanSettngs(ActionPlanSettings actionPlanSettings);
+
+	boolean validateeditActionSts(ActionPlanSettings actionPlanSettings);
+
+	boolean isCustomfieldsExist(Customfields customfields);
+
+	int addCustomfields(Customfields customfields);
+
+	int updateCustomfields(Customfields customfields);
 
 }

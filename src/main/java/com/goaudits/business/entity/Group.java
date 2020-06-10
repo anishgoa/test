@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Repository
 public class Group implements Serializable{
 	
@@ -20,6 +22,9 @@ public class Group implements Serializable{
 	private String group_name = null;
 	private boolean active;
 	private String audit_token;
+	
+	@JsonIgnore
+	private boolean inactiveq=true;
 	private List<Question> QuestionList = new ArrayList<Question>();
 	
 	
@@ -89,6 +94,18 @@ public class Group implements Serializable{
 	}
 	public void setGroup_name(String group_name) {
 		this.group_name = group_name;
+	}
+	/**
+	 * @return the inactiveq
+	 */
+	public boolean isInactiveq() {
+		return inactiveq;
+	}
+	/**
+	 * @param inactiveq the inactiveq to set
+	 */
+	public void setInactiveq(boolean inactiveq) {
+		this.inactiveq = inactiveq;
 	}
 
 	

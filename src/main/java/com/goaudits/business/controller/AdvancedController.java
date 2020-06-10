@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.goaudits.business.entity.ActionPlanSettings;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.CustomFieldList;
@@ -214,10 +215,89 @@ public class AdvancedController {
 	public ResponseEntity<List<CustomFieldList>> getAllCustomFields(@RequestBody AuditName audit) {
 		
 		List<CustomFieldList> customFieldsList = advancedservice.getCustomFieldsList(audit);
-		if (customFieldsList.isEmpty()) {
-			return new ResponseEntity(new GoAuditsException("No custom fields are found"), HttpStatus.NOT_FOUND);
-		} 
+	
 		return new ResponseEntity<List<CustomFieldList>>(customFieldsList, HttpStatus.OK);
 	}
+	
+	
+
+	@RequestMapping(value = "/customfields/add", method = RequestMethod.POST)
+	public ResponseEntity<?> addCustomFields(@RequestBody Customfields customfields) {
+		
+		if (advancedservice.isCustomfieldsExist(customfields)) {
+			return new ResponseEntity(new GoAuditsException("Custom fields cannot be added, already exists"),
+					HttpStatus.CONFLICT);
+		}
+		try {
+			advancedservice.addCustomfields(customfields);
+			List<Customfields> customFieldsList=new ArrayList<Customfields>();
+			customFieldsList.add(customfields);
+			return new ResponseEntity<List<Customfields>>(customFieldsList, HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+
+	@RequestMapping(value = "/customfields/update", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateCustomfields(@RequestBody Customfields customfields) {
+
+		if (advancedservice.isCustomfieldsExist(customfields)) {
+			try {
+				advancedservice.updateCustomfields(customfields);
+
+				List<Customfields> customFieldsList=new ArrayList<Customfields>();
+				customFieldsList.add(customfields);
+				return new ResponseEntity<List<Customfields>>(customFieldsList, HttpStatus.CREATED);
+				
+			} catch (Exception e) {
+				return new ResponseEntity(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+			}
+		}
+		return new ResponseEntity(new GoAuditsException("Custom field cannot be updated, record not found"),
+				HttpStatus.CONFLICT);
+	}
+
+	
+
+	
+	@RequestMapping(value = "/actionplansettings", method = RequestMethod.POST)
+	public ResponseEntity<?> getActionPlanSetngs(@RequestBody ActionPlanSettings ActionPlanSettings) {
+
+		List<ActionPlanSettings> actlist = advancedservice.getActionPlanSettngs(ActionPlanSettings);
+
+		return new ResponseEntity<List<ActionPlanSettings>>(actlist, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/addactionplansetngs", method = RequestMethod.POST)
+	public ResponseEntity<?> addActionPlanSetngs(@RequestBody ActionPlanSettings ActionPlanSettings) {
+
+		if (ActionPlanSettings.getPriority_id() == 0) {
+
+			if (advancedservice.validateaddActionSts(ActionPlanSettings)) {
+				return new ResponseEntity<>(new GoAuditsException("Priority already exists"), HttpStatus.CONFLICT);
+			} else {
+				int actplnadd = advancedservice.addOrEditActionPlanSettngs(ActionPlanSettings);
+
+				List<ActionPlanSettings> actionPlansetngs=new ArrayList<ActionPlanSettings>();
+				ActionPlanSettings.setPriority_id(actplnadd);
+				actionPlansetngs.add(ActionPlanSettings);
+				return new ResponseEntity<List<ActionPlanSettings>>(actionPlansetngs, HttpStatus.OK);
+			}
+
+		} else if (advancedservice.validateeditActionSts(ActionPlanSettings)) {
+			return new ResponseEntity<>(new GoAuditsException("Priority already exists"), HttpStatus.CONFLICT);
+
+		} else {
+			int actplnadd = advancedservice.addOrEditActionPlanSettngs(ActionPlanSettings);
+			
+			
+			List<ActionPlanSettings> actionPlansetngs=new ArrayList<ActionPlanSettings>();
+			ActionPlanSettings.setPriority_id(actplnadd);
+			actionPlansetngs.add(ActionPlanSettings);
+			return new ResponseEntity<List<ActionPlanSettings>>(actionPlansetngs, HttpStatus.OK);
+		}
+
+	}
+	
 
 }

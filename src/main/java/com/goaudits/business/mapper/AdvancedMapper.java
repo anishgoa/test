@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.mapping.StatementType;
 
+import com.goaudits.business.entity.ActionPlanSettings;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.Company;
@@ -126,5 +127,31 @@ public interface AdvancedMapper {
 	@Select(value = "{ CALL GA_SP_PORTAL_GET_CUSTOMFIELDS_MT( #{guid, mode=IN, jdbcType=BINARY}, #{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER} ) }")
 	@Options(statementType = StatementType.CALLABLE)
 	List<CustomFieldList> getCustomFieldsList(AuditName audit);
+
+	@Select("SELECT * FROM GA_CUSTOM_ACTION_PRIORITIES_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id}  AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id}  AND ACTIVE=#{active}")
+	List<ActionPlanSettings> getActionPlanSettngs(ActionPlanSettings ActionPlanSettings);
+
+	@Select("SELECT COUNT(*) FROM GA_CUSTOM_ACTION_PRIORITIES_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id}  AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND PRIORITY_NAME=#{priority_name}")
+	int validateaddActionSts(ActionPlanSettings actionPlanSettings);
+
+	@Select("SELECT COUNT(*) FROM GA_CUSTOM_ACTION_PRIORITIES_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id}  AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND PRIORITY_NAME=#{priority_name} AND PRIORITY_ID!=#{priority_id}")
+	int validateeditActionSts(ActionPlanSettings actionPlanSettings);
+
+	@Select(value = "{ CALL SP_GA_UPDATEACTIONPLANSETTINGS_DET( #{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},#{priority_id, mode=IN, jdbcType=INTEGER},#{priority_name, mode=IN, jdbcType=VARCHAR},#{priority_color, mode=IN, jdbcType=VARCHAR} ,#{default_due_days, mode=IN, jdbcType=INTEGER},#{active, mode=IN, jdbcType=BOOLEAN} )}")
+	@Options(statementType = StatementType.CALLABLE)
+	int addOrEditActionPlanSettngs(ActionPlanSettings actionPlanSettings);
+
+	@Select("SELECT COUNT(*) FROM GA_CUSTOMFIELDS_MT WHERE GUID = #{guid} AND CLIENT_ID = #{client_id} AND AUDIT_TYPE_ID = #{audit_type_id} AND FIELD_NAME=#{field_name}")
+	int isCustomfieldsExist(Customfields customfields);
+
+	@Insert(value = "{ CALL SP_GA_UPDATE_CUSTOMFIELDS_DET_PV2( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER}, "
+			+ "#{audit_type_id, mode=IN, jdbcType=VARCHAR}, #{field_name, mode=IN, jdbcType=VARCHAR}, #{field_label, mode=IN, jdbcType=VARCHAR}, #{field_type, mode=IN, jdbcType=VARCHAR}, #{pactive, mode=IN, jdbcType=BOOLEAN} ) }")
+	@Options(statementType = StatementType.CALLABLE)
+	int addCustomfields(Customfields customfields);	
+	
+	
+	
+	
+	
 	
 }

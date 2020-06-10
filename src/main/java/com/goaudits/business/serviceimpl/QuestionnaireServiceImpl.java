@@ -149,7 +149,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			List<Group> Grouplist = questionnairemapper.getallGroups(secl);
 			for (Group grp : Grouplist) {
 				grp.setGroup_id(grp.getGroup_id());
-				grp.setActive(sec.isActive());
+				grp.setInactiveq(sec.isActive());
 				List<Question> QuestionList = questionnairemapper.getallQuestions(grp);
 
 				for (Question ques : QuestionList) {

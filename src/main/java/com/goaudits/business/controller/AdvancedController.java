@@ -21,6 +21,7 @@ import com.goaudits.business.entity.CustomFieldList;
 import com.goaudits.business.entity.Customfields;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Personseen;
+import com.goaudits.business.entity.Tag;
 import com.goaudits.business.entity.User;
 import com.goaudits.business.service.AdvancedService;
 import com.goaudits.business.util.GoAuditsException;
@@ -295,6 +296,64 @@ public class AdvancedController {
 			ActionPlanSettings.setPriority_id(actplnadd);
 			actionPlansetngs.add(ActionPlanSettings);
 			return new ResponseEntity<List<ActionPlanSettings>>(actionPlansetngs, HttpStatus.OK);
+		}
+
+	}
+	
+	/**
+	 * List report tags of a company
+	 * @param guid
+	 * @param uid
+	 * @param client_id
+	 * @return
+	 */
+	@RequestMapping(value = "/report/tag/list", method = RequestMethod.POST)
+	public ResponseEntity<?> getReportTag(@RequestBody Tag tag) {
+
+		List<Tag> reportTagList = advancedservice.getReportTag(tag.getGuid(),tag.getUid(), tag.getClient_id());
+
+		return new ResponseEntity<List<Tag>>(reportTagList, HttpStatus.OK);
+	}
+	
+	/**
+	 * Add / create a new report tag
+	 * @param tag
+	 * @return
+	 */
+	@RequestMapping(value = "/reporttag/add", method = RequestMethod.POST)
+	public ResponseEntity<?> addReportTag(@RequestBody Tag tag) {
+
+		
+		if (advancedservice.validateaddTag(tag)) {
+
+			return new ResponseEntity(new GoAuditsException("Tag cannot be added,tag code already exists"),
+					HttpStatus.CONFLICT);
+
+		} else {
+			int reportTag = advancedservice.addReportTag(tag);
+			return new ResponseEntity<Integer>(reportTag, HttpStatus.OK);
+
+		}
+
+	}
+	
+	/**
+	 * Update or edit the report tag
+	 * @param tag
+	 * @return
+	 */
+	@RequestMapping(value = "/reporttag/update", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateReportTag(@RequestBody Tag tag) {
+
+		
+		if (advancedservice.validateeditTag(tag)) {
+
+			return new ResponseEntity(new GoAuditsException("Tag cannot be saved,tag code already exists"),
+					HttpStatus.CONFLICT);
+
+		} else {
+			int reportTag = advancedservice.addReportTag(tag);
+			return new ResponseEntity<Integer>(reportTag, HttpStatus.OK);
 		}
 
 	}

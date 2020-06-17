@@ -76,4 +76,12 @@ public interface AdvancedService {
 
 	int updateCustomfields(Customfields customfields);
 
+	List<Tag> getReportTag(String guid, String uid, int client_id);
+
+	boolean validateaddTag(Tag tag);
+
+	int addReportTag(Tag tag);
+
+	boolean validateeditTag(Tag tag);
+
 }

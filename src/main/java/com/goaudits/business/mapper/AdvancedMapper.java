@@ -79,10 +79,6 @@ public interface AdvancedMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	int addTagCategory(LocationTags tgs);
 
-	@Select(value = "{ CALL SP_GA_GETREPORTTAGLIST_DET( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR})}")
-	@Options(statementType = StatementType.CALLABLE)
-	List<Tag> getAllReportTags(Tag tag);
-
 	@Select("SELECT * FROM GA_TAG_CATEGORY_MT WHERE GUID=#{guid}")
 	List<LocationTags> getTagCategories(String guid);
 	
@@ -150,8 +146,24 @@ public interface AdvancedMapper {
 	int addCustomfields(Customfields customfields);	
 	
 	
+	@Select(value = "{ CALL SP_GA_GETREPORTTAGLIST_DET( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR})}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Tag> getAllReportTags(@Param("guid")String guid,@Param("uid")String uid,@Param("client_id") int client_id);
 	
 	
+	@Select(value = "{ CALL SP_GA_GETREPORTTAGLIST_DET_V2( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR})}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Tag> getAllReportTagsV2(@Param("guid")String guid,@Param("uid")String uid,@Param("client_id") int client_id);
 	
+	@Select("SELECT COUNT(*) FROM GA_AUDIT_REPORTTAG_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND TAG_CODE=#{tag_code}")
+	int validateaddTag(Tag tag);
+	
+	@Insert(value = "{ CALL SP_GA_ADDREPORTTAG_DET( #{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR},#{audit_type_id, mode=IN, jdbcType=VARCHAR},"
+			+ "#{tag_code, mode=IN, jdbcType=VARCHAR},#{tag_description, mode=IN, jdbcType=VARCHAR},#{passing_level, mode=IN, jdbcType=VARCHAR},#{id, mode=IN, jdbcType=VARCHAR})}")
+	@Options(statementType = StatementType.CALLABLE)
+	int addReportTag(Tag tag);
+	
+	@Select("SELECT COUNT(*) FROM GA_AUDIT_REPORTTAG_MT WHERE ID!=#{id} AND GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND TAG_CODE=#{tag_code}")
+	int validateeditTag(Tag tag);
 	
 }

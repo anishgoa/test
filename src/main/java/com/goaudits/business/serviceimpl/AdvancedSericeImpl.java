@@ -416,7 +416,47 @@ public class AdvancedSericeImpl implements AdvancedService {
 	}
 
 
+	@Override
+	public List<Tag> getReportTag(String guid,String uid, int client_id) {
+		List<Tag> ReportTaglist = advancedmapper
+				.getAllReportTagsV2(guid, uid, client_id);
+//		for (Tag tg : ReportTaglist) {
+//			String id[] = tg.getTagids().split("---");
+//			String tag_code[] = tg.getTag_code().split("---");
+//			String tag_description[] = tg.getTag_description().split("---");
+//			String passing_level[] = tg.getPassing_level().split("---");
+//			for (int i = 0; i < tag_code.length; i++) {
+//				Tag tgs = new Tag();
+//		
+//				tgs.setId(Integer.parseInt(id[i]));
+//				tgs.setTag_code(tag_code[i]);
+//				tgs.setTag_description(tag_description[i]);
+//				
+//				tgs.setPassing_level(passing_level[i]);
+//				tg.getReportTagList ().add(tgs);
+//
+//			}
+//
+//		}
 
+		return ReportTaglist;
+	}
 
-
+	@Override
+	public boolean validateaddTag(Tag tag) {
+		
+		return (advancedmapper.validateaddTag(tag))> 0 ?true:false;
+	}
+	
+	@Override
+	public int addReportTag(Tag tag) {
+		
+		return advancedmapper.addReportTag(tag) ;
+	}
+	
+	@Override
+	public boolean validateeditTag(Tag tag) {
+		
+		return (advancedmapper.validateeditTag(tag))> 0 ?true:false;
+	}
 }

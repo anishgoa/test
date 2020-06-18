@@ -115,6 +115,7 @@ public class Question implements Serializable {
 	private int image_id;
 	private String qcomments;
 	private int audits_count;
+	private int addedquestion_order=0;
     byte[] binaryimage;
 	private List<Choice> choiceList = new ArrayList<Choice>();
 	private List<Choice> sublist = new ArrayList<Choice>();
@@ -1032,6 +1033,20 @@ public class Question implements Serializable {
 
 	public void setAudits_count(int audits_count) {
 		this.audits_count = audits_count;
+	}
+
+	/**
+	 * @return the addedquestion_order
+	 */
+	public int getAddedquestion_order() {
+		return addedquestion_order;
+	}
+
+	/**
+	 * @param addedquestion_order the addedquestion_order to set
+	 */
+	public void setAddedquestion_order(int addedquestion_order) {
+		this.addedquestion_order = addedquestion_order;
 	}
 
 	

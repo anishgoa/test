@@ -29,9 +29,7 @@ public class Section implements Serializable{
 	private boolean is_help_bold;
 	private boolean is_help_italic;
 	private boolean help_text_position;
-	private String new_section_name;
-	private int group_id;
-	private String new_group_name;
+	
 	private List<Group> GroupList = new ArrayList<Group>();
 	
 	
@@ -153,42 +151,5 @@ public class Section implements Serializable{
 	public void setIs_help_italic(boolean is_help_italic) {
 		this.is_help_italic = is_help_italic;
 	}
-	/**
-	 * @return the new_section_name
-	 */
-	public String getNew_section_name() {
-		return new_section_name;
-	}
-	/**
-	 * @param new_section_name the new_section_name to set
-	 */
-	public void setNew_section_name(String new_section_name) {
-		this.new_section_name = new_section_name;
-	}
-	/**
-	 * @return the group_id
-	 */
-	public int getGroup_id() {
-		return group_id;
-	}
-	/**
-	 * @param group_id the group_id to set
-	 */
-	public void setGroup_id(int group_id) {
-		this.group_id = group_id;
-	}
-	/**
-	 * @return the new_group_name
-	 */
-	public String getNew_group_name() {
-		return new_group_name;
-	}
-	/**
-	 * @param new_group_name the new_group_name to set
-	 */
-	public void setNew_group_name(String new_group_name) {
-		this.new_group_name = new_group_name;
-	}
-	
 	
 }

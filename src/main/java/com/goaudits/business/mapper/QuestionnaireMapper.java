@@ -222,7 +222,7 @@ public interface QuestionnaireMapper {
 	@Select(value = "{ CALL SP_GA_PORTAL_CLONE_SECTION( #{guid, mode=IN, jdbcType=BINARY}, #{uid, mode=IN, jdbcType=BINARY}, "
 			+ "#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER },"
 			+ "#{section_id, mode=IN, jdbcType=INTEGER },#{new_section_name, mode=IN, jdbcType=VARCHAR }, "
-			+ "#{group_id, mode=IN, jdbcType=INTEGER },#{new_group_name, mode=IN, jdbcType=VARCHAR }")
+			+ "#{group_id, mode=IN, jdbcType=INTEGER },#{new_group_name, mode=IN, jdbcType=VARCHAR} )}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<SectionGroupClone> cloneSectionGroup(SectionGroupClone section);
 }

@@ -18,6 +18,7 @@ import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.QuestionOrder;
 import com.goaudits.business.entity.Questionimage;
 import com.goaudits.business.entity.Section;
+import com.goaudits.business.entity.SectionGroupClone;
 import com.goaudits.business.entity.Tag;
 import com.goaudits.business.entity.User;
 
@@ -217,4 +218,11 @@ public interface QuestionnaireMapper {
 
 	@Select("SELECT CHOICE_ID AS CREATED_CHOICE_ID,CHOICE_TEXT,CHOICE_COLOUR,CHOICE_PAT_ID FROM GA_CHOICETYPE_MT_V2 WHERE GUID=#{guid} AND CHOICE_PAT_ID=#{choicepatid} AND CHOICE_ID!=0")
 	List<Choice> getChoicesforPatternForQues(@Param("guid")String guid,@Param("choicepatid") int choicepatid);
+
+	@Select(value = "{ CALL SP_GA_PORTAL_CLONE_SECTION( #{guid, mode=IN, jdbcType=BINARY}, #{uid, mode=IN, jdbcType=BINARY}, "
+			+ "#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER },"
+			+ "#{section_id, mode=IN, jdbcType=INTEGER },#{new_section_name, mode=IN, jdbcType=VARCHAR }, "
+			+ "#{group_id, mode=IN, jdbcType=INTEGER },#{new_group_name, mode=IN, jdbcType=VARCHAR }")
+	@Options(statementType = StatementType.CALLABLE)
+	List<SectionGroupClone> cloneSectionGroup(SectionGroupClone section);
 }

@@ -9,6 +9,7 @@ import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.QuestionOrder;
 import com.goaudits.business.entity.Questionimage;
 import com.goaudits.business.entity.Section;
+import com.goaudits.business.entity.SectionGroupClone;
 import com.goaudits.business.entity.Tag;
 import com.goaudits.business.entity.User;
 
@@ -75,6 +76,8 @@ public interface QuestionnaireService {
 	List<User> getAdminslist(String guid);
 
 	String getCloudinaryFlag(String guid);
+
+	List<SectionGroupClone> cloneSection(SectionGroupClone section);
 
 
 

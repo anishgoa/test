@@ -19,6 +19,7 @@ import com.goaudits.business.entity.QuestionOrder;
 import com.goaudits.business.entity.Questionimage;
 import com.goaudits.business.entity.S3;
 import com.goaudits.business.entity.Section;
+import com.goaudits.business.entity.SectionGroupClone;
 import com.goaudits.business.entity.Tag;
 import com.goaudits.business.entity.User;
 import com.goaudits.business.service.QuestionnaireService;
@@ -364,6 +365,12 @@ public class Questionnaire {
 		List<String> flag=new ArrayList<String>();
 		flag.add(cloudflag);
 		return new ResponseEntity<List<String>>(flag, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/section/clone", method = RequestMethod.POST)
+	public ResponseEntity<List<SectionGroupClone>> cloneSection(@RequestBody SectionGroupClone section) {
+		List<SectionGroupClone> sectionlist = QuestionnaireService.cloneSection(section);
+		return new ResponseEntity<List<SectionGroupClone>>(sectionlist, HttpStatus.OK);
 	}
 
 }

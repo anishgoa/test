@@ -79,6 +79,10 @@ public interface QuestionnaireService {
 
 	List<SectionGroupClone> cloneSection(SectionGroupClone section);
 
+	int changeConditionalChoicenew(Question question);
+
+	int getQimagecount(Question question);
+
 
 
 }

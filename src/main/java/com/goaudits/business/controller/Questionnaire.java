@@ -36,10 +36,10 @@ public class Questionnaire {
 
 	@Autowired
 	private S3Service s3Service;
-	
+
 	@RequestMapping(value = "/prequestionaudit", method = RequestMethod.POST)
 	public ResponseEntity<List<Section>> getPreQuestionsaudit(@RequestBody Section section) {
-		
+
 		List<Section> sectionlist = QuestionnaireService.getUserQuestions(section);
 		return new ResponseEntity<List<Section>>(sectionlist, HttpStatus.OK);
 
@@ -176,11 +176,11 @@ public class Questionnaire {
 	@RequestMapping(value = "/question/add", method = RequestMethod.POST)
 	public ResponseEntity<?> addQuestion(@RequestBody List<Question> question) {
 
-		if (question.get(0).isConditionnew()) {
-			if (QuestionnaireService.isConditionalChoiceQuestionExist(question)) {
-				return new ResponseEntity<>(new GoAuditsException("Response already exists"), HttpStatus.CONFLICT);
-			}
-		}
+//		if (question.get(0).isConditionnew()) {
+//			if (QuestionnaireService.isConditionalChoiceQuestionExist(question)) {
+//				return new ResponseEntity<>(new GoAuditsException("Response already exists"), HttpStatus.CONFLICT);
+//			}
+//		}
 
 		try {
 			int qno = QuestionnaireService.addQuestion(question);
@@ -251,6 +251,23 @@ public class Questionnaire {
 		}
 	}
 
+	@RequestMapping(value = "/question/changecondchoice", method = RequestMethod.POST)
+	public ResponseEntity<?> chngeConditinalChoice(@RequestBody Question question) {
+
+//		if (QuestionnaireService.isConditionalChoiceExist(question)) {
+//			return new ResponseEntity<>(new GoAuditsException("Response already exists"), HttpStatus.CONFLICT);
+//		}
+
+		try {
+			QuestionnaireService.changeConditionalChoicenew(question);
+			List<Question> QuestionList = new ArrayList<Question>();
+			QuestionList.add(question);
+			return new ResponseEntity<List<Question>>(QuestionList, HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+
 	@RequestMapping(value = "/question/image", method = RequestMethod.POST)
 	public ResponseEntity<?> getQuestionImage(@RequestBody Question question) {
 		try {
@@ -280,8 +297,7 @@ public class Questionnaire {
 			}
 		}
 	}
-	
-	
+
 	@RequestMapping(value = "/customchoice/add", method = RequestMethod.POST)
 	public ResponseEntity<?> addCustomchoice(@RequestBody List<Choice> choice) {
 		if (QuestionnaireService.isCustomChoiceExist(choice)) {
@@ -289,16 +305,17 @@ public class Questionnaire {
 					HttpStatus.CONFLICT);
 		}
 		try {
-			int choice_pat_id = QuestionnaireService.addCustomChoice(choice);			
+			int choice_pat_id = QuestionnaireService.addCustomChoice(choice);
 			choice.get(0).setChoice_pat_id(choice_pat_id);
 			return new ResponseEntity<List<Choice>>(choice, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
+
 	@RequestMapping(value = "/question/delete", method = RequestMethod.POST)
 	public ResponseEntity<?> deleteQuestion(@RequestBody Question question) {
-	
+
 		// if (auditConfigService.isAudit(question.getGuid(),
 		// question.getClient_id(), question.getAudit_type_id())) {
 		// return new ResponseEntity(new GoAuditsException(
@@ -315,35 +332,42 @@ public class Questionnaire {
 			return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
-	
+
 	@RequestMapping(value = "/tag/list", method = RequestMethod.POST)
 	public ResponseEntity<List<Tag>> getTag(@RequestBody Tag tag) {
-	
+
 		List<Tag> taglist = QuestionnaireService.getAllTags(tag);
-	
+
 		return new ResponseEntity<List<Tag>>(taglist, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/preview/list", method = RequestMethod.POST)
 	public ResponseEntity<List<Previewchoice>> getPreview(@RequestBody Previewchoice previchoice) {
 		List<Previewchoice> previewchoicelist = QuestionnaireService.getPreviewchoice(previchoice);
 		return new ResponseEntity<List<Previewchoice>>(previewchoicelist, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/question/audit", method = RequestMethod.POST)
 	public ResponseEntity<?> getQuestionauditcount(@RequestBody Question question) {
 		int audits_count = QuestionnaireService.getQuestionAudit(question);
-		List<Question> QuestionList = new ArrayList<Question>();
-		QuestionList.get(0).setAudits_count(audits_count);
-		return new ResponseEntity<List<Question>>(QuestionList, HttpStatus.OK);
+		List<Integer> auditList = new ArrayList<Integer>();
+		auditList.add(audits_count);
+		return new ResponseEntity<List<Integer>>(auditList, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/users/admin/{guid}", method = RequestMethod.GET)
 	public ResponseEntity<List<User>> getUserslist(@PathVariable("guid") String guid) {
 		List<User> Adminslist = QuestionnaireService.getAdminslist(guid);
 		return new ResponseEntity<List<User>>(Adminslist, HttpStatus.OK);
 	}
-
+	
+	@RequestMapping(value = "/question/imgcount", method = RequestMethod.POST)
+	public ResponseEntity<?> getqimgcouunt(@RequestBody Question question) {
+		int qimagecount = QuestionnaireService.getQimagecount(question);
+		List<Integer> imgcount=new ArrayList<Integer>();
+		imgcount.add(qimagecount);
+		return new ResponseEntity<Integer>(qimagecount, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "questionimg/signature", method = RequestMethod.POST)
 	public ResponseEntity<S3> GetQuesImagSig(@RequestBody Question question) {
@@ -358,15 +382,15 @@ public class Questionnaire {
 		return new ResponseEntity<S3>(params, HttpStatus.OK);
 	}
 	
-	
+
 	@RequestMapping(value = "getCloudinaryFlag/{guid}", method = RequestMethod.GET)
 	public ResponseEntity<?> getCloudinaryFlag(@PathVariable("guid") String guid) {
 		String cloudflag = QuestionnaireService.getCloudinaryFlag(guid);
-		List<String> flag=new ArrayList<String>();
+		List<String> flag = new ArrayList<String>();
 		flag.add(cloudflag);
 		return new ResponseEntity<List<String>>(flag, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/section/clone", method = RequestMethod.POST)
 	public ResponseEntity<List<SectionGroupClone>> cloneSection(@RequestBody SectionGroupClone section) {
 		List<SectionGroupClone> sectionlist = QuestionnaireService.cloneSection(section);

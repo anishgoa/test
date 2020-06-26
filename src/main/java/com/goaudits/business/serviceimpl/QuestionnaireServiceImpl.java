@@ -223,7 +223,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			for (Choice choice : choicelists) {
 				ques.setChoice_pat_id(choicelists.get(0).getChoice_pat_id());
 				if (ques.getDefault_choice_id() != null && ques.getDefault_choice_id() != "") {
-					ques.setDefault_choice_id(choice.getCreated_choice_id() + "");
+					ques.setDefault_choice_id(ques.getDefault_choice_id().replace(choice.getChoice_id(),
+							choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getEmail_choices() != null && ques.getEmail_choices() != "") {
@@ -267,8 +268,6 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 					ques.setConditional_choiceid(ques.getConditional_choiceid().replace(choice.getChoice_id(),
 							choice.getCreated_choice_id() + ""));
 				}
-				
-				 
 
 				choice.setChoice_id(choice.getCreated_choice_id() + "");
 			}
@@ -378,16 +377,16 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			int choicepatid = questionnairemapper.getChoicePatId(guid, choice_pattern, choice_type);
 //			System.out.println(choicepatid);
 			List<Choice> choiceList = questionnairemapper.getChoicesforPatternForQues(guid, choicepatid);
-			
-			for(Choice chc:choiceList) {
-				for(Choice chs:choices) {
-					if(chc.getChoice_text().equals(chs.getChoice_text())) {
+
+			for (Choice chc : choiceList) {
+				for (Choice chs : choices) {
+					if (chc.getChoice_text().equals(chs.getChoice_text())) {
 						chs.setCreated_choice_id(chc.getCreated_choice_id());
 						chs.setChoice_pat_id(chc.getChoice_pat_id());
 					}
 				}
 			}
-			
+
 			return choices;
 		} else {
 			choice_pat_id = questionnairemapper.generateChoicepatid(guid);
@@ -401,7 +400,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 				} else {
 					choice_pattern = choice_pattern + cho.getChoice_text() + ",";
 				}
-
+				cho.setChoice_colour(cho.getChoice_colour().replace("#",""));
 				cho.setCreated_choice_id(questionnairemapper.addCustomChoice(cho));
 			}
 
@@ -438,7 +437,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			for (Choice choice : choicelists) {
 				ques.setChoice_pat_id(choicelists.get(0).getChoice_pat_id());
 				if (ques.getDefault_choice_id() != null && ques.getDefault_choice_id() != "") {
-					ques.setDefault_choice_id(choice.getCreated_choice_id() + "");
+					ques.setDefault_choice_id(ques.getDefault_choice_id().replace(choice.getChoice_id(),
+							choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getEmail_choices() != null && ques.getEmail_choices() != "") {
@@ -478,8 +478,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 				choice.setChoice_id(choice.getCreated_choice_id() + "");
 			}
 
-
-			//			List<Choice> choicelists1 = ques.getChoiceList();
+			// List<Choice> choicelists1 = ques.getChoiceList();
 			for (Choice choice : choicelists) {
 
 				questionnairemapper.addquestscores(ques.getGuid(), ques.getClient_id(), 1, ques.getAudit_type_id(),
@@ -684,6 +683,16 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	@Override
 	public List<SectionGroupClone> cloneSection(SectionGroupClone section) {
 		return questionnairemapper.cloneSectionGroup(section);
+	}
+
+	@Override
+	public int changeConditionalChoicenew(Question question) {
+		return questionnairemapper.changeConditionalChoicenew(question);
+	}
+
+	@Override
+	public int getQimagecount(Question question) {
+		return questionnairemapper.getQimagecount(question);
 	}
 
 }

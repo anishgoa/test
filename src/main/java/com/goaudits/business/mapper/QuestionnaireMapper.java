@@ -225,4 +225,11 @@ public interface QuestionnaireMapper {
 			+ "#{group_id, mode=IN, jdbcType=INTEGER },#{new_group_name, mode=IN, jdbcType=VARCHAR} )}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<SectionGroupClone> cloneSectionGroup(SectionGroupClone section);
+	
+	@Update(value = "{CALL SP_GA_UPDATECONDITIONALCHOICE_PV3( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER}, #{question_no, mode=IN, jdbcType=INTEGER}, #{choice_pat_id,mode=IN, jdbcType=INTEGER},#{oldchoiceid,mode=IN, jdbcType=INTEGER},#{choice_id,mode=IN, jdbcType=INTEGER} )}")
+	@Options(statementType = StatementType.CALLABLE)
+	int changeConditionalChoicenew(Question question);
+
+	@Select("SELECT CASE WHEN length(STATIC_IMAGE_COUNT)>0 THEN STATIC_IMAGE_COUNT ELSE 1 END AS STATIC_IMAGE_COUNT  FROM GA_AUDITTYPE_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id}")
+	int getQimagecount(Question question);
 }

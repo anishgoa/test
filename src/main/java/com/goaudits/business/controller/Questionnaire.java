@@ -366,7 +366,7 @@ public class Questionnaire {
 		int qimagecount = QuestionnaireService.getQimagecount(question);
 		List<Integer> imgcount=new ArrayList<Integer>();
 		imgcount.add(qimagecount);
-		return new ResponseEntity<Integer>(qimagecount, HttpStatus.OK);
+		return new ResponseEntity<List<Integer>>(imgcount, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "questionimg/signature", method = RequestMethod.POST)

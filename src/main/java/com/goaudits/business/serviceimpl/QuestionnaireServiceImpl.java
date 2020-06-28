@@ -313,7 +313,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 			}
 
-			questionnairemapper.addCustomChoiceorUpdate(ques);
+//			questionnairemapper.addCustomChoiceorUpdate(ques);
 
 			List<Questionimage> qimagelist = ques.getQuestimagelist();
 
@@ -496,7 +496,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			ques.setOldtagid(oldtagid);
 
 			questionnairemapper.addquest(ques);
-			questionnairemapper.addCustomChoiceorUpdate(ques);
+//			questionnairemapper.addCustomChoiceorUpdate(ques);
 
 			if (ques.isImageflag()) {
 				List<Questionimage> qimglist = ques.getQuestimagelist();

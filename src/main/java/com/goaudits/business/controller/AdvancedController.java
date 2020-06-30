@@ -175,7 +175,7 @@ public class AdvancedController {
 	@RequestMapping(value = "/workflow/add", method = RequestMethod.POST)
 	public ResponseEntity<?> addScheduleaudit(@RequestBody AuditWorkFlow AuditWorkFlow) {
 
-		int workflow = advancedservice.addWorkFlow(AuditWorkFlow);
+		 advancedservice.addWorkFlow(AuditWorkFlow);
 
 		List<AuditWorkFlow> wrkFlwList = new ArrayList<AuditWorkFlow>();
 		wrkFlwList.add(AuditWorkFlow);
@@ -185,7 +185,7 @@ public class AdvancedController {
 	@RequestMapping(value = "/workflow/edit", method = RequestMethod.POST)
 	public ResponseEntity<?> editScheduleaudit(@RequestBody AuditWorkFlow AuditWorkFlow) {
 
-		int workflow = advancedservice.editWorkFlow(AuditWorkFlow);
+		 advancedservice.editWorkFlow(AuditWorkFlow);
 
 		List<AuditWorkFlow> wrkFlwList = new ArrayList<AuditWorkFlow>();
 		wrkFlwList.add(AuditWorkFlow);
@@ -195,7 +195,7 @@ public class AdvancedController {
 	@RequestMapping(value = "/workflow/delete", method = RequestMethod.POST)
 	public ResponseEntity<?> deleteScheduleaudit(@RequestBody AuditWorkFlow AuditWorkFlow) {
 
-		int workflow = advancedservice.deleteWorkFlow(AuditWorkFlow);
+		 advancedservice.deleteWorkFlow(AuditWorkFlow);
 
 		List<AuditWorkFlow> wrkFlwList = new ArrayList<AuditWorkFlow>();
 		wrkFlwList.add(AuditWorkFlow);

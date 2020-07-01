@@ -16,6 +16,7 @@ import com.goaudits.business.entity.Group;
 import com.goaudits.business.entity.Previewchoice;
 import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.QuestionOrder;
+import com.goaudits.business.entity.QuestionVo;
 import com.goaudits.business.entity.Questionimage;
 import com.goaudits.business.entity.Section;
 import com.goaudits.business.entity.SectionGroupClone;
@@ -232,4 +233,8 @@ public interface QuestionnaireMapper {
 
 	@Select("SELECT CASE WHEN length(STATIC_IMAGE_COUNT)>0 THEN STATIC_IMAGE_COUNT ELSE 1 END AS STATIC_IMAGE_COUNT  FROM GA_AUDITTYPE_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id}")
 	int getQimagecount(Question question);
+
+	@Select(value = "{CALL GA_SP_PORTAL_GET_QUESTION_LIST( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER}, #{active, mode=IN, jdbcType=BOOLEAN} )}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<QuestionVo> getQuestionsList(Section audit);
 }

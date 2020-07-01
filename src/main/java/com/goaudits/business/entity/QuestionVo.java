@@ -1,16 +1,13 @@
 package com.goaudits.business.entity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 @Repository
-//@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
-public class Question implements Serializable {
+public class QuestionVo {
 
-	private static final long serialVersionUID = 1L;
 	private String guid;
 	private String uid;
 	private int client_id;
@@ -19,6 +16,7 @@ public class Question implements Serializable {
 	private int audit_type_id;
 	private int section_id;
 	private int group_id;
+	private String group_name;
 	private int question_no;
 	private String question_text;
 	private int choice_pat_id;
@@ -33,6 +31,7 @@ public class Question implements Serializable {
 	private String question_order;
 	private String default_choice_text;
 	private String choice_type;
+	
 	private String tag_id;
 	private String tag_code;
 	private String tag_description;
@@ -90,6 +89,8 @@ public class Question implements Serializable {
 	private int conditionalchoice;
 	private int sub_question_no;
 	private int choice_id;
+	private String choice_text;
+	private String choice_colour;
 	private boolean is_parent_question;
 	private boolean is_sub_question;
 	private String conditional_choice_pat_id;
@@ -118,6 +119,13 @@ public class Question implements Serializable {
 	private int addedquestion_order=0;
     byte[] binaryimage;
     
+    private String section_name;
+	private String section_help;
+	private String help_color;
+	private boolean is_help_bold;
+	private boolean is_help_italic;
+	private boolean help_text_position;
+	
 	private List<Choice> choiceList = new ArrayList<Choice>();
 	private List<Choice> sublist = new ArrayList<Choice>();
 	private List<Quesactionfield> questionactfldlist = new ArrayList<Quesactionfield>();
@@ -1049,5 +1057,132 @@ public class Question implements Serializable {
 	public void setAddedquestion_order(int addedquestion_order) {
 		this.addedquestion_order = addedquestion_order;
 	}
+
+	/**
+	 * @return the section_name
+	 */
+	public String getSection_name() {
+		return section_name;
+	}
+
+	/**
+	 * @param section_name the section_name to set
+	 */
+	public void setSection_name(String section_name) {
+		this.section_name = section_name;
+	}
+
+	/**
+	 * @return the section_help
+	 */
+	public String getSection_help() {
+		return section_help;
+	}
+
+	/**
+	 * @param section_help the section_help to set
+	 */
+	public void setSection_help(String section_help) {
+		this.section_help = section_help;
+	}
+
+	/**
+	 * @return the help_color
+	 */
+	public String getHelp_color() {
+		return help_color;
+	}
+
+	/**
+	 * @param help_color the help_color to set
+	 */
+	public void setHelp_color(String help_color) {
+		this.help_color = help_color;
+	}
+
+	/**
+	 * @return the is_help_bold
+	 */
+	public boolean isIs_help_bold() {
+		return is_help_bold;
+	}
+
+	/**
+	 * @param is_help_bold the is_help_bold to set
+	 */
+	public void setIs_help_bold(boolean is_help_bold) {
+		this.is_help_bold = is_help_bold;
+	}
+
+	/**
+	 * @return the is_help_italic
+	 */
+	public boolean isIs_help_italic() {
+		return is_help_italic;
+	}
+
+	/**
+	 * @param is_help_italic the is_help_italic to set
+	 */
+	public void setIs_help_italic(boolean is_help_italic) {
+		this.is_help_italic = is_help_italic;
+	}
+
+	/**
+	 * @return the help_text_position
+	 */
+	public boolean isHelp_text_position() {
+		return help_text_position;
+	}
+
+	/**
+	 * @param help_text_position the help_text_position to set
+	 */
+	public void setHelp_text_position(boolean help_text_position) {
+		this.help_text_position = help_text_position;
+	}
+
+	/**
+	 * @return the group_name
+	 */
+	public String getGroup_name() {
+		return group_name;
+	}
+
+	/**
+	 * @param group_name the group_name to set
+	 */
+	public void setGroup_name(String group_name) {
+		this.group_name = group_name;
+	}
+
+	/**
+	 * @return the choice_text
+	 */
+	public String getChoice_text() {
+		return choice_text;
+	}
+
+	/**
+	 * @param choice_text the choice_text to set
+	 */
+	public void setChoice_text(String choice_text) {
+		this.choice_text = choice_text;
+	}
+
+	/**
+	 * @return the choice_colour
+	 */
+	public String getChoice_colour() {
+		return choice_colour;
+	}
+
+	/**
+	 * @param choice_colour the choice_colour to set
+	 */
+	public void setChoice_colour(String choice_colour) {
+		this.choice_colour = choice_colour;
+	}
+	
 	
 }

@@ -3,10 +3,7 @@ package com.goaudits.business.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
-@Repository
-public class Choice {
+public class ChoiceItem {
 
 	
 	String guid;
@@ -19,7 +16,7 @@ public class Choice {
 	String choice_text;
 	String choice_colour;
 	int  score_type;
-	private List<Choice> choiceList = new ArrayList<Choice>();
+	private List<ChoiceItem> choiceList = new ArrayList<ChoiceItem>();
  	
 	String choice_text1;
 	String choice_text2;
@@ -31,14 +28,34 @@ public class Choice {
 	int created_choice_id;
 	boolean is_custom;
 	
-	private List<Question> questionlist = new ArrayList<Question>();
+	private List<QuestionItem> questionlist = new ArrayList<QuestionItem>();
 	
 	
+	public ChoiceItem(QuestionVo q) {
+		this.choice_pat_id = q.getChoice_pat_id();
+		this.choice_id = q.getChoice_id()+"";
+		this.choice_text=q.getChoice_text();
+		this.choice_colour=q.getChoice_colour();
+	}
 	
-	public List<Question> getQuestionlist() {
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof ChoiceItem) {
+			return ((ChoiceItem) obj).choice_id == choice_id;
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return Integer.parseInt(this.choice_id);
+	}
+	
+	
+	public List<QuestionItem> getQuestionlist() {
 		return questionlist;
 	}
-	public void setQuestionlist(List<Question> questionlist) {
+	public void setQuestionlist(List<QuestionItem> questionlist) {
 		this.questionlist = questionlist;
 	}
 	public String getChoice_text1() {
@@ -72,10 +89,10 @@ public class Choice {
 	public void setScore_type(int score_type) {
 		this.score_type = score_type;
 	}
-	public List<Choice> getChoiceList() {
+	public List<ChoiceItem> getChoiceList() {
 		return choiceList;
 	}
-	public void setChoiceList(List<Choice> choiceList) {
+	public void setChoiceList(List<ChoiceItem> choiceList) {
 		this.choiceList = choiceList;
 	}
 	

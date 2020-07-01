@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.goaudits.business.entity.Choice;
 import com.goaudits.business.entity.Group;
 import com.goaudits.business.entity.Previewchoice;
@@ -20,6 +21,7 @@ import com.goaudits.business.entity.Questionimage;
 import com.goaudits.business.entity.S3;
 import com.goaudits.business.entity.Section;
 import com.goaudits.business.entity.SectionGroupClone;
+import com.goaudits.business.entity.SectionItem;
 import com.goaudits.business.entity.Tag;
 import com.goaudits.business.entity.User;
 import com.goaudits.business.service.QuestionnaireService;
@@ -171,6 +173,12 @@ public class Questionnaire {
 	public ResponseEntity<List<Section>> getQuestions(@RequestBody Section sec) {
 		List<Section> grouplist = QuestionnaireService.getQuestions(sec);
 		return new ResponseEntity<List<Section>>(grouplist, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/question/list2", method = RequestMethod.POST)
+	public ResponseEntity<List<SectionItem>> getOpenQuestionsList(@RequestBody Section audit) {
+		List<SectionItem> sectionList = QuestionnaireService.getQuestionList(audit);
+		return new ResponseEntity<List<SectionItem>>(sectionList, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/question/add", method = RequestMethod.POST)

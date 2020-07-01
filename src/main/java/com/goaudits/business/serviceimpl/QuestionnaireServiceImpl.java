@@ -3,18 +3,26 @@ package com.goaudits.business.serviceimpl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.goaudits.business.entity.Choice;
+import com.goaudits.business.entity.ChoiceItem;
 import com.goaudits.business.entity.Group;
+import com.goaudits.business.entity.GroupItem;
 import com.goaudits.business.entity.Previewchoice;
 import com.goaudits.business.entity.Question;
+import com.goaudits.business.entity.QuestionItem;
 import com.goaudits.business.entity.QuestionOrder;
+import com.goaudits.business.entity.QuestionVo;
 import com.goaudits.business.entity.Questionimage;
 import com.goaudits.business.entity.Section;
 import com.goaudits.business.entity.SectionGroupClone;
+import com.goaudits.business.entity.SectionItem;
 import com.goaudits.business.entity.Tag;
 import com.goaudits.business.entity.User;
 import com.goaudits.business.mapper.QuestionnaireMapper;
@@ -693,6 +701,50 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	@Override
 	public int getQimagecount(Question question) {
 		return questionnairemapper.getQimagecount(question);
+	}
+
+	@Override
+	public List<SectionItem> getQuestionList(Section audit) {
+		
+		List<QuestionVo> questionList = questionnairemapper.getQuestionsList(audit); // query to be done
+
+		List<SectionItem> sectionItemList = questionList.stream().map(n -> new SectionItem(n)).distinct()
+				.collect(Collectors.toList());
+		
+		for (SectionItem sectionItem : sectionItemList) {
+
+			List<GroupItem> groupItemList = questionList.stream()
+					.filter(p -> p.getSection_id() == sectionItem.getSection_id())
+					.map(p -> new GroupItem(p.getSection_id(), p.getGroup_id(), p.getGroup_name()))
+					.distinct().collect(Collectors.toList());
+
+			System.out.println(groupItemList);
+
+			for (GroupItem groupItem : groupItemList) {
+
+				List<QuestionItem> questionItemList = questionList.stream()
+						.filter(p -> p.getSection_id() == groupItem.getSection_id()
+								&& p.getGroup_id() == groupItem.getGroup_id() && !p.isIs_sub_question())
+						.map(p -> new QuestionItem(p)).distinct().collect(Collectors.toList());
+				
+				System.out.println("Question List => "+ questionItemList);
+				
+				for (QuestionItem questionItem : questionItemList) {
+					List<ChoiceItem> choiceItemList = questionList.stream()
+							.filter(q -> q.getQuestion_no() == questionItem.getQuestion_no()
+									&& q.getChoice_pat_id() == questionItem.getChoice_pat_id())
+							.map(q -> new ChoiceItem(q)).distinct().collect(Collectors.toList());
+					
+					questionItem.getChoiceList().addAll(choiceItemList);
+				}
+				
+				
+				groupItem.getQuestionList().addAll(questionItemList);
+			}
+			sectionItem.getGroupList().addAll(groupItemList);
+		}
+		
+		return sectionItemList;
 	}
 
 }

@@ -4,11 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
-@Repository
-//@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
-public class Question implements Serializable {
+public class QuestionItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String guid;
@@ -118,13 +114,61 @@ public class Question implements Serializable {
 	private int addedquestion_order=0;
     byte[] binaryimage;
     
-	private List<Choice> choiceList = new ArrayList<Choice>();
+	private List<ChoiceItem> choiceList = new ArrayList<ChoiceItem>();
 	private List<Choice> sublist = new ArrayList<Choice>();
 	private List<Quesactionfield> questionactfldlist = new ArrayList<Quesactionfield>();
 	private List<Questactimage> questactimglist = new ArrayList<Questactimage>();
 	private List<Actioncount> questactcountlist = new ArrayList<Actioncount>();
 	private List<Questionimage> questimagelist = new ArrayList<Questionimage>();
 
+	
+	public QuestionItem(QuestionVo p) {
+		this.section_id = p.getSection_id();
+		this.group_id=p.getGroup_id();
+		this.question_no = p.getQuestion_no();
+		this.question_text = p.getQuestion_text();
+		this.choice_pat_id = p.getChoice_pat_id();
+		this.available_score = p.getAvailable_score();
+		this.question_help = p.getQuestion_help();
+		this.default_choice_id = p.getDefault_choice_id();
+		this.ismandatory=p.isIsmandatory();
+		this.comment_mandatory=p.isComment_mandatory();
+		this.comment_choices=p.getComment_choices();
+		this.image_mandatory=p.isImage_mandatory();
+		this.image_choices=p.getImage_choices();
+		this.question_order = p.getQuestion_order();
+		this.default_choice_text=p.getDefault_choice_text();
+		this.question_type=p.getQuestion_type();
+		this.choice_type=p.getChoice_type();
+		this.image_position=p.isImage_position();
+		this.action_enabled=p.isAction_enabled();
+		this.action_choices=p.getAction_choices();
+		this.isactionplan_mandatory=p.isIsactionplan_mandatory();
+		this.temp_min=p.getTemp_min();
+		this.temp_max=p.getTemp_max();
+		this.temp_unit=p.getTemp_unit();
+		this.is_multichoice=p.isIs_multichoice();
+		this.question_text_color=p.getQuestion_text_color();
+		this.image_path=p.getImage_path();
+		this.image_public_id=p.getImage_public_id();
+		this.image_id=p.getImage_id();
+		this.comments=p.getComments();
+		this.is_parent_question = p.isIs_parent_question();
+		this.is_sub_question = p.isIs_sub_question();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof QuestionItem) {
+			return ((QuestionItem) obj).question_no == question_no;
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return this.question_no;
+	}
 	
 	public String getQcomments() {
 		return qcomments;
@@ -780,11 +824,11 @@ public class Question implements Serializable {
 		this.default_choice_text = default_choice_text;
 	}
 
-	public List<Choice> getChoiceList() {
+	public List<ChoiceItem> getChoiceList() {
 		return choiceList;
 	}
 
-	public void setChoiceList(List<Choice> choiceList) {
+	public void setChoiceList(List<ChoiceItem> choiceList) {
 		this.choiceList = choiceList;
 	}
 

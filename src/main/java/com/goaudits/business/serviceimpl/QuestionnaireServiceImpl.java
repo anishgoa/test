@@ -707,6 +707,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	public List<SectionItem> getQuestionList(Section audit) {
 		
 		List<QuestionVo> questionList = questionnairemapper.getQuestionsList(audit); // query to be done
+		
 
 		List<SectionItem> sectionItemList = questionList.stream().map(n -> new SectionItem(n)).distinct()
 				.collect(Collectors.toList());
@@ -734,6 +735,29 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 							.filter(q -> q.getQuestion_no() == questionItem.getQuestion_no()
 									&& q.getChoice_pat_id() == questionItem.getChoice_pat_id())
 							.map(q -> new ChoiceItem(q)).distinct().collect(Collectors.toList());
+					
+					// add subquestions to each choice
+					for (ChoiceItem choiceItem : choiceItemList) {
+						List<QuestionItem> subQuestionList = questionList.stream()
+								.filter(k -> k.isIs_sub_question()
+										&& k.getParent_question_no() == choiceItem.getQuestion_no()
+										&& k.getParent_choice_pat_id() == choiceItem.getChoice_pat_id()
+										&& k.getParent_choice_id() == Integer.parseInt(choiceItem.getChoice_id()))
+								.map(k -> new QuestionItem(k)).distinct().collect(Collectors.toList());
+
+						// add choices for question
+						for (QuestionItem subquestionItem : subQuestionList) {
+							List<ChoiceItem> subChoiceItemList = questionList.stream()
+									.filter(q -> q.getQuestion_no() == subquestionItem.getQuestion_no()
+											&& q.getChoice_pat_id() == subquestionItem.getChoice_pat_id())
+									.map(q -> new ChoiceItem(q)).distinct().collect(Collectors.toList());
+
+							subquestionItem.getSublist().addAll(subChoiceItemList); // add choicelist to the sub
+																						// question
+						}
+
+						choiceItem.getQuestionlist().addAll(subQuestionList);
+					}
 					
 					questionItem.getChoiceList().addAll(choiceItemList);
 				}

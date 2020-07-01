@@ -1,12 +1,10 @@
 package com.goaudits.business.entity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionItem implements Serializable {
+public class QuestionItem {
 
-	private static final long serialVersionUID = 1L;
 	private String guid;
 	private String uid;
 	private int client_id;
@@ -115,7 +113,7 @@ public class QuestionItem implements Serializable {
     byte[] binaryimage;
     
 	private List<ChoiceItem> choiceList = new ArrayList<ChoiceItem>();
-	private List<Choice> sublist = new ArrayList<Choice>();
+	private List<ChoiceItem> sublist = new ArrayList<ChoiceItem>();
 	private List<Quesactionfield> questionactfldlist = new ArrayList<Quesactionfield>();
 	private List<Questactimage> questactimglist = new ArrayList<Questactimage>();
 	private List<Actioncount> questactcountlist = new ArrayList<Actioncount>();
@@ -282,11 +280,11 @@ public class QuestionItem implements Serializable {
 		this.conditionalflag = conditionalflag;
 	}
 
-	public List<Choice> getSublist() {
+	public List<ChoiceItem> getSublist() {
 		return sublist;
 	}
 
-	public void setSublist(List<Choice> sublist) {
+	public void setSublist(List<ChoiceItem> sublist) {
 		this.sublist = sublist;
 	}
 
@@ -1093,5 +1091,4 @@ public class QuestionItem implements Serializable {
 	public void setAddedquestion_order(int addedquestion_order) {
 		this.addedquestion_order = addedquestion_order;
 	}
-	
 }

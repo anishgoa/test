@@ -237,4 +237,5 @@ public interface QuestionnaireMapper {
 	@Select(value = "{CALL GA_SP_PORTAL_GET_QUESTION_LIST( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER}, #{active, mode=IN, jdbcType=BOOLEAN} )}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<QuestionVo> getQuestionsList(Section audit);
+	
 }

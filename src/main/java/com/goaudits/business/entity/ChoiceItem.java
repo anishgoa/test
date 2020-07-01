@@ -16,6 +16,7 @@ public class ChoiceItem {
 	String choice_text;
 	String choice_colour;
 	int  score_type;
+	private int question_no;
 	private List<ChoiceItem> choiceList = new ArrayList<ChoiceItem>();
  	
 	String choice_text1;
@@ -193,6 +194,20 @@ public class ChoiceItem {
 	 */
 	public void setIs_custom(boolean is_custom) {
 		this.is_custom = is_custom;
+	}
+
+	/**
+	 * @return the question_no
+	 */
+	public int getQuestion_no() {
+		return question_no;
+	}
+
+	/**
+	 * @param question_no the question_no to set
+	 */
+	public void setQuestion_no(int question_no) {
+		this.question_no = question_no;
 	}
 	
 	

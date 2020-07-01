@@ -118,6 +118,9 @@ public class QuestionVo {
 	private int audits_count;
 	private int addedquestion_order=0;
     byte[] binaryimage;
+	private int parent_question_no;
+	private int parent_choice_pat_id;
+	private int parent_choice_id;
     
     private String section_name;
 	private String section_help;
@@ -1182,6 +1185,48 @@ public class QuestionVo {
 	 */
 	public void setChoice_colour(String choice_colour) {
 		this.choice_colour = choice_colour;
+	}
+
+	/**
+	 * @return the parent_question_no
+	 */
+	public int getParent_question_no() {
+		return parent_question_no;
+	}
+
+	/**
+	 * @param parent_question_no the parent_question_no to set
+	 */
+	public void setParent_question_no(int parent_question_no) {
+		this.parent_question_no = parent_question_no;
+	}
+
+	/**
+	 * @return the parent_choice_pat_id
+	 */
+	public int getParent_choice_pat_id() {
+		return parent_choice_pat_id;
+	}
+
+	/**
+	 * @param parent_choice_pat_id the parent_choice_pat_id to set
+	 */
+	public void setParent_choice_pat_id(int parent_choice_pat_id) {
+		this.parent_choice_pat_id = parent_choice_pat_id;
+	}
+
+	/**
+	 * @return the parent_choice_id
+	 */
+	public int getParent_choice_id() {
+		return parent_choice_id;
+	}
+
+	/**
+	 * @param parent_choice_id the parent_choice_id to set
+	 */
+	public void setParent_choice_id(int parent_choice_id) {
+		this.parent_choice_id = parent_choice_id;
 	}
 	
 	

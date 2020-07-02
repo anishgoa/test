@@ -113,7 +113,7 @@ public class QuestionItem {
     byte[] binaryimage;
     
 	private List<ChoiceItem> choiceList = new ArrayList<ChoiceItem>();
-	private List<ChoiceItem> sublist = new ArrayList<ChoiceItem>();
+	private List<ParentChoice> sublist = new ArrayList<ParentChoice>();
 	private List<Quesactionfield> questionactfldlist = new ArrayList<Quesactionfield>();
 	private List<Questactimage> questactimglist = new ArrayList<Questactimage>();
 	private List<Actioncount> questactcountlist = new ArrayList<Actioncount>();
@@ -153,6 +153,7 @@ public class QuestionItem {
 		this.comments=p.getComments();
 		this.is_parent_question = p.isIs_parent_question();
 		this.is_sub_question = p.isIs_sub_question();
+		this.sub_question_no=p.getSub_question_no();
 	}
 	
 	@Override
@@ -280,11 +281,11 @@ public class QuestionItem {
 		this.conditionalflag = conditionalflag;
 	}
 
-	public List<ChoiceItem> getSublist() {
+	public List<ParentChoice> getSublist() {
 		return sublist;
 	}
 
-	public void setSublist(List<ChoiceItem> sublist) {
+	public void setSublist(List<ParentChoice> sublist) {
 		this.sublist = sublist;
 	}
 

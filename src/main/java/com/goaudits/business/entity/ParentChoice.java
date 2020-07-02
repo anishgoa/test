@@ -3,7 +3,7 @@ package com.goaudits.business.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChoiceItem {
+public class ParentChoice {
 
 	
 	String guid;
@@ -17,7 +17,7 @@ public class ChoiceItem {
 	String choice_colour;
 	int  score_type;
 	private int question_no;
-	private List<ChoiceItem> choiceList = new ArrayList<ChoiceItem>();
+	private List<ParentChoice> choiceList = new ArrayList<ParentChoice>();
  	
 	String choice_text1;
 	String choice_text2;
@@ -32,18 +32,18 @@ public class ChoiceItem {
 	private List<QuestionItem> questionlist = new ArrayList<QuestionItem>();
 	
 	
-	public ChoiceItem(QuestionVo q) {
-		this.choice_pat_id = q.getChoice_pat_id();
-		this.choice_id = q.getChoice_id()+"";
-		this.choice_text=q.getChoice_text();
-		this.choice_colour=q.getChoice_colour();
-		this.question_no=q.getQuestion_no();
+	public ParentChoice(ChoiceItem chs) {
+		this.choice_pat_id = chs.getChoice_pat_id();
+		this.choice_id = chs.getChoice_id()+"";
+		this.choice_text=chs.getChoice_text();
+//		this.choice_colour=q.getChoice_colour();
+//		this.question_no=q.getQuestion_no();
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ChoiceItem) {
-			return ((ChoiceItem) obj).choice_id == choice_id;
+		if (obj instanceof ParentChoice) {
+			return ((ParentChoice) obj).choice_id == choice_id;
 		}
 		return false;
 	}
@@ -91,10 +91,10 @@ public class ChoiceItem {
 	public void setScore_type(int score_type) {
 		this.score_type = score_type;
 	}
-	public List<ChoiceItem> getChoiceList() {
+	public List<ParentChoice> getChoiceList() {
 		return choiceList;
 	}
-	public void setChoiceList(List<ChoiceItem> choiceList) {
+	public void setChoiceList(List<ParentChoice> choiceList) {
 		this.choiceList = choiceList;
 	}
 	
@@ -124,24 +124,14 @@ public class ChoiceItem {
 	public void setActive(String active) {
 		this.active = active;
 	}
-	public String getChoice_id() {
-		return choice_id;
-	}
-	public void setChoice_id(String choice_id) {
-		this.choice_id = choice_id;
-	}
+	
 	public String getGuid() {
 		return guid;
 	}
 	public void setGuid(String guid) {
 		this.guid = guid;
 	}
-	public int getChoice_pat_id() {
-		return choice_pat_id;
-	}
-	public void setChoice_pat_id(int choice_pat_id) {
-		this.choice_pat_id = choice_pat_id;
-	}
+	
 	public String getChoice_pattern() {
 		return choice_pattern;
 	}
@@ -209,6 +199,34 @@ public class ChoiceItem {
 	 */
 	public void setQuestion_no(int question_no) {
 		this.question_no = question_no;
+	}
+
+	/**
+	 * @return the choice_pat_id
+	 */
+	public int getChoice_pat_id() {
+		return choice_pat_id;
+	}
+
+	/**
+	 * @param choice_pat_id the choice_pat_id to set
+	 */
+	public void setChoice_pat_id(int choice_pat_id) {
+		this.choice_pat_id = choice_pat_id;
+	}
+
+	/**
+	 * @return the choice_id
+	 */
+	public String getChoice_id() {
+		return choice_id;
+	}
+
+	/**
+	 * @param choice_id the choice_id to set
+	 */
+	public void setChoice_id(String choice_id) {
+		this.choice_id = choice_id;
 	}
 	
 	

@@ -14,6 +14,7 @@ import com.goaudits.business.entity.Choice;
 import com.goaudits.business.entity.ChoiceItem;
 import com.goaudits.business.entity.Group;
 import com.goaudits.business.entity.GroupItem;
+import com.goaudits.business.entity.ParentChoice;
 import com.goaudits.business.entity.Previewchoice;
 import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.QuestionItem;
@@ -408,7 +409,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 				} else {
 					choice_pattern = choice_pattern + cho.getChoice_text() + ",";
 				}
-				cho.setChoice_colour(cho.getChoice_colour().replace("#",""));
+				cho.setChoice_colour(cho.getChoice_colour().replace("#", ""));
 				cho.setCreated_choice_id(questionnairemapper.addCustomChoice(cho));
 			}
 
@@ -705,19 +706,18 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 	@Override
 	public List<SectionItem> getQuestionList(Section audit) {
-		
+
 		List<QuestionVo> questionList = questionnairemapper.getQuestionsList(audit); // query to be done
-		
 
 		List<SectionItem> sectionItemList = questionList.stream().map(n -> new SectionItem(n)).distinct()
 				.collect(Collectors.toList());
-		
+
 		for (SectionItem sectionItem : sectionItemList) {
 
 			List<GroupItem> groupItemList = questionList.stream()
 					.filter(p -> p.getSection_id() == sectionItem.getSection_id())
-					.map(p -> new GroupItem(p.getSection_id(), p.getGroup_id(), p.getGroup_name()))
-					.distinct().collect(Collectors.toList());
+					.map(p -> new GroupItem(p.getSection_id(), p.getGroup_id(), p.getGroup_name())).distinct()
+					.collect(Collectors.toList());
 
 			System.out.println(groupItemList);
 
@@ -727,47 +727,59 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 						.filter(p -> p.getSection_id() == groupItem.getSection_id()
 								&& p.getGroup_id() == groupItem.getGroup_id() && !p.isIs_sub_question())
 						.map(p -> new QuestionItem(p)).distinct().collect(Collectors.toList());
-				
-				System.out.println("Question List => "+ questionItemList);
-				
+
+				System.out.println("Question List => " + questionItemList);
+
 				for (QuestionItem questionItem : questionItemList) {
 					List<ChoiceItem> choiceItemList = questionList.stream()
-							.filter(q -> q.getQuestion_no() == questionItem.getQuestion_no()
+							.filter(q -> q.getSection_id() == groupItem.getSection_id()
+									&& q.getGroup_id() == groupItem.getGroup_id()
+									&& q.getQuestion_no() == questionItem.getQuestion_no()
 									&& q.getChoice_pat_id() == questionItem.getChoice_pat_id())
 							.map(q -> new ChoiceItem(q)).distinct().collect(Collectors.toList());
-					
-					// add subquestions to each choice
-					for (ChoiceItem choiceItem : choiceItemList) {
-						List<QuestionItem> subQuestionList = questionList.stream()
-								.filter(k -> k.isIs_sub_question()
-										&& k.getParent_question_no() == choiceItem.getQuestion_no()
-										&& k.getParent_choice_pat_id() == choiceItem.getChoice_pat_id()
-										&& k.getParent_choice_id() == Integer.parseInt(choiceItem.getChoice_id()))
-								.map(k -> new QuestionItem(k)).distinct().collect(Collectors.toList());
-
-						// add choices for question
-						for (QuestionItem subquestionItem : subQuestionList) {
-							List<ChoiceItem> subChoiceItemList = questionList.stream()
-									.filter(q -> q.getQuestion_no() == subquestionItem.getQuestion_no()
-											&& q.getChoice_pat_id() == subquestionItem.getChoice_pat_id())
-									.map(q -> new ChoiceItem(q)).distinct().collect(Collectors.toList());
-
-							subquestionItem.getSublist().addAll(subChoiceItemList); // add choicelist to the sub
-																						// question
-						}
-
-						choiceItem.getQuestionlist().addAll(subQuestionList);
-					}
-					
 					questionItem.getChoiceList().addAll(choiceItemList);
+
+					for (ChoiceItem chs : choiceItemList) {
+						List<ParentChoice> subChoicelist = questionList.stream()
+								.filter(q -> q.getSection_id() == questionItem.getSection_id()
+										&& q.getGroup_id() == questionItem.getGroup_id()
+										&& q.getParent_question_no() == questionItem.getQuestion_no()
+										&& q.getParent_choice_pat_id() == chs.getChoice_pat_id()
+										&& q.getParent_choice_id()==Integer.parseInt(chs.getChoice_id())
+									&& q.isIs_sub_question()
+										)
+								.map(q -> new ParentChoice(chs)).distinct().collect(Collectors.toList());
+
+						
+						for(ParentChoice sub:subChoicelist) {
+							List<QuestionItem> questionlist=questionList.stream()
+									.filter(p -> p.getSection_id() == groupItem.getSection_id()
+									&& p.getGroup_id() == groupItem.getGroup_id() 
+									&& p.getParent_question_no() == questionItem.getQuestion_no()
+									&& p.getParent_choice_pat_id()==sub.getChoice_pat_id()
+									&& p.getParent_choice_id()==Integer.parseInt(sub.getChoice_id())
+									&& p.isIs_sub_question())
+							.map(p -> new QuestionItem(p)).distinct().collect(Collectors.toList());
+
+							
+						sub.getQuestionlist().addAll(questionlist);
+							
+						}
+						
+						
+						questionItem.getSublist().addAll(subChoicelist);
+
+
+					}
+					// sublist
+
 				}
-				
-				
+
 				groupItem.getQuestionList().addAll(questionItemList);
 			}
 			sectionItem.getGroupList().addAll(groupItemList);
 		}
-		
+
 		return sectionItemList;
 	}
 

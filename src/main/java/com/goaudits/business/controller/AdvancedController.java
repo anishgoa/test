@@ -19,6 +19,7 @@ import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.CustomFieldList;
 import com.goaudits.business.entity.Customfields;
+import com.goaudits.business.entity.GroupAudit;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Personseen;
 import com.goaudits.business.entity.Tag;
@@ -355,8 +356,59 @@ public class AdvancedController {
 			int reportTag = advancedservice.addReportTag(tag);
 			return new ResponseEntity<Integer>(reportTag, HttpStatus.OK);
 		}
-
 	}
+	
+	@RequestMapping(value = "/groupaudit/list/{guid}/{active}", method = RequestMethod.GET)
+	public ResponseEntity<?> getGroupAudit(@PathVariable("guid")String guid,@PathVariable("active") boolean active) {
+
+		List<GroupAudit> auditTypeList = advancedservice.getGroupAudit(guid, active);
+
+		return new ResponseEntity<List<GroupAudit>>(auditTypeList, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/groupaudit/auditnames/{guid}/{uid}/{client_id}/{parent_audit_id}", method = RequestMethod.GET)
+	public ResponseEntity<List<AuditName>> getAllClients(@PathVariable("guid") String guid,@PathVariable("uid") String uid,@PathVariable("client_id") int client_id,
+			@PathVariable("parent_audit_id") int parent_audit_id) {
+
+		List<AuditName> auditTypeList = advancedservice.getAuditTypeList(guid,
+				uid, client_id, parent_audit_id);
+
+		return new ResponseEntity<List<AuditName>>(auditTypeList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/groupaudit/add", method = RequestMethod.POST)
+	public ResponseEntity<?> addGroupAudit(@RequestBody GroupAudit GroupAudit) {
+
+		if (GroupAudit.getParent_audit_id() == 0) {
+
+			if (advancedservice.validateGroupAudit(GroupAudit)) {
+				return new ResponseEntity(new GoAuditsException("Name cannot be added, already exists"),
+						HttpStatus.CONFLICT);
+
+			}
+
+		} else {
+
+			if (advancedservice.validateGroupAudit1(GroupAudit)) {
+				return new ResponseEntity(new GoAuditsException("Name cannot be edited, already exists"),
+						HttpStatus.CONFLICT);
+
+			}
+
+		}
+
+		int addAuditGroup = advancedservice.addAuditGroup(GroupAudit);
+		List<GroupAudit> gList=new ArrayList<GroupAudit>();
+
+		return new ResponseEntity<List<GroupAudit>>(gList, HttpStatus.OK);
+	}
+
+	
+	
+	
+
+	
+	
 	
 
 }

@@ -1,10 +1,15 @@
 package com.goaudits.business.entity;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionItem {
+import org.springframework.beans.BeanUtils;
 
+import com.goaudits.business.util.Utils;
+import com.google.gson.Gson;
+
+public class QuestionItem {
 	private String guid;
 	private String uid;
 	private int client_id;
@@ -109,9 +114,8 @@ public class QuestionItem {
 	private int image_id;
 	private String qcomments;
 	private int audits_count;
-	private int addedquestion_order=0;
-    byte[] binaryimage;
-    
+	private int addedquestion_order = 0;
+	byte[] binaryimage;
 	private List<ChoiceItem> choiceList = new ArrayList<ChoiceItem>();
 	private List<ParentChoice> sublist = new ArrayList<ParentChoice>();
 	private List<Quesactionfield> questionactfldlist = new ArrayList<Quesactionfield>();
@@ -119,43 +123,73 @@ public class QuestionItem {
 	private List<Actioncount> questactcountlist = new ArrayList<Actioncount>();
 	private List<Questionimage> questimagelist = new ArrayList<Questionimage>();
 
-	
 	public QuestionItem(QuestionVo p) {
-		this.section_id = p.getSection_id();
-		this.group_id=p.getGroup_id();
-		this.question_no = p.getQuestion_no();
-		this.question_text = p.getQuestion_text();
-		this.choice_pat_id = p.getChoice_pat_id();
-		this.available_score = p.getAvailable_score();
-		this.question_help = p.getQuestion_help();
-		this.default_choice_id = p.getDefault_choice_id();
-		this.ismandatory=p.isIsmandatory();
-		this.comment_mandatory=p.isComment_mandatory();
-		this.comment_choices=p.getComment_choices();
-		this.image_mandatory=p.isImage_mandatory();
-		this.image_choices=p.getImage_choices();
-		this.question_order = p.getQuestion_order();
-		this.default_choice_text=p.getDefault_choice_text();
-		this.question_type=p.getQuestion_type();
-		this.choice_type=p.getChoice_type();
-		this.image_position=p.isImage_position();
-		this.action_enabled=p.isAction_enabled();
-		this.action_choices=p.getAction_choices();
-		this.isactionplan_mandatory=p.isIsactionplan_mandatory();
-		this.temp_min=p.getTemp_min();
-		this.temp_max=p.getTemp_max();
-		this.temp_unit=p.getTemp_unit();
-		this.is_multichoice=p.isIs_multichoice();
-		this.question_text_color=p.getQuestion_text_color();
-		this.image_path=p.getImage_path();
-		this.image_public_id=p.getImage_public_id();
-		this.image_id=p.getImage_id();
-		this.comments=p.getComments();
-		this.is_parent_question = p.isIs_parent_question();
-		this.is_sub_question = p.isIs_sub_question();
-		this.sub_question_no=p.getSub_question_no();
+//		this.section_id = p.getSection_id();
+//		this.group_id = p.getGroup_id();
+//		this.question_no = p.getQuestion_no();
+//		this.question_text = p.getQuestion_text();
+//		this.choice_pat_id = p.getChoice_pat_id();
+//		this.available_score = p.getAvailable_score();
+//		this.question_help = p.getQuestion_help();
+//		this.default_choice_id = p.getDefault_choice_id();
+//		this.ismandatory = p.isIsmandatory();
+//		this.comment_mandatory = p.isComment_mandatory();
+//		this.comment_choices = p.getComment_choices();
+//		this.image_mandatory = p.isImage_mandatory();
+//		this.image_choices = p.getImage_choices();
+//		this.question_order = p.getQuestion_order();
+//		this.default_choice_text = p.getDefault_choice_text();
+//		this.question_type = p.getQuestion_type();
+//		this.choice_type = p.getChoice_type();
+//		this.image_position = p.isImage_position();
+//		this.action_enabled = p.isAction_enabled();
+//		this.action_choices = p.getAction_choices();
+//		this.isactionplan_mandatory = p.isIsactionplan_mandatory();
+//		this.temp_min = p.getTemp_min();
+//		this.temp_max = p.getTemp_max();
+//		this.temp_unit = p.getTemp_unit();
+//		this.is_multichoice = p.isIs_multichoice();
+//		this.question_text_color = p.getQuestion_text_color();
+//		this.image_path = p.getImage_path();
+//		this.image_public_id = p.getImage_public_id();
+//		this.image_id = p.getImage_id();
+//		this.comments = p.getComments();
+//		this.is_parent_question = p.isIs_parent_question();
+//		this.is_sub_question = p.isIs_sub_question();
+//		this.sub_question_no = p.getSub_question_no();
+//		this.active = p.isActive();
+//		this.ismandatory = p.isIsmandatory();
+//		this.question_order = p.getQuestion_order();
+//		this.tag_id = p.getTag_id();
+
+//		Gson gson = new Gson();
+//		=gson.fromJson(gson.toJson(p), QuestionItem.class);
+
+//		QuestionItem q=new QuestionItem(p);
+//		BeanUtils.copyProperties(QuestionItem.class,p);
+
+		Method[] gettersAndSetters = p.getClass().getMethods();
+
+		for (int i = 0; i < gettersAndSetters.length; i++) {
+			String methodName = gettersAndSetters[i].getName();
+			try {
+				if (methodName.startsWith("get")) {
+					this.getClass()
+							.getMethod(methodName.replaceFirst("get", "set"), gettersAndSetters[i].getReturnType())
+							.invoke(this, gettersAndSetters[i].invoke(p, null));
+				} else if (methodName.startsWith("is")) {
+					this.getClass()
+							.getMethod(methodName.replaceFirst("is", "set"), gettersAndSetters[i].getReturnType())
+							.invoke(this, gettersAndSetters[i].invoke(p, null));
+				}
+
+			} catch (Exception e) {
+//				e.printStackTrace();
+			}
+
+		}
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof QuestionItem) {
@@ -168,7 +202,7 @@ public class QuestionItem {
 	public int hashCode() {
 		return this.question_no;
 	}
-	
+
 	public String getQcomments() {
 		return qcomments;
 	}
@@ -288,8 +322,6 @@ public class QuestionItem {
 	public void setSublist(List<ParentChoice> sublist) {
 		this.sublist = sublist;
 	}
-
-
 
 	/**
 	 * @return the conditional_choice_pat_id
@@ -942,8 +974,6 @@ public class QuestionItem {
 	public void setQuestion_weight(String question_weight) {
 		this.question_weight = question_weight;
 	}
-
-
 
 	/**
 	 * @return the default_choice_id

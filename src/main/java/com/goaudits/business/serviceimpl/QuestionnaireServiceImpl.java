@@ -2,7 +2,10 @@ package com.goaudits.business.serviceimpl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -716,10 +719,10 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 			List<GroupItem> groupItemList = questionList.stream()
 					.filter(p -> p.getSection_id() == sectionItem.getSection_id())
-					.map(p -> new GroupItem(p.getSection_id(), p.getGroup_id(), p.getGroup_name())).distinct()
+					.map(p -> new GroupItem(p)).distinct()
 					.collect(Collectors.toList());
 
-			System.out.println(groupItemList);
+//			System.out.println(groupItemList);
 
 			for (GroupItem groupItem : groupItemList) {
 
@@ -728,7 +731,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 								&& p.getGroup_id() == groupItem.getGroup_id() && !p.isIs_sub_question())
 						.map(p -> new QuestionItem(p)).distinct().collect(Collectors.toList());
 
-				System.out.println("Question List => " + questionItemList);
+//				System.out.println("Question List => " + questionItemList);
 
 				for (QuestionItem questionItem : questionItemList) {
 					List<ChoiceItem> choiceItemList = questionList.stream()
@@ -749,9 +752,12 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 									&& q.isIs_sub_question()
 										)
 								.map(q -> new ParentChoice(chs)).distinct().collect(Collectors.toList());
-
 						
-						for(ParentChoice sub:subChoicelist) {
+						Set<ParentChoice> subChoicelist1 = subChoicelist.stream()
+					            .collect(Collectors.toCollection(() -> 
+					                 new TreeSet<>(Comparator.comparing(ParentChoice::getChoice_id))));
+						
+						for(ParentChoice sub:subChoicelist1) {
 							List<QuestionItem> questionlist=questionList.stream()
 									.filter(p -> p.getSection_id() == groupItem.getSection_id()
 									&& p.getGroup_id() == groupItem.getGroup_id() 
@@ -761,13 +767,23 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 									&& p.isIs_sub_question())
 							.map(p -> new QuestionItem(p)).distinct().collect(Collectors.toList());
 
+							for(QuestionItem questionItem1:questionlist) {
+							List<ChoiceItem> choiceItemList1 = questionList.stream()
+									.filter(q -> q.getSection_id() == groupItem.getSection_id()
+											&& q.getGroup_id() == groupItem.getGroup_id()
+											&& q.getQuestion_no() == questionItem1.getQuestion_no()
+											&& q.getChoice_pat_id() == questionItem1.getChoice_pat_id())
+									.map(q -> new ChoiceItem(q)).distinct().collect(Collectors.toList());
 							
+							questionItem1.getChoiceList().addAll(choiceItemList1);
+							
+							}
 						sub.getQuestionlist().addAll(questionlist);
 							
 						}
 						
 						
-						questionItem.getSublist().addAll(subChoicelist);
+						questionItem.getSublist().addAll(subChoicelist1);
 
 
 					}

@@ -38,6 +38,7 @@ public class SectionItem {
 		this.is_help_bold = n.isIs_help_bold();
 		this.is_help_italic = n.isIs_help_italic();
 		this.help_text_position = n.isHelp_text_position();
+		this.active=n.isSecactive();
 		// add active column here - Todo
 	}
 

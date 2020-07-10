@@ -8,6 +8,7 @@ import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.CustomFieldList;
 import com.goaudits.business.entity.Customfields;
+import com.goaudits.business.entity.GroupAudit;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Personseen;
 import com.goaudits.business.entity.Tag;
@@ -83,5 +84,15 @@ public interface AdvancedService {
 	int addReportTag(Tag tag);
 
 	boolean validateeditTag(Tag tag);
+
+	List<GroupAudit> getGroupAudit(String guid, boolean active);
+
+	List<AuditName> getAuditTypeList(String guid, String uid, int client_id, int parent_audit_id);
+
+	boolean validateGroupAudit(GroupAudit groupAudit);
+
+	boolean validateGroupAudit1(GroupAudit groupAudit);
+
+	int addAuditGroup(GroupAudit groupAudit);
 
 }

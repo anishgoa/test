@@ -12,6 +12,7 @@ import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.CustomFieldList;
 import com.goaudits.business.entity.Customfields;
+import com.goaudits.business.entity.GroupAudit;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Personseen;
@@ -458,5 +459,34 @@ public class AdvancedSericeImpl implements AdvancedService {
 	public boolean validateeditTag(Tag tag) {
 		
 		return (advancedmapper.validateeditTag(tag))> 0 ?true:false;
+	}
+
+	@Override
+	public List<GroupAudit> getGroupAudit(String guid, boolean active) {
+		return advancedmapper.getGroupAudit(guid,active);
+	}
+
+	@Override
+	public List<AuditName> getAuditTypeList(String guid, String uid, int client_id, int parent_audit_id) {
+		// TODO Auto-generated method stub
+		return advancedmapper.getAuditTypeList(guid,uid,client_id,parent_audit_id);
+	}
+
+	@Override
+	public boolean validateGroupAudit(GroupAudit groupAudit) {
+		// TODO Auto-generated method stub
+		return (advancedmapper.validateGroupName(groupAudit)) >0 ?true:false;
+	}
+
+	@Override
+	public boolean validateGroupAudit1(GroupAudit groupAudit) {
+		// TODO Auto-generated method stub
+		return (advancedmapper.validateGroupName1(groupAudit)) >0 ?true:false;
+	}
+
+	@Override
+	public int addAuditGroup(GroupAudit groupAudit) {
+		// TODO Auto-generated method stub
+		return advancedmapper.addGroupAudit(groupAudit);
 	}
 }

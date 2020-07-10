@@ -22,11 +22,11 @@ public class GroupItem {
 	private boolean inactiveq=true;
 	private List<QuestionItem> QuestionList = new ArrayList<QuestionItem>();
 	
-	public GroupItem(int section_id, int group_id, String group_name) {
-		this.section_id = section_id;
-		this.group_id = group_id;
-		this.group_name = group_name;
-//		this.active = 
+	public GroupItem(QuestionVo p) {
+		this.section_id = p.getSection_id();
+		this.group_id = p.getGroup_id();
+		this.group_name = p.getGroup_name();
+		this.active = p.isGrpacive();
 	}
 	
 	@Override

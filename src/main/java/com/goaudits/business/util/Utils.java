@@ -1,6 +1,7 @@
 package com.goaudits.business.util;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -9,7 +10,6 @@ import java.util.Base64;
 import java.util.UUID;
 
 public class Utils {
-
 
 	public static byte[] Base64ToBytes(String imageString) throws IOException {
 		Base64.Decoder decoder = Base64.getDecoder();
@@ -42,7 +42,7 @@ public class Utils {
 			throw new AssertionError(e);
 		}
 	}
-	
+
 	public static String splitJoinStringsAtIndex(String sourceStr, String insertText, int indexPos,
 			String delimiterStr) {
 
@@ -79,7 +79,7 @@ public class Utils {
 				if (i < myList.size() - 1) {
 					sb.append(myList.get(i));
 					sb.append("/");
-				}else {
+				} else {
 					sb.append((myList.get(i)).split("\\.")[0]);
 				}
 			}
@@ -90,6 +90,6 @@ public class Utils {
 		return sb.toString();
 	}
 
-	
-	
+
+
 }

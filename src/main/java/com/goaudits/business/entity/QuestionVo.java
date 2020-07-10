@@ -121,13 +121,14 @@ public class QuestionVo {
 	private int parent_question_no;
 	private int parent_choice_pat_id;
 	private int parent_choice_id;
-    
     private String section_name;
 	private String section_help;
 	private String help_color;
 	private boolean is_help_bold;
 	private boolean is_help_italic;
 	private boolean help_text_position;
+	private boolean grpacive;
+	private boolean secactive; 
 	
 	private List<Choice> choiceList = new ArrayList<Choice>();
 	private List<Choice> sublist = new ArrayList<Choice>();
@@ -1227,6 +1228,34 @@ public class QuestionVo {
 	 */
 	public void setParent_choice_id(int parent_choice_id) {
 		this.parent_choice_id = parent_choice_id;
+	}
+
+	/**
+	 * @return the grpacive
+	 */
+	public boolean isGrpacive() {
+		return grpacive;
+	}
+
+	/**
+	 * @param grpacive the grpacive to set
+	 */
+	public void setGrpacive(boolean grpacive) {
+		this.grpacive = grpacive;
+	}
+
+	/**
+	 * @return the secactive
+	 */
+	public boolean isSecactive() {
+		return secactive;
+	}
+
+	/**
+	 * @param secactive the secactive to set
+	 */
+	public void setSecactive(boolean secactive) {
+		this.secactive = secactive;
 	}
 	
 	

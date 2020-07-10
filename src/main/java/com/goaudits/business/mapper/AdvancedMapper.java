@@ -17,6 +17,7 @@ import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.CustomFieldList;
 import com.goaudits.business.entity.Customfields;
+import com.goaudits.business.entity.GroupAudit;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Personseen;
@@ -81,7 +82,7 @@ public interface AdvancedMapper {
 
 	@Select("SELECT * FROM GA_TAG_CATEGORY_MT WHERE GUID=#{guid}")
 	List<LocationTags> getTagCategories(String guid);
-	
+
 	@Select("SELECT * FROM GA_TAG_MT WHERE GUID=#{guid} AND CATEGORY_ID=#{category_id}")
 	List<LocationTags> getTagList(@Param("guid") String guid, @Param("category_id") int category_id);
 
@@ -93,11 +94,13 @@ public interface AdvancedMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	List<User> getAdminlist(AuditWorkFlow auditWorkFlow);
 
-	@Insert(value = "{ CALL SP_GA_ADDAUDITWORKFLOW_DET( #{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR},#{store_id, mode=IN, jdbcType=VARCHAR},#{audit_type_id, mode=IN, jdbcType=VARCHAR},#{assignee, mode=IN, jdbcType=VARCHAR}," +
-			"#{workflow_type, mode=IN, jdbcType=BOOLEAN},#{uuid, mode=IN, jdbcType=VARCHAR},#{signature_required, mode=IN, jdbcType=BOOLEAN})}")
+	@Insert(value = "{ CALL SP_GA_ADDAUDITWORKFLOW_DET( #{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR},#{store_id, mode=IN, jdbcType=VARCHAR},#{audit_type_id, mode=IN, jdbcType=VARCHAR},#{assignee, mode=IN, jdbcType=VARCHAR},"
+			+ "#{workflow_type, mode=IN, jdbcType=BOOLEAN},#{uuid, mode=IN, jdbcType=VARCHAR},#{signature_required, mode=IN, jdbcType=BOOLEAN})}")
 	@Options(statementType = StatementType.CALLABLE)
-	int addAuditWorkFlow(@Param("guid") String guid,@Param("client_id") String client_id,@Param("store_id") String store_id,@Param("audit_type_id") String audit_type_id,@Param("assignee") String assignee,
-			@Param("workflow_type") boolean workflow_type,@Param("uuid") String uuid,@Param("signature_required") boolean signature_required);
+	int addAuditWorkFlow(@Param("guid") String guid, @Param("client_id") String client_id,
+			@Param("store_id") String store_id, @Param("audit_type_id") String audit_type_id,
+			@Param("assignee") String assignee, @Param("workflow_type") boolean workflow_type,
+			@Param("uuid") String uuid, @Param("signature_required") boolean signature_required);
 
 	@Delete("DELETE FROM GA_WORKFLOW_DT WHERE UUID=#{uuid}")
 	int deleteAuditWorkFlow(@Param("uuid") String uuid);
@@ -117,8 +120,8 @@ public interface AdvancedMapper {
 
 	@Select(value = "{ CALL SP_GA_GETCUSTOMFIELDS_DET_PV3( #{guid, mode=IN, jdbcType=BINARY}, #{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER} ) }")
 	@Options(statementType = StatementType.CALLABLE)
-	List<Customfields> getAllCustomfields(@Param("guid") String guid,
-			@Param("uid") String uid, @Param("client_id") String client_id);
+	List<Customfields> getAllCustomfields(@Param("guid") String guid, @Param("uid") String uid,
+			@Param("client_id") String client_id);
 
 	@Select(value = "{ CALL GA_SP_PORTAL_GET_CUSTOMFIELDS_MT( #{guid, mode=IN, jdbcType=BINARY}, #{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER} ) }")
 	@Options(statementType = StatementType.CALLABLE)
@@ -143,27 +146,45 @@ public interface AdvancedMapper {
 	@Insert(value = "{ CALL SP_GA_UPDATE_CUSTOMFIELDS_DET_PV2( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER}, "
 			+ "#{audit_type_id, mode=IN, jdbcType=VARCHAR}, #{field_name, mode=IN, jdbcType=VARCHAR}, #{field_label, mode=IN, jdbcType=VARCHAR}, #{field_type, mode=IN, jdbcType=VARCHAR}, #{pactive, mode=IN, jdbcType=BOOLEAN} ) }")
 	@Options(statementType = StatementType.CALLABLE)
-	int addCustomfields(Customfields customfields);	
-	
-	
+	int addCustomfields(Customfields customfields);
+
 	@Select(value = "{ CALL SP_GA_GETREPORTTAGLIST_DET( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR})}")
 	@Options(statementType = StatementType.CALLABLE)
-	List<Tag> getAllReportTags(@Param("guid")String guid,@Param("uid")String uid,@Param("client_id") int client_id);
-	
-	
+	List<Tag> getAllReportTags(@Param("guid") String guid, @Param("uid") String uid, @Param("client_id") int client_id);
+
 	@Select(value = "{ CALL SP_GA_GETREPORTTAGLIST_DET_V2( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR})}")
 	@Options(statementType = StatementType.CALLABLE)
-	List<Tag> getAllReportTagsV2(@Param("guid")String guid,@Param("uid")String uid,@Param("client_id") int client_id);
-	
+	List<Tag> getAllReportTagsV2(@Param("guid") String guid, @Param("uid") String uid,
+			@Param("client_id") int client_id);
+
 	@Select("SELECT COUNT(*) FROM GA_AUDIT_REPORTTAG_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND TAG_CODE=#{tag_code}")
 	int validateaddTag(Tag tag);
-	
+
 	@Insert(value = "{ CALL SP_GA_ADDREPORTTAG_DET( #{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR},#{audit_type_id, mode=IN, jdbcType=VARCHAR},"
 			+ "#{tag_code, mode=IN, jdbcType=VARCHAR},#{tag_description, mode=IN, jdbcType=VARCHAR},#{passing_level, mode=IN, jdbcType=VARCHAR},#{id, mode=IN, jdbcType=VARCHAR})}")
 	@Options(statementType = StatementType.CALLABLE)
 	int addReportTag(Tag tag);
-	
+
 	@Select("SELECT COUNT(*) FROM GA_AUDIT_REPORTTAG_MT WHERE ID!=#{id} AND GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND TAG_CODE=#{tag_code}")
 	int validateeditTag(Tag tag);
+
+	@Select(value = "{ CALL SP_GA_GETGROUPAUDIT_DET( #{guid, mode=IN, jdbcType=BINARY},#{active, mode=IN, jdbcType=BOOLEAN})}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<GroupAudit> getGroupAudit(@Param("guid") String guid, @Param("active") boolean active);
+
+	@Select(value = "{ CALL SP_GA_GROUPAUDIT_AUDITNAMES_DET( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{parent_audit_id, mode=IN, jdbcType=INTEGER})}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<AuditName> getAuditTypeList(String guid, String uid, int client_id, int parent_audit_id);
+
+	@Insert(value = "{ CALL SP_GA_ADDGROUPAUDIT_DET( #{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{parent_audit_id, mode=IN, jdbcType=VARCHAR},#{parent_audit_type_name, mode=IN, jdbcType=VARCHAR},#{sub_title, mode=IN, jdbcType=VARCHAR}," +
+			"#{logo, mode=IN, jdbcType=VARCHAR},#{active, mode=IN, jdbcType=BOOLEAN},#{audit_type_ids, mode=IN, jdbcType=VARCHAR},#{toemail, mode=IN, jdbcType=VARCHAR},#{ccemail, mode=IN, jdbcType=VARCHAR})}")
+	@Options(statementType = StatementType.CALLABLE)
+	int addGroupAudit(GroupAudit groupAudit);
+
+	@Select("SELECT COUNT(*) FROM GA_AUDITTYPE_PARENT_MT WHERE GUID=#{guid} AND PARENT_AUDIT_TYPE_NAME=#{parent_audit_type_name}")
+	int validateGroupName(GroupAudit GroupAudit);
+	
+	@Select("SELECT COUNT(*) FROM GA_AUDITTYPE_PARENT_MT WHERE GUID=#{guid} AND PARENT_AUDIT_ID!=#{parent_audit_id} AND PARENT_AUDIT_TYPE_NAME=#{parent_audit_type_name}")
+	int validateGroupName1(GroupAudit GroupAudit);
 	
 }

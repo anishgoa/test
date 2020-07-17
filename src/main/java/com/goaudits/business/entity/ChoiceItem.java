@@ -38,6 +38,7 @@ public class ChoiceItem {
 		this.choice_text=q.getChoice_text();
 		this.choice_colour=q.getChoice_colour();
 		this.question_no=q.getQuestion_no();
+		this.default_score_percent=q.getDefault_score_percent();
 	}
 	
 	@Override

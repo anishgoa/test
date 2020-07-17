@@ -28,7 +28,7 @@ public class ParentChoice {
 	String comment_mandatory;
 	int created_choice_id;
 	boolean is_custom;
-	
+
 	private List<QuestionItem> questionlist = new ArrayList<QuestionItem>();
 	
 	
@@ -36,6 +36,7 @@ public class ParentChoice {
 		this.choice_pat_id = chs.getChoice_pat_id();
 		this.choice_id = chs.getChoice_id()+"";
 		this.choice_text=chs.getChoice_text();
+		this.default_score_percent=chs.getDefault_score_percent();
 //		this.choice_colour=q.getChoice_colour();
 //		this.question_no=q.getQuestion_no();
 	}

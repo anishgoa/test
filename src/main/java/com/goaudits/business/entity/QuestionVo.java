@@ -129,7 +129,8 @@ public class QuestionVo {
 	private boolean help_text_position;
 	private boolean grpacive;
 	private boolean secactive; 
-	
+	String default_score_percent;
+
 	private List<Choice> choiceList = new ArrayList<Choice>();
 	private List<Choice> sublist = new ArrayList<Choice>();
 	private List<Quesactionfield> questionactfldlist = new ArrayList<Quesactionfield>();
@@ -1256,6 +1257,20 @@ public class QuestionVo {
 	 */
 	public void setSecactive(boolean secactive) {
 		this.secactive = secactive;
+	}
+
+	/**
+	 * @return the default_score_percent
+	 */
+	public String getDefault_score_percent() {
+		return default_score_percent;
+	}
+
+	/**
+	 * @param default_score_percent the default_score_percent to set
+	 */
+	public void setDefault_score_percent(String default_score_percent) {
+		this.default_score_percent = default_score_percent;
 	}
 	
 	

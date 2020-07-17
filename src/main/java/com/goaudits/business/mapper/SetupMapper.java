@@ -178,7 +178,7 @@ public interface SetupMapper {
 	@Select("SELECT GPS_LOCATION_FILTER_ENABLED FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1 LIMIT 1")
 	boolean getGpsFlag(String guid);
 
-	@Select(value = "{ CALL SP_GA_GETREPORTADMIN_DET_PV4( #{guid, mode=IN, jdbcType=BINARY}, #{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER} ) }")
+	@Select(value = "{ CALL SP_GA_GETREPORTADMIN_DET_PV5( #{guid, mode=IN, jdbcType=BINARY}, #{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER} ) }")
 	@Options(statementType = StatementType.CALLABLE)
 	List<Report> getReports(Report report);
 
@@ -188,7 +188,7 @@ public interface SetupMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	int UpdateReport(Report report);
 
-	@Select(value = "{ CALL SP_GA_GETTEMPLATE_DETAILS( #{guid, mode=IN, jdbcType=BINARY} )}")
+	@Select(value = "{ CALL SP_GA_GETTEMPLATE_DETAILS_V1( #{guid, mode=IN, jdbcType=BINARY} )}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<Report> getReportTemplates(String guid);
 

@@ -192,7 +192,7 @@ public interface SetupMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	List<Report> getReportTemplates(String guid);
 
-	@Select("SELECT * FROM GA_CLIENT_MT WHERE GUID=(SELECT GUID FROM GA_USERDET_MT WHERE USER_NAME='templates@goaudits.com') AND ACTIVE=1")
+	@Select("SELECT * FROM GA_CLIENT_MT WHERE GUID=(SELECT GUID FROM GA_USERDET_MT WHERE USER_NAME='templates@goaudits.com') AND ACTIVE=1 ORDER BY SORT_ORDER")
 	List<Company> getPreexistingTemplates();
 
 	@Select(value = "{CALL GA_SP_APP_GET_AUDITNAMES_INDUSTRIES(0, #{client_id, mode=IN, jdbcType=INTEGER})}")

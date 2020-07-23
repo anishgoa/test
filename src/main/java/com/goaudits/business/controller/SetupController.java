@@ -2,6 +2,7 @@ package com.goaudits.business.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import com.goaudits.business.entity.ActionPlanAssignee;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.EmailTemplate;
+import com.goaudits.business.entity.GuidedSetup;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
@@ -410,5 +412,34 @@ public class SetupController {
 			return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
+	
+	@RequestMapping(value = "/guideddata", method = RequestMethod.GET)
+	public ResponseEntity<?> guidedSetupData() {
+		List<GuidedSetup> dataList=setupservice.getGuidedSetupdata();
+		return new ResponseEntity<List<GuidedSetup>>(dataList, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/cmpcount/{guid}", method = RequestMethod.GET)
+	public ResponseEntity<?> CompanyCount(@PathVariable("guid") String guid) {
+		int count=setupservice.getCompanyCount(guid);
+		List<Integer> list=new ArrayList<Integer>();
+		list.add(count);
+		return new ResponseEntity<List<Integer>>(list, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/createdguided", method = RequestMethod.POST)
+	public ResponseEntity<?> createguidedSetup(@RequestBody GuidedSetup gudsetp,Company cmp) {
+		cmp.setGuid(gudsetp.getGuid());
+		cmp.setUid(gudsetp.getUid());
+		cmp.setClient_name(gudsetp.getCompany_name());
+		cmp.setLogo(gudsetp.getLogo());
+		cmp.setActive(true);
+		setupservice.addCompany(cmp);
+		setupservice.createGuided(gudsetp);
+		List<GuidedSetup> arr=new ArrayList<GuidedSetup>();
+		arr.add(gudsetp);
+		return new ResponseEntity<List<GuidedSetup>>(arr, HttpStatus.OK);
+	}
+	
 
 }

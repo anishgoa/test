@@ -6,6 +6,7 @@ import com.goaudits.business.entity.ActionPlanAssignee;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.EmailTemplate;
+import com.goaudits.business.entity.GuidedSetup;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
@@ -102,6 +103,12 @@ public interface SetupService {
 	public int createPreTemplate(PreTemplates preTemplates);
 
 	public int cloneAuditName(PreTemplates preTemplates);
+
+	public List<GuidedSetup> getGuidedSetupdata();
+
+	public int getCompanyCount(String guid);
+
+	public int createGuided(GuidedSetup gudsetp);
 
 	
 }

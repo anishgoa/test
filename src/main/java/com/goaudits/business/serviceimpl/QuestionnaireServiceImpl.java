@@ -728,7 +728,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 				List<QuestionItem> questionItemList = questionList.stream()
 						.filter(p -> p.getSection_id() == groupItem.getSection_id()
-								&& p.getGroup_id() == groupItem.getGroup_id() && !p.isIs_sub_question())
+								&& p.getGroup_id() == groupItem.getGroup_id() && !p.isIs_sub_question() && p.getQuestion_text()!=null)
 						.map(p -> new QuestionItem(p)).distinct().collect(Collectors.toList());
 
 //				System.out.println("Question List => " + questionItemList);

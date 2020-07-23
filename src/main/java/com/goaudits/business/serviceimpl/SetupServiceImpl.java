@@ -14,6 +14,7 @@ import com.goaudits.business.entity.EmailMessage;
 import com.goaudits.business.entity.EmailSubject;
 import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.Group;
+import com.goaudits.business.entity.GuidedSetup;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
@@ -549,6 +550,21 @@ public class SetupServiceImpl implements SetupService {
 		}
 
 		return 1;
+	}
+
+	@Override
+	public List<GuidedSetup> getGuidedSetupdata() {
+		return setupmapper.getGuidedSetupdata();
+	}
+
+	@Override
+	public int getCompanyCount(String guid) {
+		return setupmapper.getCompanyCount(guid);
+	}
+
+	@Override
+	public int createGuided(GuidedSetup gudsetp) {
+		return setupmapper.createGuided(gudsetp);
 	}
 
 }

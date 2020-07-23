@@ -18,6 +18,7 @@ import com.goaudits.business.entity.EmailMessage;
 import com.goaudits.business.entity.EmailSubject;
 import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.Group;
+import com.goaudits.business.entity.GuidedSetup;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
@@ -192,10 +193,10 @@ public interface SetupMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	List<Report> getReportTemplates(String guid);
 
-	@Select("SELECT * FROM GA_CLIENT_MT WHERE GUID=(SELECT GUID FROM GA_USERDET_MT WHERE USER_NAME='templates@goaudits.com') AND ACTIVE=1 ORDER BY SORT_ORDER")
+	@Select("SELECT CM.GUID,CM.CLIENT_ID,CM.CLIENT_NAME,CL.LOGO FROM GA_CLIENT_MT CM,GA_CLIENTLOGO_MT CL WHERE CM.GUID=(SELECT GUID FROM GA_USERDET_MT WHERE USER_NAME='templates@goaudits.com') AND CM.ACTIVE=1 AND CM.GUID=CL.GUID AND CM.CLIENT_ID=CL.CLIENT_ID ORDER BY CM.SORT_ORDER")
 	List<Company> getPreexistingTemplates();
 
-	@Select(value = "{CALL GA_SP_APP_GET_AUDITNAMES_INDUSTRIES(0, #{client_id, mode=IN, jdbcType=INTEGER})}")
+	@Select(value = "{CALL GA_SP_PORTAL_GET_AUDITNAMES_INDUSTRIES_V1(0, #{client_id, mode=IN, jdbcType=INTEGER})}")
 	List<AuditName> getPreAuditnames(int client_id);
 
 	@Select("{CALL GA_SP_PORTAL_GET_AUDITNAMES_INDUSTRIES()}")
@@ -246,5 +247,14 @@ public interface SetupMapper {
 
 	@Select("SELECT * FROM GA_REPORTMPLIMAGE_MT WHERE TEMPLATE_ID=#{template_id}")
 	List<ReportImage> getReportImages(int template_id);
+
+	@Select("SELECT * FROM GA_GUIDEDSETUP_DT ORDER BY SORT_ORDER ASC")
+	List<GuidedSetup> getGuidedSetupdata();
+
+	@Select("SELECT COUNT(*) FROM GA_CLIENT_MT WHERE GUID=#{guid}")
+	int getCompanyCount(String guid);
+
+	@Update("UPDATE GA_USERDET_MT SET PRIMARY_GOAL=#{goal},LAUNCH_BUSINESS=#{launch},BUSINESS=#{bussiness},TEMPLATE=#{template} WHERE GUID=#{guid} AND SUPER_USER=1")
+	int createGuided(GuidedSetup gudsetp);
 
 }

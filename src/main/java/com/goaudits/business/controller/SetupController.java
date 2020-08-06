@@ -65,6 +65,7 @@ public class SetupController {
 				List<Company> companyList = new ArrayList<Company>();
 				company.setClient_id(comp.getClient_id());
 				company.setLogo(comp.getLogo());
+				company.setLast_modified(comp.getLast_modified());
 				companyList.add(company);
 				return new ResponseEntity<List<Company>>(companyList, HttpStatus.CREATED);
 			} catch (Exception e) {
@@ -80,8 +81,9 @@ public class SetupController {
 
 		if (!setupservice.isCompanyExistInDB(company)) {
 			try {
-				setupservice.updateCompany(company);
+				Company cmpy = setupservice.updateCompany(company);
 				List<Company> companyList = new ArrayList<Company>();
+				company.setLast_modified(cmpy.getLast_modified());
 				companyList.add(company);
 				return new ResponseEntity<List<Company>>(companyList, HttpStatus.OK);
 			} catch (Exception e) {
@@ -240,6 +242,7 @@ public class SetupController {
 			AuditName AudName = setupservice.addAuditName(auditname);
 			auditname.setAudit_type_id(AudName.getAudit_type_id());
 			auditname.setLogo(AudName.getLogo());
+			auditname.setLast_modified(AudName.getLast_modified());
 			List<AuditName> auditNameList = new ArrayList<AuditName>();
 			auditNameList.add(auditname);
 			return new ResponseEntity<List<AuditName>>(auditNameList, HttpStatus.CREATED);
@@ -264,6 +267,7 @@ public class SetupController {
 			try {
 				AuditName AudName = setupservice.updateAuditName(auditname);
 				auditname.setAudit_type_id(AudName.getAudit_type_id());
+				auditname.setLast_modified(AudName.getLast_modified());
 				List<AuditName> auditNameList = new ArrayList<AuditName>();
 				auditNameList.add(auditname);
 				return new ResponseEntity<List<AuditName>>(auditNameList, HttpStatus.OK);
@@ -296,8 +300,6 @@ public class SetupController {
 			}
 		}
 	}
-	
-	
 
 	@RequestMapping(value = "/getscorerange/{guid}/{client_id}/{audit_type_id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getScoreRange(@PathVariable String guid, @PathVariable String client_id,
@@ -316,7 +318,7 @@ public class SetupController {
 	public ResponseEntity<?> getEmailTemplates(@RequestBody EmailTemplate emailtemplate) {
 
 		List<EmailTemplate> emailTemplateList = setupservice.getEmailTemplates(emailtemplate);
-	
+
 		return new ResponseEntity<List<EmailTemplate>>(emailTemplateList, HttpStatus.OK);
 	}
 
@@ -412,34 +414,40 @@ public class SetupController {
 			return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
-	
+
 	@RequestMapping(value = "/guideddata", method = RequestMethod.GET)
 	public ResponseEntity<?> guidedSetupData() {
-		List<GuidedSetup> dataList=setupservice.getGuidedSetupdata();
+		List<GuidedSetup> dataList = setupservice.getGuidedSetupdata();
 		return new ResponseEntity<List<GuidedSetup>>(dataList, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/cmpcount/{guid}", method = RequestMethod.GET)
 	public ResponseEntity<?> CompanyCount(@PathVariable("guid") String guid) {
-		int count=setupservice.getCompanyCount(guid);
-		List<Integer> list=new ArrayList<Integer>();
+		int count = setupservice.getCompanyCount(guid);
+		List<Integer> list = new ArrayList<Integer>();
 		list.add(count);
 		return new ResponseEntity<List<Integer>>(list, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/createdguided", method = RequestMethod.POST)
-	public ResponseEntity<?> createguidedSetup(@RequestBody GuidedSetup gudsetp,Company cmp) {
+	public ResponseEntity<?> createguidedSetup(@RequestBody GuidedSetup gudsetp, Company cmp) {
 		cmp.setGuid(gudsetp.getGuid());
 		cmp.setUid(gudsetp.getUid());
 		cmp.setClient_name(gudsetp.getCompany_name());
 		cmp.setLogo(gudsetp.getLogo());
 		cmp.setActive(true);
-		setupservice.addCompany(cmp);
+		Company newcmp = setupservice.addCompany(cmp);
+		Location location = new Location();
+		location.setGuid(gudsetp.getGuid());
+		location.setUid(gudsetp.getUid());
+		location.setClient_id(newcmp.getClient_id());
+		location.setActive(true);
+		location.setStore_name("My Site");
+		setupservice.addLocation(location);
 		setupservice.createGuided(gudsetp);
-		List<GuidedSetup> arr=new ArrayList<GuidedSetup>();
+		List<GuidedSetup> arr = new ArrayList<GuidedSetup>();
 		arr.add(gudsetp);
 		return new ResponseEntity<List<GuidedSetup>>(arr, HttpStatus.OK);
 	}
-	
 
 }

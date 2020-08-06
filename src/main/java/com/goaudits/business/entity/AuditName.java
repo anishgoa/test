@@ -46,6 +46,7 @@ public class AuditName implements Serializable {
     private boolean image_required = true;
     private boolean hide_signature_app;
     private int count;
+    private String last_modified;
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
 	private List<Location> strarry = new ArrayList<Location>();
 
@@ -336,6 +337,20 @@ public class AuditName implements Serializable {
 
 	public void setStrarry(List<Location> strarry) {
 		this.strarry = strarry;
+	}
+
+	/**
+	 * @return the last_modified
+	 */
+	public String getLast_modified() {
+		return last_modified;
+	}
+
+	/**
+	 * @param last_modified the last_modified to set
+	 */
+	public void setLast_modified(String last_modified) {
+		this.last_modified = last_modified;
 	}
 	
 	

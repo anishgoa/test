@@ -23,6 +23,7 @@ public class Company {
 	private boolean image_required=true;
 	private boolean company_clone;
 	private int count;
+	private String last_modified;
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
 	private List<AuditName> audarry = new ArrayList<AuditName>();
 
@@ -169,6 +170,20 @@ public class Company {
 
 	public void setAudarry(List<AuditName> audarry) {
 		this.audarry = audarry;
+	}
+
+	/**
+	 * @return the last_modified
+	 */
+	public String getLast_modified() {
+		return last_modified;
+	}
+
+	/**
+	 * @param last_modified the last_modified to set
+	 */
+	public void setLast_modified(String last_modified) {
+		this.last_modified = last_modified;
 	}
 
 

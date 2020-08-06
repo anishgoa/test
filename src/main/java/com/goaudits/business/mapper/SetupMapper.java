@@ -254,7 +254,7 @@ public interface SetupMapper {
 	@Select("SELECT COUNT(*) FROM GA_CLIENT_MT WHERE GUID=#{guid}")
 	int getCompanyCount(String guid);
 
-	@Update("UPDATE GA_USERDET_MT SET PRIMARY_GOAL=#{goal},LAUNCH_BUSINESS=#{launch},BUSINESS=#{bussiness},TEMPLATE=#{template} WHERE GUID=#{guid} AND SUPER_USER=1")
+	@Update("UPDATE GA_USERDET_MT SET PRIMARY_GOAL=#{goal},NO_OF_LICENSES=#{no_of_licenses},PHONE_NUMBER=#{number},INDUSTRY=#{bussiness},WALKTHROUGH=#{walkthrough} WHERE GUID=#{guid} AND SUPER_USER=1")
 	int createGuided(GuidedSetup gudsetp);
 
 }

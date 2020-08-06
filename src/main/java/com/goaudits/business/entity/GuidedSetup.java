@@ -14,6 +14,10 @@ public class GuidedSetup {
 	String launch;
 	String guid;
 	String uid;
+	String no_of_licenses;
+	String number;
+	boolean walkthrough;
+	
 	/**
 	 * @return the id
 	 */
@@ -133,6 +137,42 @@ public class GuidedSetup {
 	 */
 	public void setUid(String uid) {
 		this.uid = uid;
+	}
+	/**
+	 * @return the no_of_licenses
+	 */
+	public String getNo_of_licenses() {
+		return no_of_licenses;
+	}
+	/**
+	 * @param no_of_licenses the no_of_licenses to set
+	 */
+	public void setNo_of_licenses(String no_of_licenses) {
+		this.no_of_licenses = no_of_licenses;
+	}
+	/**
+	 * @return the number
+	 */
+	public String getNumber() {
+		return number;
+	}
+	/**
+	 * @param number the number to set
+	 */
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	/**
+	 * @return the walkthrough
+	 */
+	public boolean isWalkthrough() {
+		return walkthrough;
+	}
+	/**
+	 * @param walkthrough the walkthrough to set
+	 */
+	public void setWalkthrough(boolean walkthrough) {
+		this.walkthrough = walkthrough;
 	}
 	
 

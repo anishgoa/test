@@ -174,7 +174,7 @@ public class Questionnaire {
 		List<Section> grouplist = QuestionnaireService.getQuestions(sec);
 		return new ResponseEntity<List<Section>>(grouplist, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/question/list2", method = RequestMethod.POST)
 	public ResponseEntity<List<SectionItem>> getOpenQuestionsList(@RequestBody Section audit) {
 		List<SectionItem> sectionList = QuestionnaireService.getQuestionList(audit);
@@ -368,11 +368,11 @@ public class Questionnaire {
 		List<User> Adminslist = QuestionnaireService.getAdminslist(guid);
 		return new ResponseEntity<List<User>>(Adminslist, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/question/imgcount", method = RequestMethod.POST)
 	public ResponseEntity<?> getqimgcouunt(@RequestBody Question question) {
 		int qimagecount = QuestionnaireService.getQimagecount(question);
-		List<Integer> imgcount=new ArrayList<Integer>();
+		List<Integer> imgcount = new ArrayList<Integer>();
 		imgcount.add(qimagecount);
 		return new ResponseEntity<List<Integer>>(imgcount, HttpStatus.OK);
 	}
@@ -389,7 +389,6 @@ public class Questionnaire {
 		params.setAudit_type_id(question.getAudit_type_id() + "");
 		return new ResponseEntity<S3>(params, HttpStatus.OK);
 	}
-	
 
 	@RequestMapping(value = "getCloudinaryFlag/{guid}", method = RequestMethod.GET)
 	public ResponseEntity<?> getCloudinaryFlag(@PathVariable("guid") String guid) {
@@ -400,7 +399,31 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/section/clone", method = RequestMethod.POST)
-	public ResponseEntity<List<SectionGroupClone>> cloneSection(@RequestBody SectionGroupClone section) {
+	public ResponseEntity<?> cloneSection(@RequestBody SectionGroupClone section, Section section1, Group group) {
+
+		if (section.getGroup_id() == 0) {
+			section1.setGuid(section.getGuid());
+			section1.setClient_id(section.getClient_id());
+			section1.setAudit_type_id(section.getAudit_type_id());
+			section1.setSection_name(section.getNew_section_name());
+			if (QuestionnaireService.isSectionExist(section1)) {
+				return new ResponseEntity<>(new GoAuditsException("Section cannot be added, already exists"),
+						HttpStatus.CONFLICT);
+			}
+
+		} else {
+			group.setGuid(section.getGuid());
+			group.setClient_id(section.getClient_id());
+			group.setAudit_type_id(section.getAudit_type_id());
+			group.setSection_id(section.getSection_id());
+			group.setGroup_name(section.getNew_group_name());
+
+			if (QuestionnaireService.isGroupExist(group)) {
+				return new ResponseEntity<>(new GoAuditsException("Group cannot be added, already exists"),
+						HttpStatus.CONFLICT);
+			}
+		}
+
 		List<SectionGroupClone> sectionlist = QuestionnaireService.cloneSection(section);
 		return new ResponseEntity<List<SectionGroupClone>>(sectionlist, HttpStatus.OK);
 	}

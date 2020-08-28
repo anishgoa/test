@@ -45,7 +45,7 @@ public class Utils {
 
 	public static String splitJoinStringsAtIndex(String sourceStr, String insertText, int indexPos,
 			String delimiterStr) {
-
+		indexPos=5;
 		// split the sourceStr into array
 		String splitArr[] = sourceStr.split(delimiterStr);
 
@@ -66,7 +66,7 @@ public class Utils {
 	}
 
 	public static String removeJoinStringsAtIndex(String sourceStr, int indexPos, String delimiterStr) {
-
+		indexPos=5;
 		// split the sourceStr into array
 		String splitArr[] = sourceStr.split(delimiterStr);
 

@@ -235,18 +235,18 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			for (Choice choice : choicelists) {
 				ques.setChoice_pat_id(choicelists.get(0).getChoice_pat_id());
 				if (ques.getDefault_choice_id() != null && ques.getDefault_choice_id() != "") {
-					ques.setDefault_choice_id(ques.getDefault_choice_id().replace(choice.getChoice_id(),
+					ques.setDefault_choice_id(ques.getDefault_choice_id().replaceAll(choice.getChoice_id()+"\\b",
 							choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getEmail_choices() != null && ques.getEmail_choices() != "") {
 					ques.setEmail_choices(
-							ques.getEmail_choices().replace(choice.getChoice_id(), choice.getCreated_choice_id() + ""));
+							ques.getEmail_choices().replaceAll(choice.getChoice_id()+"\\b", choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getAction_choices() != null && ques.getAction_choices() != "") {
 					try {
-						ques.setAction_choices(ques.getAction_choices().replace(choice.getChoice_id(),
+						ques.setAction_choices(ques.getAction_choices().replaceAll(choice.getChoice_id()+"\\b",
 								choice.getCreated_choice_id() + ""));
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -254,30 +254,30 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 				}
 
 				if (ques.getComment_choices() != null && ques.getComment_choices() != "") {
-					ques.setComment_choices(ques.getComment_choices().replace(choice.getChoice_id(),
+					ques.setComment_choices(ques.getComment_choices().replaceAll(choice.getChoice_id()+"\\b",
 							choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getImage_choices() != null && ques.getImage_choices() != "") {
 					ques.setImage_choices(
-							ques.getImage_choices().replace(choice.getChoice_id(), choice.getCreated_choice_id() + ""));
+							ques.getImage_choices().replaceAll(choice.getChoice_id()+"\\b", choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getAuto_fail() != null && ques.getAuto_fail() != "") {
 					ques.setAuto_fail(
-							ques.getAuto_fail().replace(choice.getChoice_id(), choice.getCreated_choice_id() + ""));
+							ques.getAuto_fail().replaceAll(choice.getChoice_id()+"\\b", choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getCritical_email_list() != null && ques.getCritical_email_list() != "") {
-					ques.setCritical_email_list(ques.getCritical_email_list().replace(choice.getChoice_id(),
+					ques.setCritical_email_list(ques.getCritical_email_list().replaceAll(choice.getChoice_id()+"\\b",
 							choice.getCreated_choice_id() + ""));
 				}
 				if (ques.getConditional_choice_pat_id() != null && ques.getConditional_choice_pat_id() != "") {
-					ques.setConditional_choice_pat_id(ques.getConditional_choice_pat_id().replace(choice.getChoice_id(),
+					ques.setConditional_choice_pat_id(ques.getConditional_choice_pat_id().replaceAll(choice.getChoice_id()+"\\b",
 							choice.getCreated_choice_id() + ""));
 				}
 				if (ques.getConditional_choiceid() != null && ques.getConditional_choiceid() != "") {
-					ques.setConditional_choiceid(ques.getConditional_choiceid().replace(choice.getChoice_id(),
+					ques.setConditional_choiceid(ques.getConditional_choiceid().replaceAll(choice.getChoice_id()+"\\b",
 							choice.getCreated_choice_id() + ""));
 				}
 
@@ -449,18 +449,18 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			for (Choice choice : choicelists) {
 				ques.setChoice_pat_id(choicelists.get(0).getChoice_pat_id());
 				if (ques.getDefault_choice_id() != null && ques.getDefault_choice_id() != "") {
-					ques.setDefault_choice_id(ques.getDefault_choice_id().replace(choice.getChoice_id(),
+					ques.setDefault_choice_id(ques.getDefault_choice_id().replaceAll(choice.getChoice_id()+"\\b",
 							choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getEmail_choices() != null && ques.getEmail_choices() != "") {
 					ques.setEmail_choices(
-							ques.getEmail_choices().replace(choice.getChoice_id(), choice.getCreated_choice_id() + ""));
+							ques.getEmail_choices().replaceAll(choice.getChoice_id()+"\\b", choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getAction_choices() != null && ques.getAction_choices() != "") {
 					try {
-						ques.setAction_choices(ques.getAction_choices().replace(choice.getChoice_id(),
+						ques.setAction_choices(ques.getAction_choices().replaceAll(choice.getChoice_id()+"\\b",
 								choice.getCreated_choice_id() + ""));
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -468,22 +468,22 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 				}
 
 				if (ques.getComment_choices() != null && ques.getComment_choices() != "") {
-					ques.setComment_choices(ques.getComment_choices().replace(choice.getChoice_id(),
+					ques.setComment_choices(ques.getComment_choices().replaceAll(choice.getChoice_id()+"\\b",
 							choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getImage_choices() != null && ques.getImage_choices() != "") {
 					ques.setImage_choices(
-							ques.getImage_choices().replace(choice.getChoice_id(), choice.getCreated_choice_id() + ""));
+							ques.getImage_choices().replaceAll(choice.getChoice_id()+"\\b", choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getAuto_fail() != null && ques.getAuto_fail() != "") {
 					ques.setAuto_fail(
-							ques.getAuto_fail().replace(choice.getChoice_id(), choice.getCreated_choice_id() + ""));
+							ques.getAuto_fail().replaceAll(choice.getChoice_id()+"\\b", choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getCritical_email_list() != null && ques.getCritical_email_list() != "") {
-					ques.setCritical_email_list(ques.getCritical_email_list().replace(choice.getChoice_id(),
+					ques.setCritical_email_list(ques.getCritical_email_list().replaceAll(choice.getChoice_id()+"\\b",
 							choice.getCreated_choice_id() + ""));
 				}
 

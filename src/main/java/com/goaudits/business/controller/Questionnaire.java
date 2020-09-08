@@ -57,7 +57,7 @@ public class Questionnaire {
 	public ResponseEntity<?> addSection(@RequestBody Section section) {
 
 		if (QuestionnaireService.isSectionExist(section)) {
-			return new ResponseEntity<>(new GoAuditsException("Section cannot be added, already exists"),
+			return new ResponseEntity<>(new GoAuditsException("Please provide a different section name, this one already exists"),
 					HttpStatus.CONFLICT);
 		}
 		try {
@@ -85,7 +85,7 @@ public class Questionnaire {
 						HttpStatus.EXPECTATION_FAILED);
 			}
 		}
-		return new ResponseEntity<>(new GoAuditsException("Section cannot be updated, already exists"),
+		return new ResponseEntity<>(new GoAuditsException("Please provide a different section name, this one already exists"),
 				HttpStatus.CONFLICT);
 	}
 
@@ -112,7 +112,7 @@ public class Questionnaire {
 	public ResponseEntity<?> addGroup(@RequestBody Group group) {
 
 		if (QuestionnaireService.isGroupExist(group)) {
-			return new ResponseEntity<>(new GoAuditsException("Group cannot be added, already exists"),
+			return new ResponseEntity<>(new GoAuditsException("Please provide a different group name, this one already exists"),
 					HttpStatus.CONFLICT);
 		}
 		try {
@@ -140,7 +140,7 @@ public class Questionnaire {
 				return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
 			}
 		}
-		return new ResponseEntity<>(new GoAuditsException("Group cannot be updated, already exists"),
+		return new ResponseEntity<>(new GoAuditsException("Please provide a different group name, this one already exists"),
 				HttpStatus.NOT_FOUND);
 	}
 

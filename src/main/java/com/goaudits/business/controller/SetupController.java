@@ -57,11 +57,19 @@ public class SetupController {
 	public ResponseEntity<?> addCompany(@RequestBody Company company) {
 
 		if (setupservice.isCompanyExists(company)) {
-			return new ResponseEntity<>(new GoAuditsException("This company name is already in use, Please enter a different company name"),
+			return new ResponseEntity<>(
+					new GoAuditsException("This company name is already in use, Please enter a different company name"),
 					HttpStatus.CONFLICT);
 		} else {
 			try {
 				Company comp = setupservice.addCompany(company);
+				Location location = new Location();
+				location.setGuid(company.getGuid());
+				location.setUid(company.getUid());
+				location.setClient_id(comp.getClient_id());
+				location.setActive(true);
+				location.setStore_name("My Site");
+				setupservice.addLocation(location);
 				List<Company> companyList = new ArrayList<Company>();
 				company.setClient_id(comp.getClient_id());
 				company.setLogo(comp.getLogo());
@@ -90,7 +98,8 @@ public class SetupController {
 				return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
 			}
 		}
-		return new ResponseEntity<>(new GoAuditsException("This company name is already in use, Please enter a different company name"),
+		return new ResponseEntity<>(
+				new GoAuditsException("This company name is already in use, Please enter a different company name"),
 				HttpStatus.CONFLICT);
 	}
 
@@ -174,7 +183,9 @@ public class SetupController {
 	public ResponseEntity<?> addLocation(@RequestBody Location location) {
 
 		if (setupservice.isLocationExist(location)) {
-			return new ResponseEntity<>(new GoAuditsException("This location name is already in use, Please enter a different location name"),
+			return new ResponseEntity<>(
+					new GoAuditsException(
+							"This location name is already in use, Please enter a different location name"),
 					HttpStatus.CONFLICT);
 		} else {
 			try {
@@ -203,7 +214,8 @@ public class SetupController {
 				return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
 			}
 		}
-		return new ResponseEntity<>(new GoAuditsException("This location name is already in use, Please enter a different location name"),
+		return new ResponseEntity<>(
+				new GoAuditsException("This location name is already in use, Please enter a different location name"),
 				HttpStatus.CONFLICT);
 	}
 
@@ -235,7 +247,9 @@ public class SetupController {
 	@RequestMapping(value = "/auditname/add", method = RequestMethod.POST)
 	public ResponseEntity<?> addAuditType(@RequestBody AuditName auditname) {
 		if (setupservice.isAuditNameExist(auditname)) {
-			return new ResponseEntity<>(new GoAuditsException("This checklist name is already in use, Please enter a different checklist name "),
+			return new ResponseEntity<>(
+					new GoAuditsException(
+							"This checklist name is already in use, Please enter a different checklist name "),
 					HttpStatus.CONFLICT);
 		}
 		try {
@@ -277,7 +291,8 @@ public class SetupController {
 						HttpStatus.EXPECTATION_FAILED);
 			}
 		}
-		return new ResponseEntity<>(new GoAuditsException("This checklist name is already in use, Please enter a different checklist name"),
+		return new ResponseEntity<>(
+				new GoAuditsException("This checklist name is already in use, Please enter a different checklist name"),
 				HttpStatus.NOT_FOUND);
 	}
 
@@ -402,7 +417,9 @@ public class SetupController {
 
 		String valid[] = setupservice.PreTemplates(PreTemplates).split("---@%");
 		if (Integer.parseInt(valid[0]) > 0) {
-			return new ResponseEntity<>(new GoAuditsException("This template name is already in use, Please enter a different template name "),
+			return new ResponseEntity<>(
+					new GoAuditsException(
+							"This template name is already in use, Please enter a different template name "),
 					HttpStatus.CONFLICT);
 		}
 		try {

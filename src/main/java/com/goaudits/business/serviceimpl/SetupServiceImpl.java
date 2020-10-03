@@ -114,13 +114,15 @@ public class SetupServiceImpl implements SetupService {
 
 		Company compy = setupmapper.addOrUpdateCompany(company);
 
-		List<ActionPlanAssignee> actionlist = company.getActionlist();
-		setupmapper.deleteActionemailCompany(company.getGuid(), company.getClient_id());
-		for (ActionPlanAssignee act : actionlist) {
+		if (!company.isIsdelete()) {
+			List<ActionPlanAssignee> actionlist = company.getActionlist();
+			setupmapper.deleteActionemailCompany(company.getGuid(), company.getClient_id());
+			for (ActionPlanAssignee act : actionlist) {
 
-			act.setGuid(company.getGuid());
-			act.setClient_id(compy.getClient_id());
-			setupmapper.insertActionemailforCompany(act);
+				act.setGuid(company.getGuid());
+				act.setClient_id(compy.getClient_id());
+				setupmapper.insertActionemailforCompany(act);
+			}
 		}
 		return compy;
 	}
@@ -174,22 +176,25 @@ public class SetupServiceImpl implements SetupService {
 		String store_id = setupmapper.addOrUpdateLocation(location);
 
 		List<LocationTags> tagslist = location.getTagslist();
-		setupmapper.deleteLocationTags(location.getGuid(), location.getClient_id(), store_id);
-		for (LocationTags t : tagslist) {
-			t.setGuid(location.getGuid());
-			t.setClient_id(location.getClient_id());
-			t.setStore_id(store_id);
-			setupmapper.addLocationTags(t);
 
-		}
-		List<ActionPlanAssignee> actionlist = location.getActionlist();
-		setupmapper.deleteLocationActionemail(location.getGuid(), location.getClient_id(), store_id);
-		for (ActionPlanAssignee act : actionlist) {
+		if (!location.isIsdelete()) {
+			setupmapper.deleteLocationTags(location.getGuid(), location.getClient_id(), store_id);
+			for (LocationTags t : tagslist) {
+				t.setGuid(location.getGuid());
+				t.setClient_id(location.getClient_id());
+				t.setStore_id(store_id);
+				setupmapper.addLocationTags(t);
 
-			act.setGuid(location.getGuid());
-			act.setClient_id(location.getClient_id());
-			act.setStore_id(store_id);
-			setupmapper.insertLoationActionemail(act);
+			}
+			List<ActionPlanAssignee> actionlist = location.getActionlist();
+			setupmapper.deleteLocationActionemail(location.getGuid(), location.getClient_id(), store_id);
+			for (ActionPlanAssignee act : actionlist) {
+
+				act.setGuid(location.getGuid());
+				act.setClient_id(location.getClient_id());
+				act.setStore_id(store_id);
+				setupmapper.insertLoationActionemail(act);
+			}
 		}
 		return store_id;
 	}
@@ -235,12 +240,14 @@ public class SetupServiceImpl implements SetupService {
 
 		AuditName AudName = setupmapper.insertUpdateAuditName(auditname);
 		List<ActionPlanAssignee> actionlist = auditname.getActionlist();
-		setupmapper.deleteActionemailAuditName(auditname);
-		for (ActionPlanAssignee act : actionlist) {
-			act.setGuid(auditname.getGuid());
-			act.setClient_id(auditname.getClient_id());
-			act.setAudit_type_id(AudName.getAudit_type_id());
-			setupmapper.insertActionemailAuditName(act);
+		if (!auditname.isIsdelete()) {
+			setupmapper.deleteActionemailAuditName(auditname);
+			for (ActionPlanAssignee act : actionlist) {
+				act.setGuid(auditname.getGuid());
+				act.setClient_id(auditname.getClient_id());
+				act.setAudit_type_id(AudName.getAudit_type_id());
+				setupmapper.insertActionemailAuditName(act);
+			}
 		}
 		return AudName;
 	}
@@ -455,14 +462,14 @@ public class SetupServiceImpl implements SetupService {
 
 	@Override
 	public List<Report> getReporttemplates(String guid) {
-		
-		List<Report> ReportList= setupmapper.getReportTemplates(guid);
-		for(Report r:ReportList) {
-		List<ReportImage>	imageList=setupmapper.getReportImages(r.getTemplate_id());
-		r.getReportImageList().addAll(imageList);
-		
+
+		List<Report> ReportList = setupmapper.getReportTemplates(guid);
+		for (Report r : ReportList) {
+			List<ReportImage> imageList = setupmapper.getReportImages(r.getTemplate_id());
+			r.getReportImageList().addAll(imageList);
+
 		}
-		
+
 		return ReportList;
 	}
 

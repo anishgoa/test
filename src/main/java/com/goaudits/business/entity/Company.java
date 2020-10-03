@@ -24,6 +24,7 @@ public class Company {
 	private boolean company_clone;
 	private int count;
 	private String last_modified;
+	private boolean isdelete;
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
 	private List<AuditName> audarry = new ArrayList<AuditName>();
 
@@ -184,6 +185,20 @@ public class Company {
 	 */
 	public void setLast_modified(String last_modified) {
 		this.last_modified = last_modified;
+	}
+
+	/**
+	 * @return the isdelete
+	 */
+	public boolean isIsdelete() {
+		return isdelete;
+	}
+
+	/**
+	 * @param isdelete the isdelete to set
+	 */
+	public void setIsdelete(boolean isdelete) {
+		this.isdelete = isdelete;
 	}
 
 

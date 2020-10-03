@@ -286,7 +286,7 @@ public class SetupController {
 				auditNameList.add(auditname);
 				return new ResponseEntity<List<AuditName>>(auditNameList, HttpStatus.OK);
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+//				System.out.println(e.getMessage());
 				return new ResponseEntity<>(new GoAuditsException("Something went wrong"),
 						HttpStatus.EXPECTATION_FAILED);
 			}

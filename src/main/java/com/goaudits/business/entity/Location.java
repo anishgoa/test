@@ -36,7 +36,7 @@ public class Location implements Serializable {
 	private String tags;
 	private String postcode;
 	private boolean gps_location_filter_enabled; 
-
+	private boolean isdelete;
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
 	private List<LocationTags> tagslist = new ArrayList<LocationTags>();
 
@@ -266,6 +266,20 @@ public class Location implements Serializable {
 
 	public void setGps_location_filter_enabled(boolean gps_location_filter_enabled) {
 		this.gps_location_filter_enabled = gps_location_filter_enabled;
+	}
+
+	/**
+	 * @return the isdelete
+	 */
+	public boolean isIsdelete() {
+		return isdelete;
+	}
+
+	/**
+	 * @param isdelete the isdelete to set
+	 */
+	public void setIsdelete(boolean isdelete) {
+		this.isdelete = isdelete;
 	}
 	
 

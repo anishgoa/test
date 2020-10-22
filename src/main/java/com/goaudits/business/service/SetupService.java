@@ -110,5 +110,7 @@ public interface SetupService {
 
 	public int createGuided(GuidedSetup gudsetp);
 
+	public List<Location> getLocationsBasedonCompanyv2(Location location);
+
 	
 }

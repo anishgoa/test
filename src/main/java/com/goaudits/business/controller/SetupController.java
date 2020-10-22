@@ -46,6 +46,12 @@ public class SetupController {
 		List<Location> locationList = setupservice.getLocationsBasedonCompany(location);
 		return new ResponseEntity<List<Location>>(locationList, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/location/listv2", method = RequestMethod.POST)
+	public ResponseEntity<List<Location>> getlocationsBasedeOnCompanyV2(@RequestBody Location location) {
+		List<Location> locationList = setupservice.getLocationsBasedonCompanyv2(location);
+		return new ResponseEntity<List<Location>>(locationList, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/auditname/list", method = RequestMethod.POST)
 	public ResponseEntity<List<AuditName>> getAuditNamesByCompany(@RequestBody AuditName auditname) {

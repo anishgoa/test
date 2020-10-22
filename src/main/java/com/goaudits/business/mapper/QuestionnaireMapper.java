@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.mapping.StatementType;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.goaudits.business.entity.Choice;
 import com.goaudits.business.entity.Group;
@@ -60,7 +61,7 @@ public interface QuestionnaireMapper {
 	@Select("SELECT COUNT(*) FROM GA_GROUP_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND SECTION_ID=#{section_id} AND GROUP_ID!=#{group_id} AND GROUP_NAME=#{group_name} ")
 	int isGroupExistInDB(Group group);
 
-	@Select(value = "{ CALL SP_GA_GETALLCHOICES_PV2( #{guid, mode=IN, jdbcType=BINARY} ) }")
+	@Select(value = "{ CALL SP_GA_GETALLCHOICES_PV3( #{guid, mode=IN, jdbcType=BINARY} ) }")
 	@Options(statementType = StatementType.CALLABLE)
 	List<Choice> getChoiceList(String guid);
 
@@ -237,5 +238,10 @@ public interface QuestionnaireMapper {
 	@Select(value = "{CALL GA_SP_PORTAL_GET_QUESTION_LIST( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER}, #{active, mode=IN, jdbcType=BOOLEAN} )}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<QuestionVo> getQuestionsList(Section audit);
+
+	@Transactional(rollbackFor = Exception.class)
+	@Insert(value = "{CALL GA_SP_PORTAL_ADDCONDIONALFORCOPY( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER}, #{section_id, mode=IN, jdbcType=INTEGER},#{group_id, mode=IN, jdbcType=INTEGER},#{copyques_no, mode=IN, jdbcType=INTEGER},#{question_no, mode=IN, jdbcType=INTEGER} )}")
+	int addConditionalQuestionForCopy(@Param("guid")String guid,@Param("client_id") int client_id,@Param("audit_type_id") int audit_type_id,
+			@Param("section_id")int section_id,@Param("group_id")int group_id,@Param("copyques_no")String copyques_no,@Param("question_no")int question_no);
 	
 }

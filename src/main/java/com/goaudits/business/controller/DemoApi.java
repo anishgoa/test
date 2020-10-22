@@ -36,4 +36,10 @@ public class DemoApi {
 		return new ResponseEntity<List<DemoAudits>>(auditsList, HttpStatus.OK);
 	}
 	
+	@PostMapping("/getauditsv1")
+	public ResponseEntity<?> getManageAuditsListv1(@RequestBody DemoAudits audits){
+		List<DemoAudits> auditsList = demoService.getManageAuditsListv1(audits);
+		return new ResponseEntity<List<DemoAudits>>(auditsList, HttpStatus.OK);
+	}
+	
 }

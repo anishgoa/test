@@ -362,7 +362,15 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 				}
 
 			}
+			
+			if(ques.isCopy()) {
+				questionnairemapper.addConditionalQuestionForCopy(ques.getGuid(), ques.getClient_id(),
+						ques.getAudit_type_id(),ques.getSection_id(),ques.getGroup_id(),ques.getCopyques_no(),ques.getQuestion_no());
+			}
+						
+		
 		}
+
 
 		return qno;
 	}
@@ -449,18 +457,18 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			for (Choice choice : choicelists) {
 				ques.setChoice_pat_id(choicelists.get(0).getChoice_pat_id());
 				if (ques.getDefault_choice_id() != null && ques.getDefault_choice_id() != "") {
-					ques.setDefault_choice_id(ques.getDefault_choice_id().replaceAll(choice.getChoice_id()+"\\b",
+					ques.setDefault_choice_id(ques.getDefault_choice_id().replaceAll(choice.getChoice_id() + "\\b",
 							choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getEmail_choices() != null && ques.getEmail_choices() != "") {
-					ques.setEmail_choices(
-							ques.getEmail_choices().replaceAll(choice.getChoice_id()+"\\b", choice.getCreated_choice_id() + ""));
+					ques.setEmail_choices(ques.getEmail_choices().replaceAll(choice.getChoice_id() + "\\b",
+							choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getAction_choices() != null && ques.getAction_choices() != "") {
 					try {
-						ques.setAction_choices(ques.getAction_choices().replaceAll(choice.getChoice_id()+"\\b",
+						ques.setAction_choices(ques.getAction_choices().replaceAll(choice.getChoice_id() + "\\b",
 								choice.getCreated_choice_id() + ""));
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -468,22 +476,22 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 				}
 
 				if (ques.getComment_choices() != null && ques.getComment_choices() != "") {
-					ques.setComment_choices(ques.getComment_choices().replaceAll(choice.getChoice_id()+"\\b",
+					ques.setComment_choices(ques.getComment_choices().replaceAll(choice.getChoice_id() + "\\b",
 							choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getImage_choices() != null && ques.getImage_choices() != "") {
-					ques.setImage_choices(
-							ques.getImage_choices().replaceAll(choice.getChoice_id()+"\\b", choice.getCreated_choice_id() + ""));
+					ques.setImage_choices(ques.getImage_choices().replaceAll(choice.getChoice_id() + "\\b",
+							choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getAuto_fail() != null && ques.getAuto_fail() != "") {
-					ques.setAuto_fail(
-							ques.getAuto_fail().replaceAll(choice.getChoice_id()+"\\b", choice.getCreated_choice_id() + ""));
+					ques.setAuto_fail(ques.getAuto_fail().replaceAll(choice.getChoice_id() + "\\b",
+							choice.getCreated_choice_id() + ""));
 				}
 
 				if (ques.getCritical_email_list() != null && ques.getCritical_email_list() != "") {
-					ques.setCritical_email_list(ques.getCritical_email_list().replaceAll(choice.getChoice_id()+"\\b",
+					ques.setCritical_email_list(ques.getCritical_email_list().replaceAll(choice.getChoice_id() + "\\b",
 							choice.getCreated_choice_id() + ""));
 				}
 
@@ -625,9 +633,9 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		for (Choice cho : choices) {
 
 			if (i++ == choices.size() - 1) {
-				choice_pattern = choice_pattern + cho.getChoice_text();
+				choice_pattern = choice_pattern + cho.getChoice_text().trim();
 			} else {
-				choice_pattern = choice_pattern + cho.getChoice_text() + ",";
+				choice_pattern = choice_pattern + cho.getChoice_text().trim() + ",";
 			}
 		}
 
@@ -718,8 +726,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		for (SectionItem sectionItem : sectionItemList) {
 
 			List<GroupItem> groupItemList = questionList.stream()
-					.filter(p -> p.getSection_id() == sectionItem.getSection_id())
-					.map(p -> new GroupItem(p)).distinct()
+					.filter(p -> p.getSection_id() == sectionItem.getSection_id()).map(p -> new GroupItem(p)).distinct()
 					.collect(Collectors.toList());
 
 //			System.out.println(groupItemList);
@@ -728,7 +735,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 				List<QuestionItem> questionItemList = questionList.stream()
 						.filter(p -> p.getSection_id() == groupItem.getSection_id()
-								&& p.getGroup_id() == groupItem.getGroup_id() && !p.isIs_sub_question() && p.getQuestion_text()!=null)
+								&& p.getGroup_id() == groupItem.getGroup_id() && !p.isIs_sub_question()
+								&& p.getQuestion_text() != null)
 						.map(p -> new QuestionItem(p)).distinct().collect(Collectors.toList());
 
 //				System.out.println("Question List => " + questionItemList);
@@ -748,43 +756,39 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 										&& q.getGroup_id() == questionItem.getGroup_id()
 										&& q.getParent_question_no() == questionItem.getQuestion_no()
 										&& q.getParent_choice_pat_id() == chs.getChoice_pat_id()
-										&& q.getParent_choice_id()==Integer.parseInt(chs.getChoice_id())
-									&& q.isIs_sub_question()
-										)
+										&& q.getParent_choice_id() == Integer.parseInt(chs.getChoice_id())
+										&& q.isIs_sub_question())
 								.map(q -> new ParentChoice(chs)).distinct().collect(Collectors.toList());
-						
-						Set<ParentChoice> subChoicelist1 = subChoicelist.stream()
-					            .collect(Collectors.toCollection(() -> 
-					                 new TreeSet<>(Comparator.comparing(ParentChoice::getChoice_id))));
-						
-						for(ParentChoice sub:subChoicelist1) {
-							List<QuestionItem> questionlist=questionList.stream()
+
+						Set<ParentChoice> subChoicelist1 = subChoicelist.stream().collect(Collectors
+								.toCollection(() -> new TreeSet<>(Comparator.comparing(ParentChoice::getChoice_id))));
+
+						for (ParentChoice sub : subChoicelist1) {
+							List<QuestionItem> questionlist = questionList.stream()
 									.filter(p -> p.getSection_id() == groupItem.getSection_id()
-									&& p.getGroup_id() == groupItem.getGroup_id() 
-									&& p.getParent_question_no() == questionItem.getQuestion_no()
-									&& p.getParent_choice_pat_id()==sub.getChoice_pat_id()
-									&& p.getParent_choice_id()==Integer.parseInt(sub.getChoice_id())
-									&& p.isIs_sub_question())
-							.map(p -> new QuestionItem(p)).distinct().collect(Collectors.toList());
+											&& p.getGroup_id() == groupItem.getGroup_id()
+											&& p.getParent_question_no() == questionItem.getQuestion_no()
+											&& p.getParent_choice_pat_id() == sub.getChoice_pat_id()
+											&& p.getParent_choice_id() == Integer.parseInt(sub.getChoice_id())
+											&& p.isIs_sub_question())
+									.map(p -> new QuestionItem(p)).distinct().collect(Collectors.toList());
 
-							for(QuestionItem questionItem1:questionlist) {
-							List<ChoiceItem> choiceItemList1 = questionList.stream()
-									.filter(q -> q.getSection_id() == groupItem.getSection_id()
-											&& q.getGroup_id() == groupItem.getGroup_id()
-											&& q.getQuestion_no() == questionItem1.getQuestion_no()
-											&& q.getChoice_pat_id() == questionItem1.getChoice_pat_id())
-									.map(q -> new ChoiceItem(q)).distinct().collect(Collectors.toList());
-							
-							questionItem1.getChoiceList().addAll(choiceItemList1);
-							
+							for (QuestionItem questionItem1 : questionlist) {
+								List<ChoiceItem> choiceItemList1 = questionList.stream()
+										.filter(q -> q.getSection_id() == groupItem.getSection_id()
+												&& q.getGroup_id() == groupItem.getGroup_id()
+												&& q.getQuestion_no() == questionItem1.getQuestion_no()
+												&& q.getChoice_pat_id() == questionItem1.getChoice_pat_id())
+										.map(q -> new ChoiceItem(q)).distinct().collect(Collectors.toList());
+
+								questionItem1.getChoiceList().addAll(choiceItemList1);
+
 							}
-						sub.getQuestionlist().addAll(questionlist);
-							
-						}
-						
-						
-						questionItem.getSublist().addAll(subChoicelist1);
+							sub.getQuestionlist().addAll(questionlist);
 
+						}
+
+						questionItem.getSublist().addAll(subChoicelist1);
 
 					}
 					// sublist

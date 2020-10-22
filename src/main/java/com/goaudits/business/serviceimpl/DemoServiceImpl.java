@@ -54,4 +54,33 @@ public class DemoServiceImpl implements DemoServiceInterface {
 		return auditslist;
 	}
 
+
+
+	@Override
+	public List<DemoAudits> getManageAuditsListv1(DemoAudits audits) {
+		List<DemoAudits> auditslist = demoMapper.getManageAuditsListv1(audits);
+
+		String pattern = "yyyy-MM-dd";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		SimpleDateFormat simpleDateFormat2;
+
+		for (DemoAudits a : auditslist) {
+
+			Date date = null;
+			try {
+				date = simpleDateFormat.parse(a.getAudit_date());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			simpleDateFormat2 = new SimpleDateFormat("dd, MMM yyyy");
+			String newFormatttedDate = simpleDateFormat2.format(date);
+			a.setDisplay_audit_date(newFormatttedDate);
+		}
+
+		return auditslist;
+
+	}
+
 }

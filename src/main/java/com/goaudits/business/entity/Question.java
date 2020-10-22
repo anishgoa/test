@@ -117,6 +117,8 @@ public class Question implements Serializable {
 	private int audits_count;
 	private int addedquestion_order=0;
     byte[] binaryimage;
+    private boolean copy=false;
+    private String copyques_no;
     
 	private List<Choice> choiceList = new ArrayList<Choice>();
 	private List<Choice> sublist = new ArrayList<Choice>();
@@ -1049,5 +1051,35 @@ public class Question implements Serializable {
 	public void setAddedquestion_order(int addedquestion_order) {
 		this.addedquestion_order = addedquestion_order;
 	}
+
+	/**
+	 * @return the copy
+	 */
+	public boolean isCopy() {
+		return copy;
+	}
+
+	/**
+	 * @param copy the copy to set
+	 */
+	public void setCopy(boolean copy) {
+		this.copy = copy;
+	}
+
+	/**
+	 * @return the copyques_no
+	 */
+	public String getCopyques_no() {
+		return copyques_no;
+	}
+
+	/**
+	 * @param copyques_no the copyques_no to set
+	 */
+	public void setCopyques_no(String copyques_no) {
+		this.copyques_no = copyques_no;
+	}
+	
+	
 	
 }

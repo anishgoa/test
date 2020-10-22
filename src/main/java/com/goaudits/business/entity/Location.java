@@ -37,6 +37,9 @@ public class Location implements Serializable {
 	private String postcode;
 	private boolean gps_location_filter_enabled; 
 	private boolean isdelete;
+	int min;
+	int max;
+	int count;
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
 	private List<LocationTags> tagslist = new ArrayList<LocationTags>();
 
@@ -281,6 +284,50 @@ public class Location implements Serializable {
 	public void setIsdelete(boolean isdelete) {
 		this.isdelete = isdelete;
 	}
+
+	/**
+	 * @return the min
+	 */
+	public int getMin() {
+		return min;
+	}
+
+	/**
+	 * @param min the min to set
+	 */
+	public void setMin(int min) {
+		this.min = min;
+	}
+
+	/**
+	 * @return the max
+	 */
+	public int getMax() {
+		return max;
+	}
+
+	/**
+	 * @param max the max to set
+	 */
+	public void setMax(int max) {
+		this.max = max;
+	}
+
+	/**
+	 * @return the count
+	 */
+	public int getCount() {
+		return count;
+	}
+
+	/**
+	 * @param count the count to set
+	 */
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+
 	
 
 }

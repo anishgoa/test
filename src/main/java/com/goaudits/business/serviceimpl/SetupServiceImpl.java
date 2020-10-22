@@ -574,4 +574,9 @@ public class SetupServiceImpl implements SetupService {
 		return setupmapper.createGuided(gudsetp);
 	}
 
+	@Override
+	public List<Location> getLocationsBasedonCompanyv2(Location location) {
+		return setupmapper.getLocationsBasedonCompanyv2(location);
+	}
+
 }

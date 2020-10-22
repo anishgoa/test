@@ -9,4 +9,6 @@ public interface DemoServiceInterface {
 	List<DemoAudits> getDemoAuditsList();
 
 	List<DemoAudits> getManageAuditsList(DemoAudits audits);
+
+	List<DemoAudits> getManageAuditsListv1(DemoAudits audits);
 }

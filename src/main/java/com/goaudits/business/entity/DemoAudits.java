@@ -35,6 +35,9 @@ public class DemoAudits {
 	private int wkcount;
 	private String score;
 	private String status_name;
+	private int min;
+	private int max;
+	private int count;
 //	private List<Customfields> Customfieldslist = new ArrayList<Customfields>();
 //	private List<Location> strarry = new ArrayList<Location>();
 	
@@ -223,6 +226,42 @@ public class DemoAudits {
 	}
 	public void setStatus_name(String status_name) {
 		this.status_name = status_name;
+	}
+	/**
+	 * @return the min
+	 */
+	public int getMin() {
+		return min;
+	}
+	/**
+	 * @param min the min to set
+	 */
+	public void setMin(int min) {
+		this.min = min;
+	}
+	/**
+	 * @return the max
+	 */
+	public int getMax() {
+		return max;
+	}
+	/**
+	 * @param max the max to set
+	 */
+	public void setMax(int max) {
+		this.max = max;
+	}
+	/**
+	 * @return the count
+	 */
+	public int getCount() {
+		return count;
+	}
+	/**
+	 * @param count the count to set
+	 */
+	public void setCount(int count) {
+		this.count = count;
 	}
 	
 	

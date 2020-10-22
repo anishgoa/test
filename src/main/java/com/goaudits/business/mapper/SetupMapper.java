@@ -256,5 +256,9 @@ public interface SetupMapper {
 
 	@Update("UPDATE GA_USERDET_MT SET PRIMARY_GOAL=#{goal},NO_OF_LICENSES=#{no_of_licenses},PHONE_NUMBER=#{number},INDUSTRY=#{bussiness},WALKTHROUGH=#{walkthrough} WHERE GUID=#{guid} AND SUPER_USER=1")
 	int createGuided(GuidedSetup gudsetp);
+	
+	@Select(value = "{ CALL SP_GA_GETLOCATIONBYCLIENT_PV5( #{guid, mode=IN, jdbcType=BINARY}, #{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{active, mode=IN, jdbcType=BOOLEAN},#{min, mode=IN, jdbcType=INTEGER},#{max, mode=IN, jdbcType=INTEGER} ) }")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Location> getLocationsBasedonCompanyv2(Location location);
 
 }

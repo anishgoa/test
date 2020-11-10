@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.goaudits.business.entity.Choice;
 import com.goaudits.business.entity.Group;
+import com.goaudits.business.entity.GroupOrder;
 import com.goaudits.business.entity.Previewchoice;
 import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.QuestionOrder;
@@ -243,5 +244,9 @@ public interface QuestionnaireMapper {
 	@Insert(value = "{CALL GA_SP_PORTAL_ADDCONDIONALFORCOPY( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER}, #{section_id, mode=IN, jdbcType=INTEGER},#{group_id, mode=IN, jdbcType=INTEGER},#{copyques_no, mode=IN, jdbcType=INTEGER},#{question_no, mode=IN, jdbcType=INTEGER} )}")
 	int addConditionalQuestionForCopy(@Param("guid")String guid,@Param("client_id") int client_id,@Param("audit_type_id") int audit_type_id,
 			@Param("section_id")int section_id,@Param("group_id")int group_id,@Param("copyques_no")String copyques_no,@Param("question_no")int question_no);
+
+	@Insert(value = "{CALL SP_GA_UPDATE_GROUPORDER_DET_PV2(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
+			+ "#{dragedsectionid, mode=IN, jdbcType=INTEGER},#{dropsection_id, mode=IN, jdbcType=INTEGER},#{draggroup_order, mode=IN, jdbcType=INTEGER},#{dropgroup_order, mode=IN, jdbcType=INTEGER})}")
+	int updateGroupOrder(GroupOrder grouporder);
 	
 }

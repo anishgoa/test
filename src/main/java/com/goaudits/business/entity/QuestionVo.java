@@ -130,6 +130,7 @@ public class QuestionVo {
 	private boolean grpacive;
 	private boolean secactive; 
 	String default_score_percent;
+	private int group_order;
 
 	private List<Choice> choiceList = new ArrayList<Choice>();
 	private List<Choice> sublist = new ArrayList<Choice>();
@@ -1271,6 +1272,20 @@ public class QuestionVo {
 	 */
 	public void setDefault_score_percent(String default_score_percent) {
 		this.default_score_percent = default_score_percent;
+	}
+
+	/**
+	 * @return the group_order
+	 */
+	public int getGroup_order() {
+		return group_order;
+	}
+
+	/**
+	 * @param group_order the group_order to set
+	 */
+	public void setGroup_order(int group_order) {
+		this.group_order = group_order;
 	}
 	
 	

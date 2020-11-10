@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.goaudits.business.entity.Choice;
 import com.goaudits.business.entity.Group;
+import com.goaudits.business.entity.GroupOrder;
 import com.goaudits.business.entity.Previewchoice;
 import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.QuestionOrder;
@@ -85,6 +86,8 @@ public interface QuestionnaireService {
 	int getQimagecount(Question question);
 
 	List<SectionItem> getQuestionList(Section audit);
+
+	int groupOrder(GroupOrder grouporder);
 
 
 

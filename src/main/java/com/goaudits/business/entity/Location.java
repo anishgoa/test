@@ -40,12 +40,13 @@ public class Location implements Serializable {
 	int min;
 	int max;
 	int count;
+	String search_item;
+	String sort;
+	String order;
+	
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
 	private List<LocationTags> tagslist = new ArrayList<LocationTags>();
 
-	
-	
-	
 	public String getPostcode() {
 		return postcode;
 	}
@@ -325,6 +326,48 @@ public class Location implements Serializable {
 	 */
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	/**
+	 * @return the search_item
+	 */
+	public String getSearch_item() {
+		return search_item;
+	}
+
+	/**
+	 * @param search_item the search_item to set
+	 */
+	public void setSearch_item(String search_item) {
+		this.search_item = search_item;
+	}
+
+	/**
+	 * @return the sort
+	 */
+	public String getSort() {
+		return sort;
+	}
+
+	/**
+	 * @param sort the sort to set
+	 */
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
+	/**
+	 * @return the order
+	 */
+	public String getOrder() {
+		return order;
+	}
+
+	/**
+	 * @param order the order to set
+	 */
+	public void setOrder(String order) {
+		this.order = order;
 	}
 
 

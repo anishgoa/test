@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class DemoAudits {
+	private String audit_id;
 	private String guid;
 	private String uid;
 	private String client_id;
@@ -38,6 +39,9 @@ public class DemoAudits {
 	private int min;
 	private int max;
 	private int count;
+	String search_item;
+	String sort;
+	String order;
 //	private List<Customfields> Customfieldslist = new ArrayList<Customfields>();
 //	private List<Location> strarry = new ArrayList<Location>();
 	
@@ -262,6 +266,54 @@ public class DemoAudits {
 	 */
 	public void setCount(int count) {
 		this.count = count;
+	}
+	/**
+	 * @return the search_item
+	 */
+	public String getSearch_item() {
+		return search_item;
+	}
+	/**
+	 * @param search_item the search_item to set
+	 */
+	public void setSearch_item(String search_item) {
+		this.search_item = search_item;
+	}
+	/**
+	 * @return the sort
+	 */
+	public String getSort() {
+		return sort;
+	}
+	/**
+	 * @param sort the sort to set
+	 */
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+	/**
+	 * @return the order
+	 */
+	public String getOrder() {
+		return order;
+	}
+	/**
+	 * @param order the order to set
+	 */
+	public void setOrder(String order) {
+		this.order = order;
+	}
+	/**
+	 * @return the audit_id
+	 */
+	public String getAudit_id() {
+		return audit_id;
+	}
+	/**
+	 * @param audit_id the audit_id to set
+	 */
+	public void setAudit_id(String audit_id) {
+		this.audit_id = audit_id;
 	}
 	
 	

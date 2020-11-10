@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.goaudits.business.entity.Choice;
 import com.goaudits.business.entity.Group;
+import com.goaudits.business.entity.GroupOrder;
 import com.goaudits.business.entity.Previewchoice;
 import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.QuestionOrder;
@@ -305,6 +306,18 @@ public class Questionnaire {
 			}
 		}
 	}
+
+	@RequestMapping(value = "/group/order", method = RequestMethod.POST)
+	public ResponseEntity<?> groupOrder(@RequestBody GroupOrder grouporder) {
+		
+		QuestionnaireService.groupOrder(grouporder);
+		List<GroupOrder> qOrderList = new ArrayList<GroupOrder>();
+		qOrderList.add(grouporder);
+		return new ResponseEntity<List<GroupOrder>>(qOrderList, HttpStatus.OK);
+		
+		
+	}
+	
 
 	@RequestMapping(value = "/customchoice/add", method = RequestMethod.POST)
 	public ResponseEntity<?> addCustomchoice(@RequestBody List<Choice> choice) {

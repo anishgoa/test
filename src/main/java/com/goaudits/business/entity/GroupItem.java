@@ -17,6 +17,7 @@ public class GroupItem {
 	private String group_name = null;
 	private boolean active;
 	private String audit_token;
+	private int group_order;
 	
 	@JsonIgnore
 	private boolean inactiveq=true;
@@ -27,6 +28,7 @@ public class GroupItem {
 		this.group_id = p.getGroup_id();
 		this.group_name = p.getGroup_name();
 		this.active = p.isGrpacive();
+		this.group_order=p.getGroup_order();
 	}
 	
 	@Override
@@ -128,6 +130,20 @@ public class GroupItem {
 	 */
 	public void setQuestionList(List<QuestionItem> questionList) {
 		QuestionList = questionList;
+	}
+
+	/**
+	 * @return the group_order
+	 */
+	public int getGroup_order() {
+		return group_order;
+	}
+
+	/**
+	 * @param group_order the group_order to set
+	 */
+	public void setGroup_order(int group_order) {
+		this.group_order = group_order;
 	}
 
 	

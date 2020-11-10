@@ -17,6 +17,7 @@ import com.goaudits.business.entity.Choice;
 import com.goaudits.business.entity.ChoiceItem;
 import com.goaudits.business.entity.Group;
 import com.goaudits.business.entity.GroupItem;
+import com.goaudits.business.entity.GroupOrder;
 import com.goaudits.business.entity.ParentChoice;
 import com.goaudits.business.entity.Previewchoice;
 import com.goaudits.business.entity.Question;
@@ -385,12 +386,12 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		if (isCustomChoiceExist(choices)) {
 			for (Choice cho : choices) {
 				cho.setGuid(guid);
-				choice_type = choices.get(0).getChoice_type();
+				choice_type = choices.get(0).getChoice_type().trim();
 				if (i++ == choices.size() - 1) {
-					choice_pattern = choice_pattern + cho.getChoice_text();
+					choice_pattern = choice_pattern + cho.getChoice_text().trim();
 					// choice_pattern=choice_pattern+"ZERO";
 				} else {
-					choice_pattern = choice_pattern + cho.getChoice_text() + ",";
+					choice_pattern = choice_pattern + cho.getChoice_text().trim() + ",";
 				}
 			}
 
@@ -415,10 +416,10 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 				cho.setGuid(guid);
 				choice_type = choices.get(0).getChoice_type();
 				if (i++ == choices.size() - 1) {
-					choice_pattern = choice_pattern + cho.getChoice_text();
+					choice_pattern = choice_pattern + cho.getChoice_text().trim();
 					// choice_pattern=choice_pattern+"ZERO";
 				} else {
-					choice_pattern = choice_pattern + cho.getChoice_text() + ",";
+					choice_pattern = choice_pattern + cho.getChoice_text().trim() + ",";
 				}
 				cho.setChoice_colour(cho.getChoice_colour().replace("#", ""));
 				cho.setCreated_choice_id(questionnairemapper.addCustomChoice(cho));
@@ -801,6 +802,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		}
 
 		return sectionItemList;
+	}
+
+	@Override
+	public int groupOrder(GroupOrder grouporder) {
+		return questionnairemapper.updateGroupOrder(grouporder);
 	}
 
 }

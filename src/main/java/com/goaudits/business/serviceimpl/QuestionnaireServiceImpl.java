@@ -401,7 +401,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 			for (Choice chc : choiceList) {
 				for (Choice chs : choices) {
-					if (chc.getChoice_text().equals(chs.getChoice_text())) {
+					if (chc.getChoice_text().trim().equals(chs.getChoice_text().trim())) {
 						chs.setCreated_choice_id(chc.getCreated_choice_id());
 						chs.setChoice_pat_id(chc.getChoice_pat_id());
 					}

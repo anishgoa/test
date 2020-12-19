@@ -131,6 +131,7 @@ public class QuestionVo {
 	private boolean secactive; 
 	String default_score_percent;
 	private int group_order;
+	private int  score_type;
 
 	private List<Choice> choiceList = new ArrayList<Choice>();
 	private List<Choice> sublist = new ArrayList<Choice>();
@@ -1286,6 +1287,20 @@ public class QuestionVo {
 	 */
 	public void setGroup_order(int group_order) {
 		this.group_order = group_order;
+	}
+
+	/**
+	 * @return the score_type
+	 */
+	public int getScore_type() {
+		return score_type;
+	}
+
+	/**
+	 * @param score_type the score_type to set
+	 */
+	public void setScore_type(int score_type) {
+		this.score_type = score_type;
 	}
 	
 	

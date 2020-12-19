@@ -1,6 +1,7 @@
 package com.goaudits.business.security.jwt;
 
-import io.jsonwebtoken.*;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,8 +9,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import com.goaudits.business.security.services.UserPrinciple;
+import com.goaudits.business.util.EncrypterHelper;
 
-import java.util.Date;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class JwtProvider {
@@ -26,14 +33,38 @@ public class JwtProvider {
 
         UserPrinciple userPrincipal = (UserPrinciple) authentication.getPrincipal();
 
-        return Jwts.builder()
+        String jwt= Jwts.builder()
 		                .setSubject((userPrincipal.getUsername()))
 		                .setIssuedAt(new Date())
 		                .setExpiration(new Date((new Date()).getTime() + jwtExpiration*1000))
 		                .signWith(SignatureAlgorithm.HS512, jwtSecret)
 		                .compact(); // build jwt string which is url safe
+		return EncrypterHelper.encrypt(jwt);
+
     }
-    
+    public String getJWTToken(String username) {
+		//String secretKey = "mySecretKey";
+		/*
+		 * List<GrantedAuthority> grantedAuthorities = AuthorityUtils
+		 * .commaSeparatedStringToAuthorityList("ROLE_USER");
+		 * 
+		 * String token = Jwts .builder() .setId("softtekJWT") .setSubject(username)
+		 * .claim("authorities", grantedAuthorities.stream()
+		 * .map(GrantedAuthority::getAuthority) .collect(Collectors.toList()))
+		 * .setIssuedAt(new Date(System.currentTimeMillis())) .setExpiration(new
+		 * Date(System.currentTimeMillis() + 600000))
+		 * .signWith(SignatureAlgorithm.HS512, secretKey.getBytes()).compact();
+		 */
+
+    	String jwt=Jwts.builder()
+                .setSubject((username))
+                .setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + jwtExpiration*1000))
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact(); // build jwt string which is url safe
+
+		return EncrypterHelper.encrypt(jwt);
+	}
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);

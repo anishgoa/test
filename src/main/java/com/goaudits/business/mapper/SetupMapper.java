@@ -124,8 +124,8 @@ public interface SetupMapper {
 	@Insert(value = "{CALL SP_GA_UPDATEACTIONEMAILAUDITNAME_DET(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},#{person_name, mode=IN, jdbcType=VARCHAR},#{person_email, mode=IN, jdbcType=VARCHAR},#{department, mode=IN, jdbcType=VARCHAR},#{isapproval_required, mode=IN, jdbcType=BOOLEAN},#{make_default, mode=IN, jdbcType=BOOLEAN})}")
 	void insertActionemailAuditName(ActionPlanAssignee act);
 
-	@Select("SELECT * FROM GA_AUDITTYPE_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID!=#{audit_type_id} AND AUDIT_TYPE_NAME=#{audit_type_name}")
-	AuditName getAuditnameDetailsByCompanyEdit(AuditName auditname);
+	@Select("SELECT COUNT(*) FROM GA_AUDITTYPE_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID!=#{audit_type_id} AND AUDIT_TYPE_NAME=#{audit_type_name}")
+	int getAuditnameDetailsByCompanyEdit(AuditName auditname);
 
 	@Delete("DELETE FROM GA_AUDITNAMEACTIONEMAIL_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_TYPE_ID=#{audit_type_id}")
 	void deleteActionemailAuditName(AuditName auditname);

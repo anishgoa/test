@@ -236,7 +236,7 @@ public class AdvancedController {
 			customFieldsList.add(customfields);
 			return new ResponseEntity<List<Customfields>>(customFieldsList, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
@@ -252,7 +252,7 @@ public class AdvancedController {
 				return new ResponseEntity<List<Customfields>>(customFieldsList, HttpStatus.CREATED);
 				
 			} catch (Exception e) {
-				return new ResponseEntity(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+				return new ResponseEntity(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
 			}
 		}
 		return new ResponseEntity(new GoAuditsException("Custom field cannot be updated, record not found"),

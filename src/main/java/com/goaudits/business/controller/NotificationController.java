@@ -33,7 +33,7 @@ public class NotificationController {
 			NotiList.add(Notification);
 			return new ResponseEntity<List<Notification>>(NotiList, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity(new GoAuditsException(e.getMessage()),
+			return new ResponseEntity(new GoAuditsException("Something went wrong" ),
 					HttpStatus.EXPECTATION_FAILED);
 		}
 
@@ -48,7 +48,7 @@ public class NotificationController {
 			NotiList.add(Notification);
 			return new ResponseEntity<List<Notification>>(NotiList, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity(new GoAuditsException(e.getMessage()),
+			return new ResponseEntity(new GoAuditsException("Something went wrong" ),
 					HttpStatus.EXPECTATION_FAILED);
 		}
 
@@ -63,7 +63,7 @@ public class NotificationController {
 			List<Notification> NotiList=new ArrayList<Notification>();
 			return new ResponseEntity<List<Notification>>(NotiList, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity(new GoAuditsException(e.getMessage()),
+			return new ResponseEntity(new GoAuditsException("Something went wrong" ),
 					HttpStatus.EXPECTATION_FAILED);
 		}
 
@@ -78,7 +78,7 @@ public class NotificationController {
 		
 			return new ResponseEntity<List<Notification>>(notificationlist, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity(new GoAuditsException(e.getMessage()),
+			return new ResponseEntity(new GoAuditsException("Something went wrong" ),
 					HttpStatus.EXPECTATION_FAILED);
 		}
 
@@ -92,7 +92,7 @@ public class NotificationController {
 			List<Notification> NotiList=new ArrayList<Notification>();
 			return new ResponseEntity<List<Notification>>(NotiList, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity(new GoAuditsException(e.getMessage()),
+			return new ResponseEntity(new GoAuditsException("Something went wrong" ),
 					HttpStatus.EXPECTATION_FAILED);
 		}
 	}

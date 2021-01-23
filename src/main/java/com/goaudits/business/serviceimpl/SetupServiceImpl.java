@@ -232,7 +232,7 @@ public class SetupServiceImpl implements SetupService {
 
 	@Override
 	public boolean isAuditNameExistInDB(AuditName auditname) {
-		return (setupmapper.getAuditnameDetailsByCompanyEdit(auditname)) != null ? true : false;
+		return (setupmapper.getAuditnameDetailsByCompanyEdit(auditname)) > 0 ? true : false;
 	}
 
 	@Override

@@ -84,8 +84,8 @@ public class SetupController {
 				return new ResponseEntity<List<Company>>(companyList, HttpStatus.CREATED);
 			} catch (Exception e) {
 				e.printStackTrace();
-				System.out.println(e.getMessage());
-				return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+//				System.out.println("Something went wrong" );
+				return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
 			}
 		}
 	}
@@ -101,7 +101,7 @@ public class SetupController {
 				companyList.add(company);
 				return new ResponseEntity<List<Company>>(companyList, HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+				return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
 			}
 		}
 		return new ResponseEntity<>(
@@ -201,7 +201,7 @@ public class SetupController {
 				locationList.add(location);
 				return new ResponseEntity<List<Location>>(locationList, HttpStatus.CREATED);
 			} catch (Exception e) {
-				return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+				return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
 			}
 		}
 	}
@@ -217,7 +217,7 @@ public class SetupController {
 				locationList.add(location);
 				return new ResponseEntity<List<Location>>(locationList, HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+				return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
 			}
 		}
 		return new ResponseEntity<>(
@@ -283,7 +283,7 @@ public class SetupController {
 
 	@RequestMapping(value = "/auditname/update", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateAuditName(@RequestBody AuditName auditname) {
-		if (!setupservice.isAuditNameExistInDB(auditname)) {
+		if (setupservice.isAuditNameExistInDB(auditname)) {
 			try {
 				AuditName AudName = setupservice.updateAuditName(auditname);
 				auditname.setAudit_type_id(AudName.getAudit_type_id());
@@ -292,14 +292,14 @@ public class SetupController {
 				auditNameList.add(auditname);
 				return new ResponseEntity<List<AuditName>>(auditNameList, HttpStatus.OK);
 			} catch (Exception e) {
-//				System.out.println(e.getMessage());
+//				System.out.println("Something went wrong" );
 				return new ResponseEntity<>(new GoAuditsException("Something went wrong"),
 						HttpStatus.EXPECTATION_FAILED);
 			}
 		}
 		return new ResponseEntity<>(
 				new GoAuditsException("This checklist name is already in use, Please enter a different checklist name"),
-				HttpStatus.NOT_FOUND);
+				HttpStatus.CONFLICT);
 	}
 
 	@RequestMapping(value = "/cloneauditname", method = RequestMethod.POST)
@@ -317,7 +317,7 @@ public class SetupController {
 				preList.add(PreTemplates);
 				return new ResponseEntity<List<PreTemplates>>(preList, HttpStatus.CREATED);
 			} catch (Exception e) {
-				return new ResponseEntity(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+				return new ResponseEntity(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
 			}
 		}
 	}
@@ -370,7 +370,7 @@ public class SetupController {
 			reportList.add(report);
 			return new ResponseEntity<List<Report>>(reportList, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
@@ -434,7 +434,7 @@ public class SetupController {
 			templatesList.add(PreTemplates);
 			return new ResponseEntity<List<PreTemplates>>(templatesList, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new GoAuditsException(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 

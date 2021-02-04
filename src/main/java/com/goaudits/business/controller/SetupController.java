@@ -283,7 +283,7 @@ public class SetupController {
 
 	@RequestMapping(value = "/auditname/update", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateAuditName(@RequestBody AuditName auditname) {
-		if (setupservice.isAuditNameExistInDB(auditname)) {
+		if (!setupservice.isAuditNameExistInDB(auditname)) {
 			try {
 				AuditName AudName = setupservice.updateAuditName(auditname);
 				auditname.setAudit_type_id(AudName.getAudit_type_id());

@@ -112,5 +112,7 @@ public interface SetupService {
 
 	public List<Location> getLocationsBasedonCompanyv2(Location location);
 
+	public boolean getEditFlag(String guid);
+
 	
 }

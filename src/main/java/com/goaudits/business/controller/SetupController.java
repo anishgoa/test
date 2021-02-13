@@ -472,5 +472,13 @@ public class SetupController {
 		arr.add(gudsetp);
 		return new ResponseEntity<List<GuidedSetup>>(arr, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/editflag/{guid}", method = RequestMethod.GET)
+	public ResponseEntity<?> editAuditFlag(@PathVariable("guid") String guid) {
+		boolean flag = setupservice.getEditFlag(guid);
+		List<Boolean> list = new ArrayList<Boolean>();
+		list.add(flag);
+		return new ResponseEntity<List<Boolean>>(list, HttpStatus.OK);
+	}
 
 }

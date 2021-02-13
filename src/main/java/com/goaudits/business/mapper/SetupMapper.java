@@ -262,4 +262,7 @@ public interface SetupMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	List<Location> getLocationsBasedonCompanyv2(Location location);
 
+	@Select("SELECT EDIT_AUDIT_ENABLED FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1")
+	boolean getEditFlag(String guid);
+
 }

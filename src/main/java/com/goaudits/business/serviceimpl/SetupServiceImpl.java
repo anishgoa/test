@@ -579,4 +579,9 @@ public class SetupServiceImpl implements SetupService {
 		return setupmapper.getLocationsBasedonCompanyv2(location);
 	}
 
+	@Override
+	public boolean getEditFlag(String guid) {
+		return setupmapper.getEditFlag(guid);
+	}
+
 }

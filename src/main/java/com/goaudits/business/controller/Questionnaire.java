@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,7 @@ import com.goaudits.business.entity.Tag;
 import com.goaudits.business.entity.User;
 import com.goaudits.business.service.QuestionnaireService;
 import com.goaudits.business.util.GoAuditsException;
+import com.goaudits.business.util.Utils;
 import com.goaudits.business.service.S3Service;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -41,27 +43,64 @@ public class Questionnaire {
 	private S3Service s3Service;
 
 	@RequestMapping(value = "/prequestionaudit", method = RequestMethod.POST)
-	public ResponseEntity<List<Section>> getPreQuestionsaudit(@RequestBody Section section) {
+	public ResponseEntity<?> getPreQuestionsaudit(@RequestBody Section section,
+			@RequestHeader(name = "Authorization") String token) {
 
-		List<Section> sectionlist = QuestionnaireService.getUserQuestions(section);
-		return new ResponseEntity<List<Section>>(sectionlist, HttpStatus.OK);
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				section.setGuid(guid);
+				section.setUid(uid);
+			}
+			List<Section> sectionlist = QuestionnaireService.getUserQuestions(section);
+			return new ResponseEntity<List<Section>>(sectionlist, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
 
 	}
 
 	@RequestMapping(value = "/section/list", method = RequestMethod.POST)
-	public ResponseEntity<List<Section>> getSection(@RequestBody Section section) {
-		List<Section> sectionlist = QuestionnaireService.getSections(section);
-		return new ResponseEntity<List<Section>>(sectionlist, HttpStatus.OK);
+	public ResponseEntity<?> getSection(@RequestBody Section section,
+			@RequestHeader(name = "Authorization") String token) {
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				section.setGuid(guid);
+				section.setUid(uid);
+			}
+			List<Section> sectionlist = QuestionnaireService.getSections(section);
+			return new ResponseEntity<List<Section>>(sectionlist, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
 	}
 
 	@RequestMapping(value = "/section/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addSection(@RequestBody Section section) {
+	public ResponseEntity<?> addSection(@RequestBody Section section,
+			@RequestHeader(name = "Authorization") String token) {
 
-		if (QuestionnaireService.isSectionExist(section)) {
-			return new ResponseEntity<>(new GoAuditsException("Please provide a different section name, this one already exists"),
-					HttpStatus.CONFLICT);
-		}
 		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				section.setGuid(guid);
+				section.setUid(uid);
+			}
+
+			if (QuestionnaireService.isSectionExist(section)) {
+				return new ResponseEntity<>(
+						new GoAuditsException("Please provide a different section name, this one already exists"),
+						HttpStatus.CONFLICT);
+			}
+
 			int section_id = QuestionnaireService.addSection(section);
 			section.setSection_id(section_id);
 			List<Section> sectionList = new ArrayList<Section>();
@@ -73,50 +112,77 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/section/update", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateSection(@RequestBody Section section) {
+	public ResponseEntity<?> updateSection(@RequestBody Section section,
+			@RequestHeader(name = "Authorization") String token) {
 
-		if (!QuestionnaireService.issectionExistInDB(section)) {
-			try {
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				section.setGuid(guid);
+				section.setUid(uid);
+			}
+			if (!QuestionnaireService.issectionExistInDB(section)) {
+
 				QuestionnaireService.updateSection(section);
 				List<Section> sectionList = new ArrayList<Section>();
 				sectionList.add(section);
 				return new ResponseEntity<List<Section>>(sectionList, HttpStatus.OK);
-			} catch (Exception e) {
-				return new ResponseEntity<>(new GoAuditsException("Something went wrong"),
-						HttpStatus.EXPECTATION_FAILED);
 			}
+			return new ResponseEntity<>(
+					new GoAuditsException("Please provide a different section name, this one already exists"),
+					HttpStatus.CONFLICT);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
-		return new ResponseEntity<>(new GoAuditsException("Please provide a different section name, this one already exists"),
-				HttpStatus.CONFLICT);
 	}
 
 	@RequestMapping(value = "/section/delete", method = RequestMethod.POST)
-	public ResponseEntity<?> deleteSection(@RequestBody Section section) {
+	public ResponseEntity<?> deleteSection(@RequestBody Section section,
+			@RequestHeader(name = "Authorization") String token) {
 
-		// if (auditConfigService.isAudit(section.getGuid(),
-		// section.getClient_id(), section.getAudit_type_id())) {
-		// return new ResponseEntity(new GoAuditsException(
-		// "Audits are existing so you can't delete Section"),
-		// HttpStatus.CONFLICT);
-		// }
 		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				section.setGuid(guid);
+				section.setUid(uid);
+			}
+			// if (auditConfigService.isAudit(section.getGuid(),
+			// section.getClient_id(), section.getAudit_type_id())) {
+			// return new ResponseEntity(new GoAuditsException(
+			// "Audits are existing so you can't delete Section"),
+			// HttpStatus.CONFLICT);
+			// }
+
 			QuestionnaireService.deleteSection(section);
 			List<Section> sectionList = new ArrayList<Section>();
 			sectionList.add(section);
 			return new ResponseEntity<List<Section>>(sectionList, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
 	@RequestMapping(value = "/group/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addGroup(@RequestBody Group group) {
+	public ResponseEntity<?> addGroup(@RequestBody Group group, @RequestHeader(name = "Authorization") String token) {
 
-		if (QuestionnaireService.isGroupExist(group)) {
-			return new ResponseEntity<>(new GoAuditsException("Please provide a different group name, this one already exists"),
-					HttpStatus.CONFLICT);
-		}
 		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				group.setGuid(guid);
+				group.setUid(uid);
+			}
+			if (QuestionnaireService.isGroupExist(group)) {
+				return new ResponseEntity<>(
+						new GoAuditsException("Please provide a different group name, this one already exists"),
+						HttpStatus.CONFLICT);
+			}
+
 			int group_id = QuestionnaireService.addGroup(group);
 			group.setGroup_id(group_id);
 			List<Group> groupList = new ArrayList<Group>();
@@ -124,43 +190,63 @@ public class Questionnaire {
 
 			return new ResponseEntity<List<Group>>(groupList, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
 	@RequestMapping(value = "/group/update", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateGroup(@RequestBody Group group) {
+	public ResponseEntity<?> updateGroup(@RequestBody Group group,
+			@RequestHeader(name = "Authorization") String token) {
 
-		if (!QuestionnaireService.isGroupExistInDB(group)) {
-			try {
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				group.setGuid(guid);
+				group.setUid(uid);
+			}
+			if (!QuestionnaireService.isGroupExistInDB(group)) {
+
 				QuestionnaireService.updateGroup(group);
 				List<Group> groupList = new ArrayList<Group>();
 				groupList.add(group);
 				return new ResponseEntity<List<Group>>(groupList, HttpStatus.OK);
-			} catch (Exception e) {
-				return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
+
 			}
+			return new ResponseEntity<>(
+					new GoAuditsException("Please provide a different group name, this one already exists"),
+					HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
-		return new ResponseEntity<>(new GoAuditsException("Please provide a different group name, this one already exists"),
-				HttpStatus.NOT_FOUND);
 	}
 
 	@RequestMapping(value = "/group/delete", method = RequestMethod.POST)
-	public ResponseEntity<?> deleteGroup(@RequestBody Group group) {
+	public ResponseEntity<?> deleteGroup(@RequestBody Group group,
+			@RequestHeader(name = "Authorization") String token) {
 
-		// if (auditConfigService.isAudit(group.getGuid(), group.getClient_id(),
-		// group.getAudit_type_id())) {
-		// return new ResponseEntity(new GoAuditsException(
-		// "Audits are existing so you can't delete Group"),
-		// HttpStatus.CONFLICT);
-		// }
 		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				group.setGuid(guid);
+				group.setUid(uid);
+			}
+			// if (auditConfigService.isAudit(group.getGuid(), group.getClient_id(),
+			// group.getAudit_type_id())) {
+			// return new ResponseEntity(new GoAuditsException(
+			// "Audits are existing so you can't delete Group"),
+			// HttpStatus.CONFLICT);
+			// }
+
 			QuestionnaireService.deleteGroup(group);
 			List<Group> groupList = new ArrayList<Group>();
 			groupList.add(group);
 			return new ResponseEntity<List<Group>>(groupList, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
@@ -183,15 +269,23 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/question/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addQuestion(@RequestBody List<Question> question) {
+	public ResponseEntity<?> addQuestion(@RequestBody List<Question> question,
+			@RequestHeader(name = "Authorization") String token) {
 
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				question.get(0).setGuid(guid);
+				question.get(0).setUid(uid);
+			}
 //		if (question.get(0).isConditionnew()) {
 //			if (QuestionnaireService.isConditionalChoiceQuestionExist(question)) {
 //				return new ResponseEntity<>(new GoAuditsException("Response already exists"), HttpStatus.CONFLICT);
 //			}
 //		}
 
-		try {
 			int qno = QuestionnaireService.addQuestion(question);
 			S3 s3 = new S3();
 			s3.setClient_name(question.get(0).getClient_name());
@@ -209,20 +303,29 @@ public class Questionnaire {
 			s3List.add(params);
 			return new ResponseEntity<List<S3>>(s3List, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
 	@RequestMapping(value = "/question/update", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateQuestion(@RequestBody List<Question> question) {
-
-		if (QuestionnaireService.choiceChangeConditional(question.get(0))) {
-			return new ResponseEntity<>(
-					new GoAuditsException("Conditional questions are configured, So you can't update choice pattern"),
-					HttpStatus.NOT_FOUND);
-		}
+	public ResponseEntity<?> updateQuestion(@RequestBody List<Question> question,
+			@RequestHeader(name = "Authorization") String token) {
 
 		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				question.get(0).setGuid(guid);
+				question.get(0).setUid(uid);
+			}
+			if (QuestionnaireService.choiceChangeConditional(question.get(0))) {
+				return new ResponseEntity<>(
+						new GoAuditsException(
+								"Conditional questions are configured, So you can't update choice pattern"),
+						HttpStatus.NOT_FOUND);
+			}
+
 			QuestionnaireService.updateQuestion(question);
 			S3 s3 = new S3();
 			s3.setClient_name(question.get(0).getClient_name());
@@ -239,47 +342,71 @@ public class Questionnaire {
 			s3List.add(params);
 			return new ResponseEntity<List<S3>>(s3List, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
 	@RequestMapping(value = "/question/changechoice", method = RequestMethod.POST)
-	public ResponseEntity<?> changeConditinalChoice(@RequestBody Question question) {
-
-		if (QuestionnaireService.isConditionalChoiceExist(question)) {
-			return new ResponseEntity<>(new GoAuditsException("Response already exists"), HttpStatus.CONFLICT);
-		}
+	public ResponseEntity<?> changeConditinalChoice(@RequestBody Question question,
+			@RequestHeader(name = "Authorization") String token) {
 
 		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				question.setGuid(guid);
+				question.setUid(uid);
+			}
+			if (QuestionnaireService.isConditionalChoiceExist(question)) {
+				return new ResponseEntity<>(new GoAuditsException("Response already exists"), HttpStatus.CONFLICT);
+			}
+
 			QuestionnaireService.changeConditionalChoice(question);
 			List<Question> QuestionList = new ArrayList<Question>();
 			QuestionList.add(question);
 			return new ResponseEntity<List<Question>>(QuestionList, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
 	@RequestMapping(value = "/question/changecondchoice", method = RequestMethod.POST)
-	public ResponseEntity<?> chngeConditinalChoice(@RequestBody Question question) {
+	public ResponseEntity<?> chngeConditinalChoice(@RequestBody Question question,
+			@RequestHeader(name = "Authorization") String token) {
 
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				question.setGuid(guid);
+				question.setUid(uid);
+			}
 //		if (QuestionnaireService.isConditionalChoiceExist(question)) {
 //			return new ResponseEntity<>(new GoAuditsException("Response already exists"), HttpStatus.CONFLICT);
 //		}
 
-		try {
 			QuestionnaireService.changeConditionalChoicenew(question);
 			List<Question> QuestionList = new ArrayList<Question>();
 			QuestionList.add(question);
 			return new ResponseEntity<List<Question>>(QuestionList, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
 	@RequestMapping(value = "/question/image", method = RequestMethod.POST)
-	public ResponseEntity<?> getQuestionImage(@RequestBody Question question) {
+	public ResponseEntity<?> getQuestionImage(@RequestBody Question question,
+			@RequestHeader(name = "Authorization") String token) {
 		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				question.setGuid(guid);
+				question.setUid(uid);
+			}
 			List<Questionimage> questionImagelist = QuestionnaireService.getQuestionImage(question);
 			return new ResponseEntity<List<Questionimage>>(questionImagelist, HttpStatus.OK);
 		} catch (Exception e) {
@@ -288,78 +415,125 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/question/order", method = RequestMethod.POST)
-	public ResponseEntity<?> questionOrder(@RequestBody QuestionOrder questionOrder) {
+	public ResponseEntity<?> questionOrder(@RequestBody QuestionOrder questionOrder,
+			@RequestHeader(name = "Authorization") String token) {
 
-		if (QuestionnaireService.isAudit(questionOrder.getGuid(), questionOrder.getClient_id(),
-				questionOrder.getAudit_type_id())
-				&& questionOrder.getDraggroup_id() != questionOrder.getDropgroup_id()) {
-			return new ResponseEntity<>(new GoAuditsException("Audits are existing so you can't change the order"),
-					HttpStatus.CONFLICT);
-		} else {
-			try {
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				questionOrder.setGuid(guid);
+				questionOrder.setUid(uid);
+			}
+			if (QuestionnaireService.isAudit(questionOrder.getGuid(), questionOrder.getClient_id(),
+					questionOrder.getAudit_type_id())
+					&& questionOrder.getDraggroup_id() != questionOrder.getDropgroup_id()) {
+				return new ResponseEntity<>(new GoAuditsException("Audits are existing so you can't change the order"),
+						HttpStatus.CONFLICT);
+			} else {
+
 				QuestionnaireService.orderQuestions(questionOrder);
 				List<QuestionOrder> qOrderList = new ArrayList<QuestionOrder>();
 				qOrderList.add(questionOrder);
 				return new ResponseEntity<List<QuestionOrder>>(qOrderList, HttpStatus.OK);
-			} catch (Exception e) {
-				return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
 			}
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
 	@RequestMapping(value = "/group/order", method = RequestMethod.POST)
-	public ResponseEntity<?> groupOrder(@RequestBody GroupOrder grouporder) {
-		
-		QuestionnaireService.groupOrder(grouporder);
-		List<GroupOrder> qOrderList = new ArrayList<GroupOrder>();
-		qOrderList.add(grouporder);
-		return new ResponseEntity<List<GroupOrder>>(qOrderList, HttpStatus.OK);
-		
-		
+	public ResponseEntity<?> groupOrder(@RequestBody GroupOrder grouporder,
+			@RequestHeader(name = "Authorization") String token) {
+
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				grouporder.setGuid(guid);
+				grouporder.setUid(uid);
+			}
+			QuestionnaireService.groupOrder(grouporder);
+			List<GroupOrder> qOrderList = new ArrayList<GroupOrder>();
+			qOrderList.add(grouporder);
+			return new ResponseEntity<List<GroupOrder>>(qOrderList, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
 	}
-	
 
 	@RequestMapping(value = "/customchoice/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addCustomchoice(@RequestBody List<Choice> choice) {
-		if (QuestionnaireService.isCustomChoiceExist(choice)) {
-			return new ResponseEntity<>(new GoAuditsException("choices cannot be added, already exists"),
-					HttpStatus.CONFLICT);
-		}
+	public ResponseEntity<?> addCustomchoice(@RequestBody List<Choice> choice,
+			@RequestHeader(name = "Authorization") String token) {
+
 		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				choice.get(0).setGuid(guid);
+			}
+			if (QuestionnaireService.isCustomChoiceExist(choice)) {
+				return new ResponseEntity<>(new GoAuditsException("choices cannot be added, already exists"),
+						HttpStatus.CONFLICT);
+			}
+
 			int choice_pat_id = QuestionnaireService.addCustomChoice(choice);
 			choice.get(0).setChoice_pat_id(choice_pat_id);
 			return new ResponseEntity<List<Choice>>(choice, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
 	@RequestMapping(value = "/question/delete", method = RequestMethod.POST)
-	public ResponseEntity<?> deleteQuestion(@RequestBody Question question) {
+	public ResponseEntity<?> deleteQuestion(@RequestBody Question question,
+			@RequestHeader(name = "Authorization") String token) {
 
-		// if (auditConfigService.isAudit(question.getGuid(),
-		// question.getClient_id(), question.getAudit_type_id())) {
-		// return new ResponseEntity(new GoAuditsException(
-		// "Audits are existing so you can't delete Question"),
-		// HttpStatus.CONFLICT);
-		// }
 		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				question.setGuid(guid);
+				question.setUid(uid);
+			}
+			// if (auditConfigService.isAudit(question.getGuid(),
+			// question.getClient_id(), question.getAudit_type_id())) {
+			// return new ResponseEntity(new GoAuditsException(
+			// "Audits are existing so you can't delete Question"),
+			// HttpStatus.CONFLICT);
+			// }
+
 			QuestionnaireService.deleteQuestion(question);
 			List<Question> QuestionList = new ArrayList<Question>();
 			QuestionList.add(question);
 
 			return new ResponseEntity<List<Question>>(QuestionList, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
 	@RequestMapping(value = "/tag/list", method = RequestMethod.POST)
-	public ResponseEntity<List<Tag>> getTag(@RequestBody Tag tag) {
+	public ResponseEntity<?> getTag(@RequestBody Tag tag, @RequestHeader(name = "Authorization") String token) {
 
-		List<Tag> taglist = QuestionnaireService.getAllTags(tag);
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				tag.setGuid(guid);
+				tag.setUid(uid);
+			}
+			List<Tag> taglist = QuestionnaireService.getAllTags(tag);
 
-		return new ResponseEntity<List<Tag>>(taglist, HttpStatus.OK);
+			return new ResponseEntity<List<Tag>>(taglist, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
 	}
 
 	@RequestMapping(value = "/preview/list", method = RequestMethod.POST)
@@ -383,24 +557,52 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/question/imgcount", method = RequestMethod.POST)
-	public ResponseEntity<?> getqimgcouunt(@RequestBody Question question) {
-		int qimagecount = QuestionnaireService.getQimagecount(question);
-		List<Integer> imgcount = new ArrayList<Integer>();
-		imgcount.add(qimagecount);
-		return new ResponseEntity<List<Integer>>(imgcount, HttpStatus.OK);
+	public ResponseEntity<?> getqimgcouunt(@RequestBody Question question,
+			@RequestHeader(name = "Authorization") String token) {
+
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				question.setGuid(guid);
+				question.setUid(uid);
+			}
+			int qimagecount = QuestionnaireService.getQimagecount(question);
+			List<Integer> imgcount = new ArrayList<Integer>();
+			imgcount.add(qimagecount);
+			return new ResponseEntity<List<Integer>>(imgcount, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
 	}
 
 	@RequestMapping(value = "questionimg/signature", method = RequestMethod.POST)
-	public ResponseEntity<S3> GetQuesImagSig(@RequestBody Question question) {
-		S3 s3 = new S3();
-		s3.setClient_id(question.getClient_id() + "");
-		s3.setAudit_type_id(question.getAudit_type_id() + "");
-		s3.setGuid(question.getGuid());
-		s3.setPage("question");
-		S3 params = s3Service.GetPayload(s3);
-		params.setClient_id(question.getClient_id() + "");
-		params.setAudit_type_id(question.getAudit_type_id() + "");
-		return new ResponseEntity<S3>(params, HttpStatus.OK);
+	public ResponseEntity<?> GetQuesImagSig(@RequestBody Question question,
+			@RequestHeader(name = "Authorization") String token) {
+
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				question.setGuid(guid);
+				question.setUid(uid);
+			}
+			S3 s3 = new S3();
+			s3.setClient_id(question.getClient_id() + "");
+			s3.setAudit_type_id(question.getAudit_type_id() + "");
+			s3.setGuid(question.getGuid());
+			s3.setPage("question");
+			S3 params = s3Service.GetPayload(s3);
+			params.setClient_id(question.getClient_id() + "");
+			params.setAudit_type_id(question.getAudit_type_id() + "");
+			return new ResponseEntity<S3>(params, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
 	}
 
 	@RequestMapping(value = "getCloudinaryFlag/{guid}", method = RequestMethod.GET)
@@ -412,33 +614,45 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/section/clone", method = RequestMethod.POST)
-	public ResponseEntity<?> cloneSection(@RequestBody SectionGroupClone section, Section section1, Group group) {
+	public ResponseEntity<?> cloneSection(@RequestBody SectionGroupClone section, Section section1, Group group,
+			@RequestHeader(name = "Authorization") String token) {
 
-		if (section.getGroup_id() == 0) {
-			section1.setGuid(section.getGuid());
-			section1.setClient_id(section.getClient_id());
-			section1.setAudit_type_id(section.getAudit_type_id());
-			section1.setSection_name(section.getNew_section_name());
-			if (QuestionnaireService.isSectionExist(section1)) {
-				return new ResponseEntity<>(new GoAuditsException("Section cannot be added, already exists"),
-						HttpStatus.CONFLICT);
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				section.setGuid(guid);
+				section.setUid(uid);
+			}
+			if (section.getGroup_id() == 0) {
+				section1.setGuid(section.getGuid());
+				section1.setClient_id(section.getClient_id());
+				section1.setAudit_type_id(section.getAudit_type_id());
+				section1.setSection_name(section.getNew_section_name());
+				if (QuestionnaireService.isSectionExist(section1)) {
+					return new ResponseEntity<>(new GoAuditsException("Section cannot be added, already exists"),
+							HttpStatus.CONFLICT);
+				}
+
+			} else {
+				group.setGuid(section.getGuid());
+				group.setClient_id(section.getClient_id());
+				group.setAudit_type_id(section.getAudit_type_id());
+				group.setSection_id(section.getSection_id());
+				group.setGroup_name(section.getNew_group_name());
+
+				if (QuestionnaireService.isGroupExist(group)) {
+					return new ResponseEntity<>(new GoAuditsException("Group cannot be added, already exists"),
+							HttpStatus.CONFLICT);
+				}
 			}
 
-		} else {
-			group.setGuid(section.getGuid());
-			group.setClient_id(section.getClient_id());
-			group.setAudit_type_id(section.getAudit_type_id());
-			group.setSection_id(section.getSection_id());
-			group.setGroup_name(section.getNew_group_name());
-
-			if (QuestionnaireService.isGroupExist(group)) {
-				return new ResponseEntity<>(new GoAuditsException("Group cannot be added, already exists"),
-						HttpStatus.CONFLICT);
-			}
+			List<SectionGroupClone> sectionlist = QuestionnaireService.cloneSection(section);
+			return new ResponseEntity<List<SectionGroupClone>>(sectionlist, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 
-		List<SectionGroupClone> sectionlist = QuestionnaireService.cloneSection(section);
-		return new ResponseEntity<List<SectionGroupClone>>(sectionlist, HttpStatus.OK);
 	}
-
 }

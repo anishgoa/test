@@ -9,7 +9,10 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.UUID;
 
+import io.jsonwebtoken.Jwts;
+
 public class Utils {
+    private static String jwtSecret="goaconsoleSecretKey";
 
 	public static byte[] Base64ToBytes(String imageString) throws IOException {
 		Base64.Decoder decoder = Base64.getDecoder();
@@ -89,7 +92,21 @@ public class Utils {
 
 		return sb.toString();
 	}
-
+	public static String getGuid(String token) {
+		
+		 return Jwts.parser()
+	                .setSigningKey(jwtSecret)
+	                .parseClaimsJws(token)
+	                .getBody().getId();
+	}
+	
+	public static String getUid(String token) {
+		
+		 return Jwts.parser()
+	                .setSigningKey(jwtSecret)
+	                .parseClaimsJws(token)
+	                .getBody().getIssuer();
+	}
 
 
 }

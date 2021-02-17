@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,7 @@ import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.Section;
 import com.goaudits.business.service.SetupService;
 import com.goaudits.business.util.GoAuditsException;
+import com.goaudits.business.util.Utils;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -60,14 +62,22 @@ public class SetupController {
 	}
 
 	@RequestMapping(value = "/company/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addCompany(@RequestBody Company company) {
-
-		if (setupservice.isCompanyExists(company)) {
+	public ResponseEntity<?> addCompany(@RequestBody Company company,@RequestHeader(name = "Authorization") String token) {
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				company.setGuid(guid);
+				company.setUid(uid);
+			}
+			
+			if (setupservice.isCompanyExists(company)) {
 			return new ResponseEntity<>(
 					new GoAuditsException("This company name is already in use, Please enter a different company name"),
 					HttpStatus.CONFLICT);
 		} else {
-			try {
+			
 				Company comp = setupservice.addCompany(company);
 				Location location = new Location();
 				location.setGuid(company.getGuid());
@@ -82,11 +92,12 @@ public class SetupController {
 				company.setLast_modified(comp.getLast_modified());
 				companyList.add(company);
 				return new ResponseEntity<List<Company>>(companyList, HttpStatus.CREATED);
-			} catch (Exception e) {
-				e.printStackTrace();
-//				System.out.println("Something went wrong" );
-				return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
-			}
+			
+		}
+		} catch (Exception e) {
+			e.printStackTrace();
+//			System.out.println("Something went wrong" );
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 

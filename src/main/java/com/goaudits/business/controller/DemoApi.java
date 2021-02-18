@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.goaudits.business.entity.DemoAudits;
 import com.goaudits.business.service.DemoServiceInterface;
+import com.goaudits.business.util.GoAuditsException;
+import com.goaudits.business.util.Utils;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -22,24 +25,49 @@ public class DemoApi {
 
 	@Autowired
 	DemoServiceInterface demoService;
-	
+
 	@GetMapping("/list")
-	public ResponseEntity<List<DemoAudits>> getListOfAudits(){
+	public ResponseEntity<List<DemoAudits>> getListOfAudits() {
 		List<DemoAudits> auditsList = demoService.getDemoAuditsList();
 		return new ResponseEntity<List<DemoAudits>>(auditsList, HttpStatus.OK);
 	}
-	
-	
+
 	@PostMapping("/getaudits")
-	public ResponseEntity<?> getManageAuditsList(@RequestBody DemoAudits audits){
-		List<DemoAudits> auditsList = demoService.getManageAuditsList(audits);
-		return new ResponseEntity<List<DemoAudits>>(auditsList, HttpStatus.OK);
+	public ResponseEntity<?> getManageAuditsList(@RequestBody DemoAudits audits,
+			@RequestHeader(name = "Authorization") String token) {
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				audits.setGuid(guid);
+				audits.setUid(uid);
+			}
+			List<DemoAudits> auditsList = demoService.getManageAuditsList(audits);
+			return new ResponseEntity<List<DemoAudits>>(auditsList, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
 	}
-	
+
 	@PostMapping("/getauditsv1")
-	public ResponseEntity<?> getManageAuditsListv1(@RequestBody DemoAudits audits){
-		List<DemoAudits> auditsList = demoService.getManageAuditsListv1(audits);
-		return new ResponseEntity<List<DemoAudits>>(auditsList, HttpStatus.OK);
+	public ResponseEntity<?> getManageAuditsListv1(@RequestBody DemoAudits audits,
+			@RequestHeader(name = "Authorization") String token) {
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				audits.setGuid(guid);
+				audits.setUid(uid);
+			}
+			List<DemoAudits> auditsList = demoService.getManageAuditsListv1(audits);
+			return new ResponseEntity<List<DemoAudits>>(auditsList, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
 	}
-	
+
 }

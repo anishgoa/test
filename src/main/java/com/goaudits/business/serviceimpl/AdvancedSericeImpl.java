@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.goaudits.business.entity.ActionPlanSettings;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.AuditWorkFlow;
+import com.goaudits.business.entity.Broadcast;
 import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.CustomFieldList;
 import com.goaudits.business.entity.Customfields;
@@ -488,5 +489,16 @@ public class AdvancedSericeImpl implements AdvancedService {
 	public int addAuditGroup(GroupAudit groupAudit) {
 		// TODO Auto-generated method stub
 		return advancedmapper.addGroupAudit(groupAudit);
+	}
+
+	@Override
+	public List<Broadcast> getBroadcastList(Broadcast broadcast) {
+		return advancedmapper.getBroadcastList(broadcast);
+	}
+
+	@Override
+	public List<Broadcast> getBroadcastdetails(Broadcast broadcast) {
+		// TODO Auto-generated method stub
+		return advancedmapper.getBroadcastdetails(broadcast);
 	}
 }

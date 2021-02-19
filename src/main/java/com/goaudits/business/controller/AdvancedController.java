@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.goaudits.business.entity.ActionPlanSettings;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.AuditWorkFlow;
+import com.goaudits.business.entity.Broadcast;
 import com.goaudits.business.entity.CustomFieldList;
 import com.goaudits.business.entity.Customfields;
 import com.goaudits.business.entity.GroupAudit;
@@ -713,5 +714,45 @@ public class AdvancedController {
 			e.printStackTrace();
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
+		
+		
 	}
+	
+	@RequestMapping(value = "/broadcast/list", method = RequestMethod.POST)
+	public ResponseEntity<?> publishList(Broadcast broadcast,
+			@RequestHeader(name = "Authorization") String token) {
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				broadcast.setGuid(guid);
+			}
+		List<Broadcast> userlist = advancedservice.getBroadcastList(broadcast);
+		return new ResponseEntity<List<Broadcast>>(userlist, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+
+	@RequestMapping(value = "/broadcast/details", method = RequestMethod.POST)
+	public ResponseEntity<?> publishListDetails(@RequestBody Broadcast broadcast,
+			@RequestHeader(name = "Authorization") String token) {
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				broadcast.setGuid(guid);
+			}
+			List<Broadcast> publishlist = advancedservice.getBroadcastdetails(broadcast);
+			return new ResponseEntity<List<Broadcast>>(publishlist, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+	
+	
 }

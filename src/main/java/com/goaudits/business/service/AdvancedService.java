@@ -6,6 +6,7 @@ import java.util.List;
 import com.goaudits.business.entity.ActionPlanSettings;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.AuditWorkFlow;
+import com.goaudits.business.entity.Broadcast;
 import com.goaudits.business.entity.CustomFieldList;
 import com.goaudits.business.entity.Customfields;
 import com.goaudits.business.entity.GroupAudit;
@@ -94,5 +95,9 @@ public interface AdvancedService {
 	boolean validateGroupAudit1(GroupAudit groupAudit);
 
 	int addAuditGroup(GroupAudit groupAudit);
+
+	List<Broadcast> getBroadcastList(Broadcast broadcast);
+
+	List<Broadcast> getBroadcastdetails(Broadcast broadcast);
 
 }

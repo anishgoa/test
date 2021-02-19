@@ -14,6 +14,7 @@ import org.apache.ibatis.mapping.StatementType;
 import com.goaudits.business.entity.ActionPlanSettings;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.AuditWorkFlow;
+import com.goaudits.business.entity.Broadcast;
 import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.CustomFieldList;
 import com.goaudits.business.entity.Customfields;
@@ -186,5 +187,13 @@ public interface AdvancedMapper {
 	
 	@Select("SELECT COUNT(*) FROM GA_AUDITTYPE_PARENT_MT WHERE GUID=#{guid} AND PARENT_AUDIT_ID!=#{parent_audit_id} AND PARENT_AUDIT_TYPE_NAME=#{parent_audit_type_name}")
 	int validateGroupName1(GroupAudit GroupAudit);
+
+	@Select(value = "{ CALL GA_SP_PORTAL_GET_MASTERDATA_BROADCAST_LIST( #{guid, mode=IN, jdbcType=BINARY})}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Broadcast> getBroadcastList(Broadcast broadcast);
+
+	@Select(value = "{ CALL GA_SP_PORTAL_BROADCAST_DETILS( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY})}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Broadcast> getBroadcastdetails(Broadcast broadcast);
 	
 }

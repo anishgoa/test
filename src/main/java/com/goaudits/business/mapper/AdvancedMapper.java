@@ -195,5 +195,14 @@ public interface AdvancedMapper {
 	@Select(value = "{ CALL GA_SP_PORTAL_BROADCAST_DETILS( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY})}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<Broadcast> getBroadcastdetails(Broadcast broadcast);
+
+	@Select(value = "{ CALL GA_SP_PORTAL_ADD_MASTERDATA_BROADCAST( #{guid, mode=IN, jdbcType=BINARY},#{broadcast_message, mode=IN, jdbcType=VARCHAR},#{created_by_uid, mode=IN, jdbcType=VARCHAR},#{broadcast_header, mode=IN, jdbcType=VARCHAR})}")
+	@Options(statementType = StatementType.CALLABLE)
+	int addPublish(Broadcast broadcast);
+
+	
+	@Select(value = "{ CALL GA_SP_PORTAL_ADD_TRANSDATA_BROADCAST( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR},#{broadcast_id, mode=IN, jdbcType=INTEGER},#{created_at, mode=IN, jdbcType=VARCHAR})}")
+	@Options(statementType = StatementType.CALLABLE)
+	int addPublishTrans(Broadcast broadcast);
 	
 }

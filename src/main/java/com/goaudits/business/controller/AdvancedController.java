@@ -657,9 +657,9 @@ public class AdvancedController {
 	}
 
 	@RequestMapping(value = "/groupaudit/auditnames/{guid}/{uid}/{client_id}/{parent_audit_id}", method = RequestMethod.GET)
-	public ResponseEntity<?> getAllClients(@PathVariable("guid") String guid,
-			@PathVariable("uid") String uid, @PathVariable("client_id") int client_id,
-			@PathVariable("parent_audit_id") int parent_audit_id, @RequestHeader(name = "Authorization") String token) {
+	public ResponseEntity<?> getAllClients(@PathVariable("guid") String guid, @PathVariable("uid") String uid,
+			@PathVariable("client_id") int client_id, @PathVariable("parent_audit_id") int parent_audit_id,
+			@RequestHeader(name = "Authorization") String token) {
 
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -714,13 +714,11 @@ public class AdvancedController {
 			e.printStackTrace();
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
-		
-		
+
 	}
-	
+
 	@RequestMapping(value = "/broadcast/list", method = RequestMethod.POST)
-	public ResponseEntity<?> publishList(Broadcast broadcast,
-			@RequestHeader(name = "Authorization") String token) {
+	public ResponseEntity<?> publishList(Broadcast broadcast, @RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
 				token = token.replace("Bearer ", "");
@@ -728,8 +726,8 @@ public class AdvancedController {
 				String uid = Utils.getUid(token);
 				broadcast.setGuid(guid);
 			}
-		List<Broadcast> userlist = advancedservice.getBroadcastList(broadcast);
-		return new ResponseEntity<List<Broadcast>>(userlist, HttpStatus.OK);
+			List<Broadcast> userlist = advancedservice.getBroadcastList(broadcast);
+			return new ResponseEntity<List<Broadcast>>(userlist, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
@@ -753,6 +751,25 @@ public class AdvancedController {
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
-	
-	
+
+	@RequestMapping(value = "/broadcast/add", method = RequestMethod.POST)
+	public ResponseEntity<?> publishAdd(@RequestBody Broadcast broadcast,
+			@RequestHeader(name = "Authorization") String token) {
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				broadcast.setGuid(guid);
+				broadcast.setCreated_by_uid(uid);
+//				broadcast.setUid(uid);
+			}
+			int addcount = advancedservice.addBroadcast(broadcast);
+			return new ResponseEntity<Integer>(addcount, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+
 }

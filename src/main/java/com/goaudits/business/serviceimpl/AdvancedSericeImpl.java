@@ -280,17 +280,19 @@ public class AdvancedSericeImpl implements AdvancedService {
 	@Override
 	public int addWorkFlow(AuditWorkFlow auditWorkFlow) {
 
-		String locations[]=auditWorkFlow.getStore_id().split(",");
-		String auditnames[]=auditWorkFlow.getAudit_type_id().split(",");
-		String assignees[]=auditWorkFlow.getAssignee().split(",");
-		for(int i=0;i<locations.length;i++){
-			for(int j=0;j<auditnames.length;j++){
-				for(int k=0;k<assignees.length;k++){
+		String locations[] = auditWorkFlow.getStore_id().split(",");
+		String auditnames[] = auditWorkFlow.getAudit_type_id().split(",");
+		String assignees[] = auditWorkFlow.getAssignee().split(",");
+		for (int i = 0; i < locations.length; i++) {
+			for (int j = 0; j < auditnames.length; j++) {
+				for (int k = 0; k < assignees.length; k++) {
 					String uuid = String.valueOf(Utils.generateUID());
-					auditWorkFlow.setUuid(uuid);	
-					advancedmapper.addAuditWorkFlow(auditWorkFlow.getGuid(),auditWorkFlow.getClient_id(),locations[i],auditnames[j],assignees[k],auditWorkFlow.isWorkflow_type(),auditWorkFlow.getUuid(),auditWorkFlow.isSignature_required());
-				}	
-			}	
+					auditWorkFlow.setUuid(uuid);
+					advancedmapper.addAuditWorkFlow(auditWorkFlow.getGuid(), auditWorkFlow.getClient_id(), locations[i],
+							auditnames[j], assignees[k], auditWorkFlow.isWorkflow_type(), auditWorkFlow.getUuid(),
+							auditWorkFlow.isSignature_required());
+				}
+			}
 		}
 		return 1;
 
@@ -299,24 +301,26 @@ public class AdvancedSericeImpl implements AdvancedService {
 	@Override
 	public int editWorkFlow(AuditWorkFlow auditWorkFlow) {
 		advancedmapper.deleteAuditWorkFlow(auditWorkFlow.getEdituuid());
-		String locations[]=auditWorkFlow.getStore_id().split(",");
-		String auditnames[]=auditWorkFlow.getAudit_type_id().split(",");
-		String assignees[]=auditWorkFlow.getAssignee().split(",");
-		
-		for(int i=0;i<locations.length;i++){
-			
-			for(int j=0;j<auditnames.length;j++){
-				
-				for(int k=0;k<assignees.length;k++){
+		String locations[] = auditWorkFlow.getStore_id().split(",");
+		String auditnames[] = auditWorkFlow.getAudit_type_id().split(",");
+		String assignees[] = auditWorkFlow.getAssignee().split(",");
+
+		for (int i = 0; i < locations.length; i++) {
+
+			for (int j = 0; j < auditnames.length; j++) {
+
+				for (int k = 0; k < assignees.length; k++) {
 					String uuid = String.valueOf(Utils.generateUID());
 					auditWorkFlow.setUuid(uuid);
-					advancedmapper.addAuditWorkFlow(auditWorkFlow.getGuid(),auditWorkFlow.getClient_id(),locations[i],auditnames[j],assignees[k],auditWorkFlow.isWorkflow_type(),auditWorkFlow.getUuid(),auditWorkFlow.isSignature_required());
+					advancedmapper.addAuditWorkFlow(auditWorkFlow.getGuid(), auditWorkFlow.getClient_id(), locations[i],
+							auditnames[j], assignees[k], auditWorkFlow.isWorkflow_type(), auditWorkFlow.getUuid(),
+							auditWorkFlow.isSignature_required());
 				}
-								
+
 			}
-			
+
 		}
-		
+
 		return 1;
 	}
 
@@ -374,13 +378,13 @@ public class AdvancedSericeImpl implements AdvancedService {
 
 	@Override
 	public List<CustomFieldList> getCustomFieldsList(AuditName audit) {
-		
+
 		return advancedmapper.getCustomFieldsList(audit);
 	}
 
 	@Override
 	public List<ActionPlanSettings> getActionPlanSettngs(ActionPlanSettings actionPlanSettings) {
-	
+
 		return advancedmapper.getActionPlanSettngs(actionPlanSettings);
 	}
 
@@ -396,7 +400,7 @@ public class AdvancedSericeImpl implements AdvancedService {
 
 	@Override
 	public boolean validateeditActionSts(ActionPlanSettings actionPlanSettings) {
-		
+
 		return (advancedmapper.validateeditActionSts(actionPlanSettings)) > 0 ? true : false;
 	}
 
@@ -407,21 +411,19 @@ public class AdvancedSericeImpl implements AdvancedService {
 
 	@Override
 	public int addCustomfields(Customfields customfields) {
-		
+
 		return advancedmapper.addCustomfields(customfields);
 	}
 
 	@Override
 	public int updateCustomfields(Customfields customfields) {
-	
+
 		return advancedmapper.addCustomfields(customfields);
 	}
 
-
 	@Override
-	public List<Tag> getReportTag(String guid,String uid, int client_id) {
-		List<Tag> ReportTaglist = advancedmapper
-				.getAllReportTagsV2(guid, uid, client_id);
+	public List<Tag> getReportTag(String guid, String uid, int client_id) {
+		List<Tag> ReportTaglist = advancedmapper.getAllReportTagsV2(guid, uid, client_id);
 //		for (Tag tg : ReportTaglist) {
 //			String id[] = tg.getTagids().split("---");
 //			String tag_code[] = tg.getTag_code().split("---");
@@ -446,43 +448,43 @@ public class AdvancedSericeImpl implements AdvancedService {
 
 	@Override
 	public boolean validateaddTag(Tag tag) {
-		
-		return (advancedmapper.validateaddTag(tag))> 0 ?true:false;
+
+		return (advancedmapper.validateaddTag(tag)) > 0 ? true : false;
 	}
-	
+
 	@Override
 	public int addReportTag(Tag tag) {
-		
-		return advancedmapper.addReportTag(tag) ;
+
+		return advancedmapper.addReportTag(tag);
 	}
-	
+
 	@Override
 	public boolean validateeditTag(Tag tag) {
-		
-		return (advancedmapper.validateeditTag(tag))> 0 ?true:false;
+
+		return (advancedmapper.validateeditTag(tag)) > 0 ? true : false;
 	}
 
 	@Override
 	public List<GroupAudit> getGroupAudit(String guid, boolean active) {
-		return advancedmapper.getGroupAudit(guid,active);
+		return advancedmapper.getGroupAudit(guid, active);
 	}
 
 	@Override
 	public List<AuditName> getAuditTypeList(String guid, String uid, int client_id, int parent_audit_id) {
 		// TODO Auto-generated method stub
-		return advancedmapper.getAuditTypeList(guid,uid,client_id,parent_audit_id);
+		return advancedmapper.getAuditTypeList(guid, uid, client_id, parent_audit_id);
 	}
 
 	@Override
 	public boolean validateGroupAudit(GroupAudit groupAudit) {
 		// TODO Auto-generated method stub
-		return (advancedmapper.validateGroupName(groupAudit)) >0 ?true:false;
+		return (advancedmapper.validateGroupName(groupAudit)) > 0 ? true : false;
 	}
 
 	@Override
 	public boolean validateGroupAudit1(GroupAudit groupAudit) {
 		// TODO Auto-generated method stub
-		return (advancedmapper.validateGroupName1(groupAudit)) >0 ?true:false;
+		return (advancedmapper.validateGroupName1(groupAudit)) > 0 ? true : false;
 	}
 
 	@Override
@@ -500,5 +502,29 @@ public class AdvancedSericeImpl implements AdvancedService {
 	public List<Broadcast> getBroadcastdetails(Broadcast broadcast) {
 		// TODO Auto-generated method stub
 		return advancedmapper.getBroadcastdetails(broadcast);
+	}
+
+	@Override
+	public int addBroadcast(Broadcast broadcast) {
+		int broadcast_id = advancedmapper.addPublish(broadcast);
+
+		String clients[] = broadcast.getClient_id().split(",");
+		String users[] = broadcast.getUid().split(",");
+
+		for (int i = 0; i < clients.length; i++) {
+
+			for (int j = 0; j < users.length; j++) {
+
+				broadcast.setBroadcast_id(broadcast_id);
+				broadcast.setUid(users[j]);
+				broadcast.setClient_id(clients[i]);
+
+				advancedmapper.addPublishTrans(broadcast);
+
+			}
+
+		}
+
+		return 0;
 	}
 }

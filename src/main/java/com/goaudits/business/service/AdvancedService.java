@@ -100,4 +100,6 @@ public interface AdvancedService {
 
 	List<Broadcast> getBroadcastdetails(Broadcast broadcast);
 
+	int addBroadcast(Broadcast broadcast);
+
 }

@@ -95,9 +95,13 @@ public class NotificationController {
 	
 	
 	@RequestMapping(value = "getactionnotification/{guid}/{client_id}/{notification_type}", method = RequestMethod.GET)
-	public ResponseEntity<?> editActionTaskNotification(@PathVariable("guid") String guid,@PathVariable("client_id") int client_id,@PathVariable("notification_type") int notification_type) {
+	public ResponseEntity<?> editActionTaskNotification(@PathVariable("guid") String guid,@PathVariable("client_id") int client_id,@PathVariable("notification_type") int notification_type,@RequestHeader(name = "Authorization") String token) {
 		
 		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				 guid = Utils.getGuid(token);
+			}
 			List<Notification>  notificationlist=NotificationService.editActionTaskNotification(guid,client_id,notification_type);
 		
 			return new ResponseEntity<List<Notification>>(notificationlist, HttpStatus.OK);

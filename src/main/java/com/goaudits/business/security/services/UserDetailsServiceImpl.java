@@ -20,8 +20,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		 User user = userMapper.getUserDetails(username);
+		User user = userMapper.getUserDetails(username);
 
 		return UserPrinciple.build(user);
 	}
+
+	public UserDetails loadUserByUsername1(String username, String token) throws UsernameNotFoundException {
+		User user = userMapper.getUserDetails1(username, token);
+
+		return UserPrinciple.build(user);
+	}
+
 }

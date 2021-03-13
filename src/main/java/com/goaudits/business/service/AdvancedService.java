@@ -102,4 +102,10 @@ public interface AdvancedService {
 
 	int addBroadcast(Broadcast broadcast);
 
+	List<Broadcast> getBroadcastListv1(Broadcast broadcast);
+
+	List<Broadcast> getBroadcastListDetails(Broadcast broadcast);
+
+	boolean getBroadcastflag(Broadcast broadcast);
+
 }

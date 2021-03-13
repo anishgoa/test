@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.goaudits.business.security.services.UserDetailsServiceImpl;
+import com.goaudits.business.util.EncrypterHelper;
 
 
 public class JwtAuthTokenFilter extends OncePerRequestFilter {
@@ -28,6 +29,9 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
+
+	@Autowired
+	EncrypterHelper EncrypterHelper;
 
 	@Value("${goaconsole.app.jwtSecret}")
 	private String jwtSecret;
@@ -40,14 +44,14 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 		try {
 
 			String jwt = getJwt(request);
+			String enjwt=jwt;
+			jwt=EncrypterHelper.decrypt(jwt);
 			if (jwt != null && tokenProvider.validateJwtToken(jwt)) {
 				String username = tokenProvider.getUserNameFromJwtToken(jwt);
-
-				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+				UserDetails userDetails = userDetailsService.loadUserByUsername1(username,enjwt);
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		} catch (Exception e) {

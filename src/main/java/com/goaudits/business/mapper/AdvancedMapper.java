@@ -192,6 +192,11 @@ public interface AdvancedMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	List<Broadcast> getBroadcastList(Broadcast broadcast);
 
+
+	@Select(value = "{ CALL GA_SP_PORTAL_GET_MASTERDATA_BROADCAST_LISTV1( #{guid, mode=IN, jdbcType=BINARY},#{min, mode=IN, jdbcType=INTEGER},#{max, mode=IN, jdbcType=INTEGER},#{search_item, mode=IN, jdbcType=VARCHAR})}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Broadcast> getBroadcastdetailsv1(Broadcast broadcast);
+
 	@Select(value = "{ CALL GA_SP_PORTAL_BROADCAST_DETILS( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY})}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<Broadcast> getBroadcastdetails(Broadcast broadcast);
@@ -204,5 +209,13 @@ public interface AdvancedMapper {
 	@Select(value = "{ CALL GA_SP_PORTAL_ADD_TRANSDATA_BROADCAST( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR},#{broadcast_id, mode=IN, jdbcType=INTEGER},#{created_at, mode=IN, jdbcType=VARCHAR})}")
 	@Options(statementType = StatementType.CALLABLE)
 	int addPublishTrans(Broadcast broadcast);
+
+	@Select(value = "{ CALL GA_SP_PORTAL_GET_MASTERDATA_BROADCASTDETAILS_LIST( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY})}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Broadcast> getBroadcastListDetails(Broadcast broadcast);
+
+	@Select("SELECT BROADCAST_ENABLED FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1 LIMIT 1")
+	boolean getBroadcastflag(Broadcast broadcast);
+
 	
 }

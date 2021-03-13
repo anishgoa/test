@@ -32,6 +32,11 @@ import com.goaudits.business.entity.Choice;
 
 @Mapper
 public interface SetupMapper {
+	
+	@Select(value = "{ CALL SP_GA_VALIDUSER( #{username, mode=IN, jdbcType=BINARY},#{token, mode=IN, jdbcType=VARCHAR})}")
+	@Options(statementType = StatementType.CALLABLE)
+	User getUserDetails1(@Param("username") String username, @Param("token") String token);
+
 
 	@Select("SELECT * FROM GA_USERDET_MT where USER_NAME=#{username}")
 	User getUserDetails(String username);

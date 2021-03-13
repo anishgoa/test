@@ -24,7 +24,10 @@ public class Broadcast {
 	String device_platform;
 	String app_version;
 	String broadcast_header;
-
+	String search_item;
+	int min;
+	int max;
+int count;
 	public String getBroadcast_header() {
 		return broadcast_header;
 	}
@@ -183,6 +186,62 @@ public class Broadcast {
 
 	public void setApp_version(String app_version) {
 		this.app_version = app_version;
+	}
+
+	/**
+	 * @return the search_item
+	 */
+	public String getSearch_item() {
+		return search_item;
+	}
+
+	/**
+	 * @param search_item the search_item to set
+	 */
+	public void setSearch_item(String search_item) {
+		this.search_item = search_item;
+	}
+
+	/**
+	 * @return the min
+	 */
+	public int getMin() {
+		return min;
+	}
+
+	/**
+	 * @param min the min to set
+	 */
+	public void setMin(int min) {
+		this.min = min;
+	}
+
+	/**
+	 * @return the max
+	 */
+	public int getMax() {
+		return max;
+	}
+
+	/**
+	 * @param max the max to set
+	 */
+	public void setMax(int max) {
+		this.max = max;
+	}
+
+	/**
+	 * @return the count
+	 */
+	public int getCount() {
+		return count;
+	}
+
+	/**
+	 * @param count the count to set
+	 */
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 }

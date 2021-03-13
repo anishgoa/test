@@ -503,6 +503,12 @@ public class AdvancedSericeImpl implements AdvancedService {
 		// TODO Auto-generated method stub
 		return advancedmapper.getBroadcastdetails(broadcast);
 	}
+	
+	@Override
+	public List<Broadcast> getBroadcastListv1(Broadcast broadcast) {
+		// TODO Auto-generated method stub
+		return advancedmapper.getBroadcastdetailsv1(broadcast);
+	}
 
 	@Override
 	public int addBroadcast(Broadcast broadcast) {
@@ -527,4 +533,17 @@ public class AdvancedSericeImpl implements AdvancedService {
 
 		return 0;
 	}
+
+	@Override
+	public List<Broadcast> getBroadcastListDetails(Broadcast broadcast) {
+		return advancedmapper.getBroadcastListDetails(broadcast);
+	}
+
+	@Override
+	public boolean getBroadcastflag(Broadcast broadcast) {
+		// TODO Auto-generated method stub
+		return advancedmapper.getBroadcastflag(broadcast);
+	}
+
+	
 }

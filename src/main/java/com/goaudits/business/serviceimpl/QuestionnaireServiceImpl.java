@@ -564,7 +564,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 						String scaleDownProperty = "w_1000,c_fill,g_auto";
 						String delimiterStr = "/";
-						int replaceIndex = 6;
+						int replaceIndex = 5;
 
 						String reportImgUrl = null;
 						if (qimage.getImage_path() == "" || qimage.getImage_path() == null) {

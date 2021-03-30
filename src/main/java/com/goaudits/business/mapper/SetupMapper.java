@@ -270,4 +270,7 @@ public interface SetupMapper {
 	@Select("SELECT EDIT_AUDIT_ENABLED FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1")
 	boolean getEditFlag(String guid);
 
+	@Select("SELECT INPROGESS_TO_COMPLETE FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1")
+	boolean getCompletedFlag(String guid);
+
 }

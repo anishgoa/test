@@ -893,5 +893,24 @@ public class SetupController {
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
+	
+	
+	@RequestMapping(value = "/completeflag/{guid}", method = RequestMethod.GET)
+	public ResponseEntity<?> completeFlag(@PathVariable("guid") String guid,
+			@RequestHeader(name = "Authorization") String token) {
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				guid = Utils.getGuid(token);
+			}
+			boolean flag = setupservice.getCompletedFlag(guid);
+			List<Boolean> list = new ArrayList<Boolean>();
+			list.add(flag);
+			return new ResponseEntity<List<Boolean>>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
 
 }

@@ -114,5 +114,7 @@ public interface SetupService {
 
 	public boolean getEditFlag(String guid);
 
+	public boolean getCompletedFlag(String guid);
+
 	
 }

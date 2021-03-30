@@ -584,4 +584,10 @@ public class SetupServiceImpl implements SetupService {
 		return setupmapper.getEditFlag(guid);
 	}
 
+	@Override
+	public boolean getCompletedFlag(String guid) {
+		// TODO Auto-generated method stub
+		return setupmapper.getCompletedFlag(guid);
+	}
+
 }

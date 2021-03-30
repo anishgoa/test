@@ -32,14 +32,11 @@ import com.goaudits.business.config.DatabaseConfig;
 
 import io.jsonwebtoken.Jwts;
 
-
 @SuppressWarnings("restriction")
 public class Utils {
 
+	private static String jwtSecret = "goaconsoleSecretKey";
 
- 
-    private static String jwtSecret="goaconsoleSecretKey";
-    
 	private static int workload = 6;
 
 	public static byte[] Base64ToBytes(String imageString) throws IOException {
@@ -88,7 +85,7 @@ public class Utils {
 		String hashed_password = BCrypt.hashpw(password_plaintext, salt);
 		return (hashed_password);
 	}
-	
+
 	public static String ConvertToBase64(byte[] imgBytes) {
 		try {
 			Base64.Encoder encoder = Base64.getEncoder();
@@ -97,7 +94,7 @@ public class Utils {
 			throw new AssertionError(e);
 		}
 	}
-	
+
 	public static String formatDateMysqltoUser(String mysqldate) throws ParseException {
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		Date d = format.parse(mysqldate);
@@ -124,7 +121,7 @@ public class Utils {
 
 	public static String splitJoinStringsAtIndex(String sourceStr, String insertText, int indexPos,
 			String delimiterStr) {
-
+		indexPos = 5;
 		// split the sourceStr into array
 		String splitArr[] = sourceStr.split(delimiterStr);
 
@@ -158,7 +155,7 @@ public class Utils {
 				if (i < myList.size() - 1) {
 					sb.append(myList.get(i));
 					sb.append("/");
-				}else {
+				} else {
 					sb.append((myList.get(i)).split("\\.")[0]);
 				}
 			}
@@ -169,10 +166,7 @@ public class Utils {
 		return sb.toString();
 	}
 
-	
-	public static String getClearText(String encrypted)  {
-
-		
+	public static String getClearText(String encrypted) {
 
 		String plaintext = "";
 
@@ -204,7 +198,6 @@ public class Utils {
 
 			byte[] msg = decoder.decode(msg64);
 
-
 			try {
 
 				SecretKey key = new SecretKeySpec(jskey, "AES");
@@ -229,7 +222,6 @@ public class Utils {
 
 	}
 
-
 	/* s must be an even-length string. */
 
 	public static byte[] hexStringToByteArray(String s) {
@@ -247,25 +239,18 @@ public class Utils {
 		return data;
 
 	}
-	
+
 	public static String getGuid(String token) {
-		EncrypterHelper EncrypterHelper=new EncrypterHelper();
-		token=EncrypterHelper.decrypt(token);
+		EncrypterHelper EncrypterHelper = new EncrypterHelper();
+		token = EncrypterHelper.decrypt(token);
 
-		 return Jwts.parser()
-	                .setSigningKey(jwtSecret)
-	                .parseClaimsJws(token)
-	                .getBody().getId();
+		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getId();
 	}
-	
+
 	public static String getUid(String token) {
-		EncrypterHelper EncrypterHelper=new EncrypterHelper();
-		token=EncrypterHelper.decrypt(token);
-		 return Jwts.parser()
-	                .setSigningKey(jwtSecret)
-	                .parseClaimsJws(token)
-	                .getBody().getIssuer();
+		EncrypterHelper EncrypterHelper = new EncrypterHelper();
+		token = EncrypterHelper.decrypt(token);
+		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getIssuer();
 	}
-	
-}
 
+}

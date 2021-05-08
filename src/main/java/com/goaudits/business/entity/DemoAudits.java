@@ -42,6 +42,7 @@ public class DemoAudits {
 	String search_item;
 	String sort;
 	String order;
+	int type_of_audit;
 //	private List<Customfields> Customfieldslist = new ArrayList<Customfields>();
 //	private List<Location> strarry = new ArrayList<Location>();
 	
@@ -314,6 +315,18 @@ public class DemoAudits {
 	 */
 	public void setAudit_id(String audit_id) {
 		this.audit_id = audit_id;
+	}
+	/**
+	 * @return the type_of_audit
+	 */
+	public int getType_of_audit() {
+		return type_of_audit;
+	}
+	/**
+	 * @param type_of_audit the type_of_audit to set
+	 */
+	public void setType_of_audit(int type_of_audit) {
+		this.type_of_audit = type_of_audit;
 	}
 	
 	

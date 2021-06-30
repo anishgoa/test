@@ -43,6 +43,7 @@ public class DemoAudits {
 	String sort;
 	String order;
 	int type_of_audit;
+	boolean perdelete;
 //	private List<Customfields> Customfieldslist = new ArrayList<Customfields>();
 //	private List<Location> strarry = new ArrayList<Location>();
 	
@@ -327,6 +328,12 @@ public class DemoAudits {
 	 */
 	public void setType_of_audit(int type_of_audit) {
 		this.type_of_audit = type_of_audit;
+	}
+	public boolean isPerdelete() {
+		return perdelete;
+	}
+	public void setPerdelete(boolean perdelete) {
+		this.perdelete = perdelete;
 	}
 	
 	

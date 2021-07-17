@@ -912,5 +912,44 @@ public class SetupController {
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
+	
+	@RequestMapping(value = "/comlocation/list", method = RequestMethod.POST)
+	public ResponseEntity<?> getlocationsBasedeOnCompanys(@RequestBody Location location,
+			@RequestHeader(name = "Authorization") String token) {
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				location.setGuid(guid);
+				location.setUid(uid);
+			}
+			List<Location> locationList = setupservice.getLocationsBasedonCompanys(location);
+			return new ResponseEntity<List<Location>>(locationList, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+
+	@RequestMapping(value = "/comauditname/list", method = RequestMethod.POST)
+	public ResponseEntity<?> getAuditNamesByCompanys(@RequestBody AuditName auditname,
+			@RequestHeader(name = "Authorization") String token) {
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				auditname.setGuid(guid);
+				auditname.setUid(uid);
+			}
+			List<AuditName> auditNameList = setupservice.getAuditNamesByCompanys(auditname);
+			return new ResponseEntity<List<AuditName>>(auditNameList, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+
 
 }

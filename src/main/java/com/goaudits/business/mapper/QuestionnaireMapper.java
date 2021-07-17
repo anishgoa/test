@@ -16,6 +16,7 @@ import com.goaudits.business.entity.Choice;
 import com.goaudits.business.entity.Group;
 import com.goaudits.business.entity.GroupOrder;
 import com.goaudits.business.entity.Previewchoice;
+import com.goaudits.business.entity.Questactimage;
 import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.QuestionOrder;
 import com.goaudits.business.entity.QuestionVo;
@@ -125,7 +126,8 @@ public interface QuestionnaireMapper {
 			+ "#{section_id, mode=IN, jdbcType=INTEGER},#{group_id, mode=IN, jdbcType=INTEGER},#{question_no, mode=IN, jdbcType=INTEGER},#{choice_pat_id, mode=IN, jdbcType=INTEGER},#{question_text, mode=IN, jdbcType=VARCHAR},#{available_score, mode=IN, jdbcType=VARCHAR},"
 			+ "#{active, mode=IN, jdbcType=BOOLEAN},#{default_choice_id, mode=IN, jdbcType=INTEGER},#{ismandatory, mode=IN, jdbcType=BOOLEAN},#{image_mandatory, mode=IN, jdbcType=BOOLEAN},#{comment_mandatory, mode=IN, jdbcType=BOOLEAN},#{tag_id, mode=IN, jdbcType=VARCHAR},#{question_help, mode=IN, jdbcType=VARCHAR},"
 			+ "#{isactionplan_mandatory, mode=IN, jdbcType=BOOLEAN},#{auto_fail, mode=IN, jdbcType=VARCHAR},#{question_type, mode=IN, jdbcType=INTEGER},#{image_position, mode=IN, jdbcType=BOOLEAN},#{action_enabled, mode=IN, jdbcType=BOOLEAN},#{email_enabled, mode=IN, jdbcType=BOOLEAN},#{action_choices, mode=IN, jdbcType=BOOLEAN},#{email_choices, mode=IN, jdbcType=BOOLEAN},#{critical_email_list, mode=IN, jdbcType=VARCHAR},"
-			+ "#{is_parent_question, mode=IN, jdbcType=BOOLEAN},#{is_sub_question, mode=IN, jdbcType=BOOLEAN},#{no_score, mode=IN, jdbcType=BOOLEAN},#{temp_min, mode=IN, jdbcType=VARCHAR},#{temp_max, mode=IN, jdbcType=VARCHAR},#{vchoice_type, mode=IN, jdbcType=VARCHAR},#{temp_unit, mode=IN, jdbcType=VARCHAR},#{is_multichoice, mode=IN, jdbcType=BOOLEAN},#{oldtagid, mode=IN, jdbcType=BOOLEAN},#{picture_layout, mode=IN, jdbcType=VARCHAR},#{comment_choices, mode=IN, jdbcType=VARCHAR},#{image_choices, mode=IN, jdbcType=VARCHAR},#{question_text_color, mode=IN, jdbcType=VARCHAR},#{addedquestion_order, mode=IN, jdbcType=INTEGER})}")
+			+ "#{is_parent_question, mode=IN, jdbcType=BOOLEAN},#{is_sub_question, mode=IN, jdbcType=BOOLEAN},#{no_score, mode=IN, jdbcType=BOOLEAN},#{temp_min, mode=IN, jdbcType=VARCHAR},#{temp_max, mode=IN, jdbcType=VARCHAR},#{vchoice_type, mode=IN, jdbcType=VARCHAR},#{temp_unit, mode=IN, jdbcType=VARCHAR},#{is_multichoice, mode=IN, jdbcType=BOOLEAN},#{oldtagid, mode=IN, jdbcType=BOOLEAN},"
+			+ "#{picture_layout, mode=IN, jdbcType=VARCHAR},#{comment_choices, mode=IN, jdbcType=VARCHAR},#{image_choices, mode=IN, jdbcType=VARCHAR},#{question_text_color, mode=IN, jdbcType=VARCHAR},#{addedquestion_order, mode=IN, jdbcType=INTEGER},#{failed_choice, mode=IN, jdbcType=INTEGER})}")
 	@Options(statementType = StatementType.CALLABLE)
 	int addquest(Question ques);
 
@@ -248,5 +250,15 @@ public interface QuestionnaireMapper {
 	@Insert(value = "{CALL SP_GA_UPDATE_GROUPORDER_DET_PV2(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
 			+ "#{dragedsectionid, mode=IN, jdbcType=INTEGER},#{dropsection_id, mode=IN, jdbcType=INTEGER},#{draggroup_order, mode=IN, jdbcType=INTEGER},#{dropgroup_order, mode=IN, jdbcType=INTEGER})}")
 	int updateGroupOrder(GroupOrder grouporder);
+
+	@Select("SELECT ENABLE_FAILED_CHOICE FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1")
+	boolean getFailedChoiceFlag(String guid);
+
+	@Select(value = "{CALL SP_GA_GET_CLONEDQUESTIONIMAGES_DET(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
+			+ "#{section_id, mode=IN, jdbcType=INTEGER},#{group_id, mode=IN, jdbcType=INTEGER})}")
+	List<Questactimage> getQuestionImages(SectionGroupClone section);
+
+	@Delete("DELETE FROM GA_QUESTIONPHOTO_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_TYPE_ID=#{audit_type_id} AND QUESTION_NO=#{question_no}")
+	int deleteQuestionImage(Questactimage q);
 	
 }

@@ -11,8 +11,10 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.mapping.StatementType;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.goaudits.business.entity.ActionPlanAssignee;
 import com.goaudits.business.entity.AuditName;
+import com.goaudits.business.entity.Choice;
 import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.EmailMessage;
 import com.goaudits.business.entity.EmailSubject;
@@ -22,13 +24,13 @@ import com.goaudits.business.entity.GuidedSetup;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
+import com.goaudits.business.entity.Questactimage;
 import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.ReportImage;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.Section;
 import com.goaudits.business.entity.User;
-import com.goaudits.business.entity.Choice;
 
 @Mapper
 public interface SetupMapper {
@@ -239,7 +241,7 @@ public interface SetupMapper {
 	int createPreTemplate(PreTemplates preTemplates);
 
 	@Transactional(rollbackFor = Exception.class)
-	@Insert(value = "CALL SP_SETUP_CLONE_AUDITNAME(#{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{pre_client_id, mode=IN, jdbcType=INTEGER},"
+	@Select(value = "CALL SP_SETUP_CLONE_AUDITNAME(#{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{pre_client_id, mode=IN, jdbcType=INTEGER},"
 			+ " #{pre_audit_type_id, mode=IN, jdbcType=INTEGER},#{pre_audit_type_name, mode=IN, jdbcType=VARCHAR})")
 	int cloneAuditName(PreTemplates preTemplates);
 
@@ -273,4 +275,24 @@ public interface SetupMapper {
 	@Select("SELECT INPROGESS_TO_COMPLETE FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1")
 	boolean getCompletedFlag(String guid);
 
+	@Select(value = "{ CALL SP_GA_GETLOCATIONBYCLIENTS_DET( #{guid, mode=IN, jdbcType=BINARY}, #{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR} ) }")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Location> getLocationsBasedonCompanys(Location location);
+
+	@Select(value = "{ CALL SP_GA_GETAUDITTYPESBYCLIENTS_DET( #{guid, mode=IN, jdbcType=BINARY}, #{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR} ) }")
+	@Options(statementType = StatementType.CALLABLE)
+	List<AuditName> getAuditNamesByCompanys(AuditName auditname);
+
+    @Select("SELECT * FROM GA_QUESTIONPHOTO_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_TYPE_ID=#{pre_audit_type_id}")
+	List<Questactimage> getQuestionPhotos(PreTemplates preTemplates);
+
+
+    @Insert(value = "{CALL SP_GA_UPDATE_QUESTIONIMAGE_DET(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
+			+ "#{question_no, mode=IN, jdbcType=INTEGER},#{action_imagebi, mode=IN, jdbcType=VARCHAR},#{cloud_image_path, mode=IN, jdbcType=VARCHAR},#{cloud_image_public_id, mode=IN, jdbcType=VARCHAR},#{cloud_image_thumbnail, mode=IN, jdbcType=VARCHAR})}")
+	@Options(statementType = StatementType.CALLABLE)
+	int addOrUpDatequestionimg(Questactimage q);
+
+
+    @Select("SELECT ENABLE_CLOUDINARY FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1 LIMIT 1")
+	boolean getCloudinary(String guid);
 }

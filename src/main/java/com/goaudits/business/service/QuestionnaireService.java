@@ -89,6 +89,8 @@ public interface QuestionnaireService {
 
 	int groupOrder(GroupOrder grouporder);
 
+	boolean getFailedChoiceFlag(String guid);
+
 
 
 }

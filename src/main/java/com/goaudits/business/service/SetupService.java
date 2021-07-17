@@ -116,5 +116,9 @@ public interface SetupService {
 
 	public boolean getCompletedFlag(String guid);
 
+	public List<Location> getLocationsBasedonCompanys(Location location);
+
+	public List<AuditName> getAuditNamesByCompanys(AuditName auditname);
+
 	
 }

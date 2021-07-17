@@ -119,7 +119,7 @@ public class Question implements Serializable {
     byte[] binaryimage;
     private boolean copy=false;
     private String copyques_no;
-    
+    private String failed_choice;
 	private List<Choice> choiceList = new ArrayList<Choice>();
 	private List<Choice> sublist = new ArrayList<Choice>();
 	private List<Quesactionfield> questionactfldlist = new ArrayList<Quesactionfield>();
@@ -1078,6 +1078,14 @@ public class Question implements Serializable {
 	 */
 	public void setCopyques_no(String copyques_no) {
 		this.copyques_no = copyques_no;
+	}
+
+	public String getFailed_choice() {
+		return failed_choice;
+	}
+
+	public void setFailed_choice(String failed_choice) {
+		this.failed_choice = failed_choice;
 	}
 	
 	

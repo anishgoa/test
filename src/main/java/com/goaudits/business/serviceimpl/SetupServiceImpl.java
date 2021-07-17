@@ -1,11 +1,15 @@
 package com.goaudits.business.serviceimpl;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.goaudits.business.entity.ActionPlanAssignee;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.Choice;
@@ -18,14 +22,15 @@ import com.goaudits.business.entity.GuidedSetup;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.PreTemplates;
+import com.goaudits.business.entity.Questactimage;
 import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.ReportImage;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.Section;
-import com.goaudits.business.mapper.QuestionnaireMapper;
 import com.goaudits.business.mapper.SetupMapper;
 import com.goaudits.business.service.SetupService;
+import com.goaudits.business.util.Constants;
 import com.goaudits.business.util.Utils;
 
 @Service
@@ -552,11 +557,60 @@ public class SetupServiceImpl implements SetupService {
 		for (int i = 0; i < clientIds.length; i++) {
 
 			preTemplates.setClient_id(clientIds[i]);
-			setupmapper.cloneAuditName(preTemplates);
+			int audit_type_id = setupmapper.cloneAuditName(preTemplates);
+			if (cloudinary(preTemplates.getGuid())) {
+				List<Questactimage> questionList = setupmapper.getQuestionPhotos(preTemplates);
+				for (Questactimage q : questionList) {
 
+					if (q.getCloud_image_path() == null) {
+
+					} else {
+						try {
+
+							String folderpath = "Companies/" + preTemplates.getGuid() + "/"
+									+ preTemplates.getClient_id() + "/Branding/" + audit_type_id + "/Question";
+
+							Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap("cloud_name", Constants.cloudname,
+									"api_key", Constants.apikey, "api_secret", Constants.apiSecret));
+							String quesimage = "";
+							quesimage = q.getCloud_image_path();
+							Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+							String timestamps = Long.toString(timestamp.getTime());
+							String filename = q.getClient_id() + "-" + q.getAudit_type_id() + "_" + timestamps;
+							@SuppressWarnings("rawtypes")
+							Map result = cloudinary.uploader().upload(quesimage.replaceAll("\\r\\n|\\r|\\n", ""),
+									ObjectUtils.asMap("folder", folderpath, "use_filename", "true", "unique_filename",
+											"false", "public_id", filename));
+
+							String scaleDownProperty = "w_1000,c_fill,g_auto";
+							String delimiterStr = "/";
+							int replaceIndex = 5;
+
+							String reportImgUrl = Utils.splitJoinStringsAtIndex(result.get("secure_url").toString(),
+									scaleDownProperty, replaceIndex, delimiterStr);
+
+							q.setCloud_image_thumbnail(reportImgUrl);
+							q.setCloud_image_path(result.get("secure_url").toString());
+							q.setCloud_image_public_id(result.get("public_id").toString());
+
+							q.setClient_id(Integer.parseInt(preTemplates.getClient_id()));
+							q.setAudit_type_id(audit_type_id);
+							setupmapper.addOrUpDatequestionimg(q);
+
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+
+					}
+				}
+			}
 		}
-
 		return 1;
+	}
+
+	private boolean cloudinary(String guid) {
+		return setupmapper.getCloudinary(guid);
 	}
 
 	@Override
@@ -588,6 +642,18 @@ public class SetupServiceImpl implements SetupService {
 	public boolean getCompletedFlag(String guid) {
 		// TODO Auto-generated method stub
 		return setupmapper.getCompletedFlag(guid);
+	}
+
+	@Override
+	public List<Location> getLocationsBasedonCompanys(Location location) {
+		// TODO Auto-generated method stub
+		return setupmapper.getLocationsBasedonCompanys(location);
+	}
+
+	@Override
+	public List<AuditName> getAuditNamesByCompanys(AuditName auditname) {
+		// TODO Auto-generated method stub
+		return setupmapper.getAuditNamesByCompanys(auditname);
 	}
 
 }

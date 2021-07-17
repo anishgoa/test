@@ -132,6 +132,7 @@ public class QuestionVo {
 	String default_score_percent;
 	private int group_order;
 	private int  score_type;
+	private int failed_choice;
 
 	private List<Choice> choiceList = new ArrayList<Choice>();
 	private List<Choice> sublist = new ArrayList<Choice>();
@@ -1301,6 +1302,14 @@ public class QuestionVo {
 	 */
 	public void setScore_type(int score_type) {
 		this.score_type = score_type;
+	}
+
+	public int getFailed_choice() {
+		return failed_choice;
+	}
+
+	public void setFailed_choice(int failed_choice) {
+		this.failed_choice = failed_choice;
 	}
 	
 	

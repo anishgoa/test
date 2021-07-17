@@ -727,4 +727,25 @@ public class Questionnaire {
 		}
 
 	}
+	
+	@RequestMapping(value = "/failedchoice/flag", method = RequestMethod.GET)
+	public ResponseEntity<?> failedChoiceFlag(@RequestHeader(name = "Authorization") String token) {
+		String guid = null;
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				 guid = Utils.getGuid(token);
+			}
+	
+			boolean flag = QuestionnaireService.getFailedChoiceFlag(guid);
+			List<Boolean> failflag=new ArrayList<Boolean>();
+			failflag.add(flag);
+			return new ResponseEntity<List<Boolean>>(failflag, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+
+	}
+	
+	
 }

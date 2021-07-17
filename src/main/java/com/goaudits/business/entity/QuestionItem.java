@@ -115,6 +115,7 @@ public class QuestionItem {
 	private String qcomments;
 	private int audits_count;
 	private int addedquestion_order = 0;
+	private int failed_choice;
 	byte[] binaryimage;
 	private List<ChoiceItem> choiceList = new ArrayList<ChoiceItem>();
 	private List<ParentChoice> sublist = new ArrayList<ParentChoice>();
@@ -1122,4 +1123,13 @@ public class QuestionItem {
 	public void setAddedquestion_order(int addedquestion_order) {
 		this.addedquestion_order = addedquestion_order;
 	}
+
+	public int getFailed_choice() {
+		return failed_choice;
+	}
+
+	public void setFailed_choice(int failed_choice) {
+		this.failed_choice = failed_choice;
+	}
+	
 }

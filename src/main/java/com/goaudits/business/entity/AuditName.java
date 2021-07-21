@@ -48,6 +48,7 @@ public class AuditName implements Serializable {
     private int count;
     private String last_modified;
     private boolean isdelete;
+    private String description;
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
 	private List<Location> strarry = new ArrayList<Location>();
 
@@ -366,6 +367,14 @@ public class AuditName implements Serializable {
 	 */
 	public void setIsdelete(boolean isdelete) {
 		this.isdelete = isdelete;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	

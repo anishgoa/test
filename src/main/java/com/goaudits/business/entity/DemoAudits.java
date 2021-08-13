@@ -44,6 +44,10 @@ public class DemoAudits {
 	String order;
 	int type_of_audit;
 	boolean perdelete;
+	String submitted_by;
+	int min_score;
+	int max_score;
+	
 //	private List<Customfields> Customfieldslist = new ArrayList<Customfields>();
 //	private List<Location> strarry = new ArrayList<Location>();
 	
@@ -334,6 +338,24 @@ public class DemoAudits {
 	}
 	public void setPerdelete(boolean perdelete) {
 		this.perdelete = perdelete;
+	}
+	public String getSubmitted_by() {
+		return submitted_by;
+	}
+	public void setSubmitted_by(String submitted_by) {
+		this.submitted_by = submitted_by;
+	}
+	public int getMin_score() {
+		return min_score;
+	}
+	public void setMin_score(int min_score) {
+		this.min_score = min_score;
+	}
+	public int getMax_score() {
+		return max_score;
+	}
+	public void setMax_score(int max_score) {
+		this.max_score = max_score;
 	}
 	
 	

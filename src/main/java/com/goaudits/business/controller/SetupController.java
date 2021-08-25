@@ -21,6 +21,7 @@ import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.GuidedSetup;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
+import com.goaudits.business.entity.Menu;
 import com.goaudits.business.entity.PreTemplates;
 import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.ScoreRange;
@@ -893,8 +894,7 @@ public class SetupController {
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
-	
-	
+
 	@RequestMapping(value = "/completeflag/{guid}", method = RequestMethod.GET)
 	public ResponseEntity<?> completeFlag(@PathVariable("guid") String guid,
 			@RequestHeader(name = "Authorization") String token) {
@@ -912,7 +912,7 @@ public class SetupController {
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
-	
+
 	@RequestMapping(value = "/comlocation/list", method = RequestMethod.POST)
 	public ResponseEntity<?> getlocationsBasedeOnCompanys(@RequestBody Location location,
 			@RequestHeader(name = "Authorization") String token) {
@@ -951,5 +951,22 @@ public class SetupController {
 		}
 	}
 
+	@RequestMapping(value = "/menuitems/list", method = RequestMethod.POST)
+	public ResponseEntity<?> getAuditNamesByCompanys(@RequestHeader(name = "Authorization") String token) {
+		try {
+			String guid = "";
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				guid = Utils.getGuid(token);
+//				String uid = Utils.getUid(token);
+			}
+			List<Menu> menuList = setupservice.getMenulist(guid);
+			return new ResponseEntity<List<Menu>>(menuList, HttpStatus.OK);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
 
 }

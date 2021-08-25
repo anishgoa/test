@@ -21,6 +21,7 @@ import com.goaudits.business.entity.Group;
 import com.goaudits.business.entity.GuidedSetup;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
+import com.goaudits.business.entity.Menu;
 import com.goaudits.business.entity.PreTemplates;
 import com.goaudits.business.entity.Questactimage;
 import com.goaudits.business.entity.Question;
@@ -654,6 +655,12 @@ public class SetupServiceImpl implements SetupService {
 	public List<AuditName> getAuditNamesByCompanys(AuditName auditname) {
 		// TODO Auto-generated method stub
 		return setupmapper.getAuditNamesByCompanys(auditname);
+	}
+
+	@Override
+	public List<Menu> getMenulist(String guid) {
+		// TODO Auto-generated method stub
+		return setupmapper.getMenulist(guid);
 	}
 
 }

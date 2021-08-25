@@ -45,8 +45,9 @@ public class DemoAudits {
 	int type_of_audit;
 	boolean perdelete;
 	String submitted_by;
-	int min_score;
-	int max_score;
+	String min_score;
+	String max_score;
+	boolean auto_fail;
 	
 //	private List<Customfields> Customfieldslist = new ArrayList<Customfields>();
 //	private List<Location> strarry = new ArrayList<Location>();
@@ -345,17 +346,24 @@ public class DemoAudits {
 	public void setSubmitted_by(String submitted_by) {
 		this.submitted_by = submitted_by;
 	}
-	public int getMin_score() {
+	
+	public String getMin_score() {
 		return min_score;
 	}
-	public void setMin_score(int min_score) {
+	public void setMin_score(String min_score) {
 		this.min_score = min_score;
 	}
-	public int getMax_score() {
+	public String getMax_score() {
 		return max_score;
 	}
-	public void setMax_score(int max_score) {
+	public void setMax_score(String max_score) {
 		this.max_score = max_score;
+	}
+	public boolean isAuto_fail() {
+		return auto_fail;
+	}
+	public void setAuto_fail(boolean auto_fail) {
+		this.auto_fail = auto_fail;
 	}
 	
 	

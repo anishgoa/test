@@ -23,6 +23,7 @@ import com.goaudits.business.entity.Group;
 import com.goaudits.business.entity.GuidedSetup;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
+import com.goaudits.business.entity.Menu;
 import com.goaudits.business.entity.PreTemplates;
 import com.goaudits.business.entity.Questactimage;
 import com.goaudits.business.entity.Question;
@@ -295,4 +296,7 @@ public interface SetupMapper {
 
     @Select("SELECT ENABLE_CLOUDINARY FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1 LIMIT 1")
 	boolean getCloudinary(String guid);
+
+    @Select("SELECT NOTIFICATION_ENABLE,GROUPAUDIT_ENABLE FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1 LIMIT 1")
+	List<Menu> getMenulist(String guid);
 }

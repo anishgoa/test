@@ -9,6 +9,7 @@ import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.GuidedSetup;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
+import com.goaudits.business.entity.Menu;
 import com.goaudits.business.entity.PreTemplates;
 import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.ScoreRange;
@@ -119,6 +120,8 @@ public interface SetupService {
 	public List<Location> getLocationsBasedonCompanys(Location location);
 
 	public List<AuditName> getAuditNamesByCompanys(AuditName auditname);
+
+	public List<Menu> getMenulist(String guid);
 
 	
 }

@@ -21,6 +21,7 @@ import com.goaudits.business.entity.EmailSubject;
 import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.Group;
 import com.goaudits.business.entity.GuidedSetup;
+import com.goaudits.business.entity.Help;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Menu;
@@ -299,4 +300,8 @@ public interface SetupMapper {
 
     @Select("SELECT NOTIFICATION_ENABLE,GROUPAUDIT_ENABLE FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1 LIMIT 1")
 	List<Menu> getMenulist(String guid);
+
+    @Select(value = "{ CALL GA_HLP_GET_LEARN_DATA(#{id, mode=IN, jdbcType=VARCHAR}) }")
+	@Options(statementType = StatementType.CALLABLE)
+    List<Help> getHelplist(String id);
 }

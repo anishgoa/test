@@ -7,6 +7,7 @@ import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.GuidedSetup;
+import com.goaudits.business.entity.Help;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Menu;
@@ -122,6 +123,8 @@ public interface SetupService {
 	public List<AuditName> getAuditNamesByCompanys(AuditName auditname);
 
 	public List<Menu> getMenulist(String guid);
+
+	public List<Help> getHelplist(String id);
 
 	
 }

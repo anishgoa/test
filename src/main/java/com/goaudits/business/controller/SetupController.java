@@ -19,6 +19,7 @@ import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.GuidedSetup;
+import com.goaudits.business.entity.Help;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Menu;
@@ -962,6 +963,18 @@ public class SetupController {
 			}
 			List<Menu> menuList = setupservice.getMenulist(guid);
 			return new ResponseEntity<List<Menu>>(menuList, HttpStatus.OK);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+	
+	@RequestMapping(value = "/help/list/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> getHelplist(@PathVariable("id") String id) {
+		try {
+			List<Help> menuList = setupservice.getHelplist(id);
+			return new ResponseEntity<List<Help>>(menuList, HttpStatus.OK);
 
 		} catch (Exception e) {
 			e.printStackTrace();

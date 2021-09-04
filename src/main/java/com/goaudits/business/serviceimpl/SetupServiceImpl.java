@@ -19,6 +19,7 @@ import com.goaudits.business.entity.EmailSubject;
 import com.goaudits.business.entity.EmailTemplate;
 import com.goaudits.business.entity.Group;
 import com.goaudits.business.entity.GuidedSetup;
+import com.goaudits.business.entity.Help;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Menu;
@@ -661,6 +662,11 @@ public class SetupServiceImpl implements SetupService {
 	public List<Menu> getMenulist(String guid) {
 		// TODO Auto-generated method stub
 		return setupmapper.getMenulist(guid);
+	}
+
+	@Override
+	public List<Help> getHelplist(String id) {
+		return setupmapper.getHelplist(id);
 	}
 
 }

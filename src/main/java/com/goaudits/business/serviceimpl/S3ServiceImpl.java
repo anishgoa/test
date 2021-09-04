@@ -123,13 +123,12 @@ public class S3ServiceImpl implements S3Service {
 
 		List<Question> questionList = s3mapper.getQuestionImages(guid);
 
+		Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap("cloud_name", Constants.cloudname, "api_key",
+				Constants.apikey, "api_secret", Constants.apiSecret));
 		for (Question q : questionList) {
-
 			String path = "Companies/" + guid + "/" + q.getClient_id() + "/Branding/" + q.getAudit_type_id()
 					+ "/Question";
 
-			Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap("cloud_name", Constants.cloudname, "api_key",
-					Constants.apikey, "api_secret", Constants.apiSecret));
 			if (q.getBinaryimage() == null) {
 
 			} else {
@@ -223,7 +222,8 @@ public class S3ServiceImpl implements S3Service {
 	public int MigrateimagesAudit(String guid) {
 
 		List<Questactimage> questionList = s3mapper.getAuditImages(guid);
-
+		Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap("cloud_name", Constants.cloudname, "api_key",
+				Constants.apikey, "api_secret", Constants.apiSecret));
 		for (Questactimage q : questionList) {
 
 			int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -235,8 +235,6 @@ public class S3ServiceImpl implements S3Service {
 			String path = "Companies/" + q.getGuid() + "/" + q.getClient_id() + "/" + q.getStore_id() + "/Audits/"
 					+ q.getAudit_type_id() + "/" + year + "/" + Month + "/" + date;
 
-			Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap("cloud_name", Constants.cloudname, "api_key",
-					Constants.apikey, "api_secret", Constants.apiSecret));
 			if (q.getAction_imagebi() == null) {
 
 			} else {
@@ -250,6 +248,7 @@ public class S3ServiceImpl implements S3Service {
 					String timestamps = Long.toString(timestamp.getTime());
 					String filename = q.getClient_id() + "-" + q.getAudit_type_id() + "_" + timestamps;
 					@SuppressWarnings("rawtypes")
+					
 					Map result = cloudinary.uploader().upload(quesimage.replaceAll("\\r\\n|\\r|\\n", ""),
 							ObjectUtils.asMap("folder", path, "use_filename", "true", "unique_filename", "false",
 									"public_id", filename));

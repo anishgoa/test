@@ -14,6 +14,7 @@ public class CustomFieldList {
 	private String field_label;
 	private String field_type;
 	private String active;
+	private String field_value;
 	/**
 	 * @return the guid
 	 */
@@ -133,6 +134,12 @@ public class CustomFieldList {
 	 */
 	public void setActive(String active) {
 		this.active = active;
+	}
+	public String getField_value() {
+		return field_value;
+	}
+	public void setField_value(String field_value) {
+		this.field_value = field_value;
 	}
 	
 	

@@ -35,6 +35,8 @@ public class Report implements Serializable{
     private String leftlogo;
     private byte[] leftlogobi;
     private String template_descrition;
+    private String show_edit;
+    
     List<ReportImage> reportImageList=new ArrayList<ReportImage>();
 	public String getTemplate_desc() {
 		return template_desc;
@@ -202,6 +204,12 @@ public class Report implements Serializable{
 	 */
 	public void setReportImageList(List<ReportImage> reportImageList) {
 		this.reportImageList = reportImageList;
+	}
+	public String getShow_edit() {
+		return show_edit;
+	}
+	public void setShow_edit(String show_edit) {
+		this.show_edit = show_edit;
 	}
 
 

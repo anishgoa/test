@@ -1,10 +1,17 @@
 package com.goaudits.business.controller;
 
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.client.RestTemplate;
 import com.goaudits.business.entity.ActionPlanAssignee;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.Company;
@@ -970,11 +977,24 @@ public class SetupController {
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
-	
+
 	@RequestMapping(value = "/help/list/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getHelplist(@PathVariable("id") String id) {
 		try {
 			List<Help> menuList = setupservice.getHelplist(id);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth("dG9rOmRkMjg2MjA3X2ZlMzJfNDUwY185NzQ2XzY1NjBiNDhkNjVmMzoxOjA=");
+			RestTemplate restTemplate = new RestTemplate();
+			HttpEntity<?> requestEntity = new HttpEntity<>(null, headers);
+			for (Help p : menuList) {
+				final String baseUrl = "https://api.intercom.io/articles/" + p.getApi_id();
+				URI uri = new URI(baseUrl);
+				ResponseEntity<String> result1 = restTemplate.exchange(uri, HttpMethod.GET, requestEntity,
+						String.class);
+				p.setBody(result1.getBody());
+			}
 			return new ResponseEntity<List<Help>>(menuList, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -982,10 +1002,10 @@ public class SetupController {
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
-	
-	
+
 	@RequestMapping(value = "/reportref/list", method = RequestMethod.POST)
-	public ResponseEntity<?> getReportRef(@RequestBody Reportref Reportref,@RequestHeader(name = "Authorization") String token) {
+	public ResponseEntity<?> getReportRef(@RequestBody Reportref Reportref,
+			@RequestHeader(name = "Authorization") String token) {
 		try {
 			String guid = "";
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -994,7 +1014,7 @@ public class SetupController {
 				Reportref.setGuid(guid);
 //				String uid = Utils.getUid(token);
 			}
-			List<Reportref>  repList= setupservice.getReportRef(Reportref);
+			List<Reportref> repList = setupservice.getReportRef(Reportref);
 			return new ResponseEntity<List<Reportref>>(repList, HttpStatus.OK);
 
 		} catch (Exception e) {

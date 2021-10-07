@@ -13,6 +13,7 @@ import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Menu;
 import com.goaudits.business.entity.PreTemplates;
 import com.goaudits.business.entity.Report;
+import com.goaudits.business.entity.Reportref;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.Section;
 
@@ -125,6 +126,8 @@ public interface SetupService {
 	public List<Menu> getMenulist(String guid);
 
 	public List<Help> getHelplist(String id);
+
+	public List<Reportref> getReportRef(Reportref Reportref);
 
 	
 }

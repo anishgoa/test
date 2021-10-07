@@ -30,6 +30,7 @@ import com.goaudits.business.entity.Questactimage;
 import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.ReportImage;
+import com.goaudits.business.entity.Reportref;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.Section;
 import com.goaudits.business.entity.User;
@@ -304,4 +305,8 @@ public interface SetupMapper {
     @Select(value = "{ CALL GA_HLP_GET_LEARN_DATA(#{id, mode=IN, jdbcType=VARCHAR}) }")
 	@Options(statementType = StatementType.CALLABLE)
     List<Help> getHelplist(String id);
+
+    @Select(value = "{ CALL SP_GA_GETAUDITID_DET(#{guid, mode=IN, jdbcType=VARCHAR},#{client_id, mode=IN, jdbcType=VARCHAR},#{min, mode=IN, jdbcType=VARCHAR},#{max, mode=IN, jdbcType=VARCHAR}) }")
+	@Options(statementType = StatementType.CALLABLE)
+    List<Reportref> getReportRef(Reportref Reportref);
 }

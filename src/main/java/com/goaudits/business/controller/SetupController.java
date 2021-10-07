@@ -25,6 +25,7 @@ import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Menu;
 import com.goaudits.business.entity.PreTemplates;
 import com.goaudits.business.entity.Report;
+import com.goaudits.business.entity.Reportref;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.Section;
 import com.goaudits.business.service.SetupService;
@@ -975,6 +976,26 @@ public class SetupController {
 		try {
 			List<Help> menuList = setupservice.getHelplist(id);
 			return new ResponseEntity<List<Help>>(menuList, HttpStatus.OK);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+	
+	
+	@RequestMapping(value = "/reportref/list", method = RequestMethod.POST)
+	public ResponseEntity<?> getReportRef(@RequestBody Reportref Reportref,@RequestHeader(name = "Authorization") String token) {
+		try {
+			String guid = "";
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				guid = Utils.getGuid(token);
+				Reportref.setGuid(guid);
+//				String uid = Utils.getUid(token);
+			}
+			List<Reportref>  repList= setupservice.getReportRef(Reportref);
+			return new ResponseEntity<List<Reportref>>(repList, HttpStatus.OK);
 
 		} catch (Exception e) {
 			e.printStackTrace();

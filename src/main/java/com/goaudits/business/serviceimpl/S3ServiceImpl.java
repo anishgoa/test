@@ -155,6 +155,7 @@ public class S3ServiceImpl implements S3Service {
 					q.setImage_public_id(result.get("public_id").toString());
 
 					s3mapper.updateQuestionImagesforclod(q);
+					result.clear();
 
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -265,7 +266,7 @@ public class S3ServiceImpl implements S3Service {
 					q.setCloud_image_public_id(result.get("public_id").toString());
 
 					s3mapper.updateAuditforclod(q);
-
+                    result.clear();
 				} catch (IOException e) {
 
 					e.printStackTrace();

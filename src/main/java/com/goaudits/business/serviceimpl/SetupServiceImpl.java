@@ -28,6 +28,7 @@ import com.goaudits.business.entity.Questactimage;
 import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.ReportImage;
+import com.goaudits.business.entity.Reportref;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.Section;
 import com.goaudits.business.mapper.SetupMapper;
@@ -667,6 +668,11 @@ public class SetupServiceImpl implements SetupService {
 	@Override
 	public List<Help> getHelplist(String id) {
 		return setupmapper.getHelplist(id);
+	}
+
+	@Override
+	public List<Reportref> getReportRef(Reportref Reportref) {
+		return setupmapper.getReportRef(Reportref);
 	}
 
 }

@@ -34,7 +34,7 @@ public interface S3Mapper {
 	@Update("UPDATE GA_QUESTACTIONIMG_DT SET CLOUD_IMAGE_PATH=#{cloud_image_path},CLOUD_IMAGE_PUBLIC_ID=#{cloud_image_public_id},CLOUD_IMAGE_THUMBNAIL=#{cloud_image_thumbnail} WHERE GUID=#{guid} AND UID=#{uid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=#{audit_group_id} AND AUDIT_TYPE_ID=#{audit_type_id} AND QUESTION_NO=#{question_no} AND STORE_ID=#{store_id} AND AUDIT_DATE=#{audit_date} AND SEQ_NO=#{seq_no} AND IMAGE_ID=#{image_id}")
 	void updateFollowupforclod(Questactimage q);
 
-	@Select("SELECT GUID,UID, CLIENT_ID,AUDIT_GROUP_ID, AUDIT_TYPE_ID, QUESTION_NO, IMAGE_ID,IMAGE as action_imagebi,STORE_ID,AUDIT_DATE,SEQ_NO FROM GA_QUESTIMG_DT WHERE GUID=#{guid} AND LENGTH(IMAGE)>0")
+	@Select("SELECT GUID,UID, CLIENT_ID,AUDIT_GROUP_ID, AUDIT_TYPE_ID, QUESTION_NO, IMAGE_ID,IMAGE as action_imagebi,STORE_ID,AUDIT_DATE,SEQ_NO FROM GA_QUESTIMG_DT WHERE GUID=#{guid} AND LENGTH(IMAGE)>0 AND CLOUD_IMAGE_URL IS NULL")
 	List<Questactimage> getAuditImages(String guid);
 
 	@Update("UPDATE GA_QUESTIMG_DT SET CLOUD_IMAGE_URL=#{cloud_image_path},REPORT_IMAGE_URL=#{cloud_image_thumbnail} WHERE GUID=#{guid} AND UID=#{uid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=#{audit_group_id} AND AUDIT_TYPE_ID=#{audit_type_id} AND QUESTION_NO=#{question_no} AND STORE_ID=#{store_id} AND AUDIT_DATE=#{audit_date} AND SEQ_NO=#{seq_no} AND IMAGE_ID=#{image_id}")

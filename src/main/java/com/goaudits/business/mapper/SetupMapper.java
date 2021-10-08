@@ -306,7 +306,7 @@ public interface SetupMapper {
 	@Options(statementType = StatementType.CALLABLE)
     List<Help> getHelplist(String id);
 
-    @Select(value = "{ CALL SP_GA_GETAUDITID_DET(#{guid, mode=IN, jdbcType=VARCHAR},#{client_id, mode=IN, jdbcType=VARCHAR},#{min, mode=IN, jdbcType=VARCHAR},#{max, mode=IN, jdbcType=VARCHAR}) }")
+    @Select(value = "{ CALL SP_GA_GETAUDITID_DET(#{guid, mode=IN, jdbcType=VARCHAR},#{client_id, mode=IN, jdbcType=VARCHAR},#{min, mode=IN, jdbcType=VARCHAR},#{max, mode=IN, jdbcType=VARCHAR},#{search, mode=IN, jdbcType=VARCHAR}) }")
 	@Options(statementType = StatementType.CALLABLE)
     List<Reportref> getReportRef(Reportref Reportref);
 }

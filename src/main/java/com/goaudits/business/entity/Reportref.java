@@ -9,6 +9,7 @@ public class Reportref {
 	String guid;
 	int min;
 	int max;
+	String search;
 	public String getClient_id() {
 		return client_id;
 	}
@@ -39,5 +40,12 @@ public class Reportref {
 	public void setMax(int max) {
 		this.max = max;
 	}
+	public String getSearch() {
+		return search;
+	}
+	public void setSearch(String search) {
+		this.search = search;
+	}
+	
 
 }

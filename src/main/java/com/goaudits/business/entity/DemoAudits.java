@@ -48,7 +48,7 @@ public class DemoAudits {
 	String min_score;
 	String max_score;
 	boolean auto_fail;
-	
+	String refnos;
 //	private List<Customfields> Customfieldslist = new ArrayList<Customfields>();
 //	private List<Location> strarry = new ArrayList<Location>();
 	
@@ -364,6 +364,12 @@ public class DemoAudits {
 	}
 	public void setAuto_fail(boolean auto_fail) {
 		this.auto_fail = auto_fail;
+	}
+	public String getRefnos() {
+		return refnos;
+	}
+	public void setRefnos(String refnos) {
+		this.refnos = refnos;
 	}
 	
 	

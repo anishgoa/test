@@ -517,8 +517,10 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 				questionnairemapper.addquestscores(ques.getGuid(), ques.getClient_id(), 1, ques.getAudit_type_id(),
 						ques.getQuestion_no(), ques.getChoice_pat_id(), choice.getChoice_id(),
 						choice.getDefault_score_percent(), choice.getScore_type(), choice.getChoice_colour());
-
 			}
+			questionnairemapper.addquestscores(ques.getGuid(), ques.getClient_id(), 1, ques.getAudit_type_id(),
+					ques.getQuestion_no(), ques.getChoice_pat_id(), "0", "0", 0, "000");
+			
 			String tag_id[] = null;
 			String oldtagid = null;
 			if (ques.getTag_id() != null) {

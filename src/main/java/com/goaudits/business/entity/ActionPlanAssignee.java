@@ -14,6 +14,16 @@ public class ActionPlanAssignee {
 	private String department;
 	private boolean isapproval_required;
 	private boolean make_default;
+    private String common_action_email;
+    
+    
+	public String getCommon_action_email() {
+		return common_action_email;
+	}
+
+	public void setCommon_action_email(String common_action_email) {
+		this.common_action_email = common_action_email;
+	}
 
 	public String getGuid() {
 		return guid;

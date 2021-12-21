@@ -97,13 +97,13 @@ public interface SetupMapper {
 	int deleteLocationTags(@Param("guid") String guid, @Param("client_id") String client_id,
 			@Param("store_id") String store_id);
 
-	@Insert(value = "{CALL SP_GA_UPDATEACTIONEMAILCLIENT_DET(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{person_name, mode=IN, jdbcType=VARCHAR},#{person_email, mode=IN, jdbcType=VARCHAR},#{department, mode=IN, jdbcType=VARCHAR},#{isapproval_required, mode=IN, jdbcType=BOOLEAN},#{make_default, mode=IN, jdbcType=BOOLEAN},#{custom_action_email, mode=IN, jdbcType=VARCHAR})}")
+	@Insert(value = "{CALL SP_GA_UPDATEACTIONEMAILCLIENT_DET(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{person_name, mode=IN, jdbcType=VARCHAR},#{person_email, mode=IN, jdbcType=VARCHAR},#{department, mode=IN, jdbcType=VARCHAR},#{isapproval_required, mode=IN, jdbcType=BOOLEAN},#{make_default, mode=IN, jdbcType=BOOLEAN},#{common_action_email, mode=IN, jdbcType=VARCHAR})}")
 	int insertActionemailforCompany(ActionPlanAssignee act);
 
 	@Delete("DELETE FROM GA_CLIENTACTIONEMAIL_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id}")
 	int deleteActionemailCompany(@Param("guid") String guid, @Param("client_id") String client_id);
 
-	@Insert(value = "{CALL SP_GA_UPDATEACTIONEMAIL_DET(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{store_id, mode=IN, jdbcType=INTEGER},#{person_name, mode=IN, jdbcType=VARCHAR},#{person_email, mode=IN, jdbcType=VARCHAR},#{department, mode=IN, jdbcType=VARCHAR},#{isapproval_required, mode=IN, jdbcType=BOOLEAN},#{make_default, mode=IN, jdbcType=BOOLEAN},#{custom_action_email, mode=IN, jdbcType=VARCHAR})}")
+	@Insert(value = "{CALL SP_GA_UPDATEACTIONEMAIL_DET(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{store_id, mode=IN, jdbcType=INTEGER},#{person_name, mode=IN, jdbcType=VARCHAR},#{person_email, mode=IN, jdbcType=VARCHAR},#{department, mode=IN, jdbcType=VARCHAR},#{isapproval_required, mode=IN, jdbcType=BOOLEAN},#{make_default, mode=IN, jdbcType=BOOLEAN},#{common_action_email, mode=IN, jdbcType=VARCHAR})}")
 	int insertLoationActionemail(ActionPlanAssignee act);
 
 	@Delete("DELETE FROM GA_STOREACTIONEMAIL_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND STORE_ID=#{store_id}")
@@ -131,7 +131,7 @@ public interface SetupMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	void AuditNameReorder(AuditName auditname);
 
-	@Insert(value = "{CALL SP_GA_UPDATEACTIONEMAILAUDITNAME_DET(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},#{person_name, mode=IN, jdbcType=VARCHAR},#{person_email, mode=IN, jdbcType=VARCHAR},#{department, mode=IN, jdbcType=VARCHAR},#{isapproval_required, mode=IN, jdbcType=BOOLEAN},#{make_default, mode=IN, jdbcType=BOOLEAN},#{custom_action_email, mode=IN, jdbcType=VARCHAR})}")
+	@Insert(value = "{CALL SP_GA_UPDATEACTIONEMAILAUDITNAME_DET(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},#{person_name, mode=IN, jdbcType=VARCHAR},#{person_email, mode=IN, jdbcType=VARCHAR},#{department, mode=IN, jdbcType=VARCHAR},#{isapproval_required, mode=IN, jdbcType=BOOLEAN},#{make_default, mode=IN, jdbcType=BOOLEAN},#{common_action_email, mode=IN, jdbcType=VARCHAR})}")
 	void insertActionemailAuditName(ActionPlanAssignee act);
 
 	@Select("SELECT COUNT(*) FROM GA_AUDITTYPE_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID!=#{audit_type_id} AND AUDIT_TYPE_NAME=#{audit_type_name}")

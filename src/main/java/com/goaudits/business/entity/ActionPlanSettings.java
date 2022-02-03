@@ -13,6 +13,7 @@ public class ActionPlanSettings {
 	String priority_color;
 	int default_due_days;
 	boolean active;
+	boolean make_default;
 	public String getGuid() {
 		return guid;
 	}
@@ -66,6 +67,12 @@ public class ActionPlanSettings {
 	}
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	public boolean isMake_default() {
+		return make_default;
+	}
+	public void setMake_default(boolean make_default) {
+		this.make_default = make_default;
 	}
 	
 	

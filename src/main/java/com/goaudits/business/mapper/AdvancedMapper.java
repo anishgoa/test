@@ -137,7 +137,7 @@ public interface AdvancedMapper {
 	@Select("SELECT COUNT(*) FROM GA_CUSTOM_ACTION_PRIORITIES_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id}  AND AUDIT_GROUP_ID=1 AND AUDIT_TYPE_ID=#{audit_type_id} AND PRIORITY_NAME=#{priority_name} AND PRIORITY_ID!=#{priority_id}")
 	int validateeditActionSts(ActionPlanSettings actionPlanSettings);
 
-	@Select(value = "{ CALL SP_GA_UPDATEACTIONPLANSETTINGS_DET( #{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},#{priority_id, mode=IN, jdbcType=INTEGER},#{priority_name, mode=IN, jdbcType=VARCHAR},#{priority_color, mode=IN, jdbcType=VARCHAR} ,#{default_due_days, mode=IN, jdbcType=INTEGER},#{active, mode=IN, jdbcType=BOOLEAN} )}")
+	@Select(value = "{ CALL SP_GA_UPDATEACTIONPLANSETTINGS_DET( #{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},#{priority_id, mode=IN, jdbcType=INTEGER},#{priority_name, mode=IN, jdbcType=VARCHAR},#{priority_color, mode=IN, jdbcType=VARCHAR} ,#{default_due_days, mode=IN, jdbcType=INTEGER},#{active, mode=IN, jdbcType=BOOLEAN},#{make_default, mode=IN, jdbcType=BOOLEAN} )}")
 	@Options(statementType = StatementType.CALLABLE)
 	int addOrEditActionPlanSettngs(ActionPlanSettings actionPlanSettings);
 

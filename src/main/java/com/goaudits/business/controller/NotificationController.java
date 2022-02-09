@@ -133,5 +133,48 @@ public class NotificationController {
 		}
 	}
 	
+	@RequestMapping(value = "createauditnotification", method = RequestMethod.POST)
+	public ResponseEntity<?> createAuditNotification(@RequestBody Notification Notification,@RequestHeader(name = "Authorization") String token
+) {
+		
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				Notification.setGuid(guid);
+				Notification.setUid(uid);
+			}
+			NotificationService.createAuditNotification(Notification);
+			List<Notification> NotiList=new ArrayList<Notification>();
+			NotiList.add(Notification);
+			return new ResponseEntity<List<Notification>>(NotiList, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ),
+					HttpStatus.EXPECTATION_FAILED);
+		}
+
+	}
+	
+	@RequestMapping(value = "editauditnotification", method = RequestMethod.POST)
+	public ResponseEntity<?> editAusitNotification(@RequestBody Notification Notification,@RequestHeader(name = "Authorization") String token
+) {
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				Notification.setGuid(guid);
+			}
+			NotificationService.editActionTaskNotification(Notification);
+			List<Notification> NotiList=new ArrayList<Notification>();
+			NotiList.add(Notification);
+			return new ResponseEntity<List<Notification>>(NotiList, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ),
+					HttpStatus.EXPECTATION_FAILED);
+		}
+
+	}
+	
 
 }

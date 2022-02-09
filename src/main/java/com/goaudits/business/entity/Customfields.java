@@ -25,7 +25,7 @@ public class Customfields implements Serializable {
 	private String active;
 	private String field_value;
 	private boolean pactive;
-	private List<Customfields> Customfieldslist = new ArrayList<Customfields>();
+	private List<Customfields> customfieldslist = new ArrayList<Customfields>();
 
 	public String getField_value() {
 		return field_value;
@@ -51,12 +51,14 @@ public class Customfields implements Serializable {
 		this.active = active;
 	}
 
+
+
 	public List<Customfields> getCustomfieldslist() {
-		return Customfieldslist;
+		return customfieldslist;
 	}
 
 	public void setCustomfieldslist(List<Customfields> customfieldslist) {
-		Customfieldslist = customfieldslist;
+		this.customfieldslist = customfieldslist;
 	}
 
 	public String getClient_id() {

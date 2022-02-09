@@ -26,7 +26,7 @@ public  class EncrypterHelper {
 
 	public  String decrypt(String encstr) {
 
-		if (encstr.length() > 12) {
+		if (encstr!=null && encstr.length() > 12) {
 
 			String cipher = encstr.substring(12);
 

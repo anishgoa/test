@@ -16,6 +16,8 @@ public interface NotificationService {
 			int client_id, int notification_type);
 
 	int deleteNotification(Notification notification);
+
+	int createAuditNotification(Notification notification);
 	
 	
 

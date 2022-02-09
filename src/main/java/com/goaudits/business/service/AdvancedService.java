@@ -108,4 +108,6 @@ public interface AdvancedService {
 
 	boolean getBroadcastflag(Broadcast broadcast);
 
+	List<Customfields> getCustomfieldvalues(Customfields customfields);
+
 }

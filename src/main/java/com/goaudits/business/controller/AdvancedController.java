@@ -437,7 +437,7 @@ public class AdvancedController {
 				customfields.setUid(uid);
 			}
 			if (advancedservice.isCustomfieldsExist(customfields)) {
-				return new ResponseEntity(new GoAuditsException("Custom fields cannot be added, already exists"),
+				return new ResponseEntity<>(new GoAuditsException("Custom fields cannot be added, already exists"),
 						HttpStatus.CONFLICT);
 			}
 
@@ -448,6 +448,27 @@ public class AdvancedController {
 		} catch (Exception e) {
 			return new ResponseEntity(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
+	}
+		
+		@RequestMapping(value = "/customvalues/list", method = RequestMethod.POST)
+		public ResponseEntity<?> getCustomFieldsValues(@RequestBody Customfields customfields,
+				@RequestHeader(name = "Authorization") String token) {
+
+			try {
+				if (token != null && token != "" && !token.isEmpty()) {
+					token = token.replace("Bearer ", "");
+					String guid = Utils.getGuid(token);
+					String uid = Utils.getUid(token);
+					customfields.setGuid(guid);
+					customfields.setUid(uid);
+				}
+								
+				List<Customfields> customFieldsList = advancedservice.getCustomfieldvalues(customfields);
+				return new ResponseEntity<List<Customfields>>(customFieldsList, HttpStatus.CREATED);
+			} catch (Exception e) {
+				return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+			}
+
 	}
 
 	@RequestMapping(value = "/customfields/update", method = RequestMethod.PUT)

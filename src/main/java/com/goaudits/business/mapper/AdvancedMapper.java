@@ -217,5 +217,14 @@ public interface AdvancedMapper {
 	@Select("SELECT BROADCAST_ENABLED FROM GA_USERDET_MT WHERE GUID=#{guid} AND SUPER_USER=1 LIMIT 1")
 	boolean getBroadcastflag(Broadcast broadcast);
 
+	@Insert("INSERT INTO `GA_CUSTOMFIELDVALUES_MT`(`GUID`,`CLIENT_ID`,`AUDIT_GROUP_ID`,`AUDIT_TYPE_ID`,`FIELD_NAME`,`FIELD_VALUE`,`ACTIVE`,`LAST_MODIFIED`) VALUES (#{guid},#{client_id},1,#{audit_type_id},#{field_name},#{field_value},1,now())")
+	int addCustomfieldsList(Customfields customfields);
+
+	@Delete("DELETE FROM GA_CUSTOMFIELDVALUES_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_TYPE_ID=#{audit_type_id} AND FIELD_NAME=#{field_name}")
+	int deleteCustomFields(Customfields customfields);
+
+	@Select("SELECT FIELD_VALUE FROM GA_CUSTOMFIELDVALUES_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_TYPE_ID=#{audit_type_id} AND FIELD_NAME=#{field_name} ")
+	List<Customfields> getCustomfieldvalues(Customfields customfields);
+
 	
 }

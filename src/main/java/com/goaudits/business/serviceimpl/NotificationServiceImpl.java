@@ -27,8 +27,7 @@ public class NotificationServiceImpl implements NotificationService {
 				if (!auditTypes[i].equals("-1")) {
 					notification.setAudit_type_id(auditTypes[i]);
 
-					NotificationMapper
-							.createActionTaskNotification(notification);
+					NotificationMapper.createActionTaskNotification(notification);
 				}
 			}
 
@@ -48,8 +47,7 @@ public class NotificationServiceImpl implements NotificationService {
 						notification.setAudit_type_id(auditTypes[i]);
 						notification.setTrigger_day(trigger_days[j]);
 
-						NotificationMapper
-								.createActionTaskNotification(notification);
+						NotificationMapper.createActionTaskNotification(notification);
 					}
 				}
 
@@ -79,8 +77,7 @@ public class NotificationServiceImpl implements NotificationService {
 				if (!auditTypes[i].equals("-1")) {
 					notification.setAudit_type_id(auditTypes[i]);
 
-					NotificationMapper
-							.createActionSummaryNotification(notification);
+					NotificationMapper.createActionSummaryNotification(notification);
 				}
 			}
 
@@ -100,8 +97,7 @@ public class NotificationServiceImpl implements NotificationService {
 						notification.setAudit_type_id(auditTypes[i]);
 						notification.setTrigger_day(trigger_days[j]);
 
-						NotificationMapper
-								.createActionSummaryNotification(notification);
+						NotificationMapper.createActionSummaryNotification(notification);
 					}
 				}
 
@@ -112,16 +108,58 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public List<Notification> editActionTaskNotification(String guid,
-			int client_id, int notification_type) {
-		
-		return NotificationMapper.getActionPlanNotification(guid,client_id,notification_type);
+	public List<Notification> editActionTaskNotification(String guid, int client_id, int notification_type) {
+
+		return NotificationMapper.getActionPlanNotification(guid, client_id, notification_type);
 	}
 
 	@Override
 	public int deleteNotification(Notification notification) {
-	
+
 		return NotificationMapper.deleteNotification(notification);
+	}
+
+	@Override
+	public int createAuditNotification(Notification notification) {
+		notification.setNotification_type(3);
+		// TODO Auto-generated method stub
+		if (notification.getFrequency() == 1) {
+
+			String auditTypes[] = notification.getAudit_type_id().split(",");
+
+			for (int i = 0; i < auditTypes.length; i++) {
+
+				if (!auditTypes[i].equals("-1")) {
+					notification.setAudit_type_id(auditTypes[i]);
+
+					NotificationMapper.createActionSummaryNotification(notification);
+				}
+			}
+
+		}
+
+		if (notification.getFrequency() == 2) {
+
+			String auditTypes[] = notification.getAudit_type_id().split(",");
+
+			String trigger_days[] = notification.getTrigger_day().split(",");
+
+			for (int j = 0; j < trigger_days.length; j++) {
+
+				for (int i = 0; i < auditTypes.length; i++) {
+
+					if (!auditTypes[i].equals("-1")) {
+						notification.setAudit_type_id(auditTypes[i]);
+						notification.setTrigger_day(trigger_days[j]);
+
+						NotificationMapper.createActionSummaryNotification(notification);
+					}
+				}
+
+			}
+
+		}
+		return 0;
 	}
 
 }

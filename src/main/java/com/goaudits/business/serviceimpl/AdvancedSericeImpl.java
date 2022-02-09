@@ -412,13 +412,25 @@ public class AdvancedSericeImpl implements AdvancedService {
 	@Override
 	public int addCustomfields(Customfields customfields) {
 
-		return advancedmapper.addCustomfields(customfields);
+		advancedmapper.addCustomfields(customfields);
+		for (Customfields cf : customfields.getCustomfieldslist()) {
+			customfields.setField_value(cf.getField_value());
+			advancedmapper.addCustomfieldsList(customfields);
+		}
+
+		return 1;
 	}
 
 	@Override
 	public int updateCustomfields(Customfields customfields) {
 
-		return advancedmapper.addCustomfields(customfields);
+		advancedmapper.addCustomfields(customfields);
+		advancedmapper.deleteCustomFields(customfields);
+		for (Customfields cf : customfields.getCustomfieldslist()) {
+			customfields.setField_value(cf.getField_value());
+			advancedmapper.addCustomfieldsList(customfields);
+		}
+		return 1;
 	}
 
 	@Override
@@ -503,7 +515,7 @@ public class AdvancedSericeImpl implements AdvancedService {
 		// TODO Auto-generated method stub
 		return advancedmapper.getBroadcastdetails(broadcast);
 	}
-	
+
 	@Override
 	public List<Broadcast> getBroadcastListv1(Broadcast broadcast) {
 		// TODO Auto-generated method stub
@@ -545,5 +557,10 @@ public class AdvancedSericeImpl implements AdvancedService {
 		return advancedmapper.getBroadcastflag(broadcast);
 	}
 
-	
+	@Override
+	public List<Customfields> getCustomfieldvalues(Customfields customfields) {
+		// TODO Auto-generated method stub
+		return advancedmapper.getCustomfieldvalues(customfields);
+	}
+
 }

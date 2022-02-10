@@ -464,7 +464,7 @@ public class AdvancedController {
 				}
 								
 				List<Customfields> customFieldsList = advancedservice.getCustomfieldvalues(customfields);
-				return new ResponseEntity<List<Customfields>>(customFieldsList, HttpStatus.CREATED);
+				return new ResponseEntity<List<Customfields>>(customFieldsList, HttpStatus.OK);
 			} catch (Exception e) {
 				return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 			}

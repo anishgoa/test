@@ -425,10 +425,12 @@ public class AdvancedSericeImpl implements AdvancedService {
 	public int updateCustomfields(Customfields customfields) {
 
 		advancedmapper.addCustomfields(customfields);
-		advancedmapper.deleteCustomFields(customfields);
-		for (Customfields cf : customfields.getCustomfieldslist()) {
-			customfields.setField_value(cf.getField_value());
-			advancedmapper.addCustomfieldsList(customfields);
+		if (!customfields.isIsdelete()) {
+			advancedmapper.deleteCustomFields(customfields);
+			for (Customfields cf : customfields.getCustomfieldslist()) {
+				customfields.setField_value(cf.getField_value());
+				advancedmapper.addCustomfieldsList(customfields);
+			}
 		}
 		return 1;
 	}

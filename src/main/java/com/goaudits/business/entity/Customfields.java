@@ -25,6 +25,7 @@ public class Customfields implements Serializable {
 	private String active;
 	private String field_value;
 	private boolean pactive;
+	private boolean isdelete;
 	private List<Customfields> customfieldslist = new ArrayList<Customfields>();
 
 	public String getField_value() {
@@ -147,6 +148,14 @@ public class Customfields implements Serializable {
 
 	public void setAudit_type_name(String audit_type_name) {
 		this.audit_type_name = audit_type_name;
+	}
+
+	public boolean isIsdelete() {
+		return isdelete;
+	}
+
+	public void setIsdelete(boolean isdelete) {
+		this.isdelete = isdelete;
 	}
 
 }

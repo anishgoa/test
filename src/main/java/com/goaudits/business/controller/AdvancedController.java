@@ -21,6 +21,7 @@ import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.Broadcast;
 import com.goaudits.business.entity.CustomFieldList;
 import com.goaudits.business.entity.Customfields;
+import com.goaudits.business.entity.FileNameChecklist;
 import com.goaudits.business.entity.GroupAudit;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Personseen;
@@ -847,4 +848,79 @@ public class AdvancedController {
 		}
 	}
 	
+	@RequestMapping(value = "/filename/addchecklist", method = RequestMethod.POST)
+	public ResponseEntity<?> addFileNameChecklist(@RequestBody FileNameChecklist fileNameChecklist,
+			@RequestHeader(name = "Authorization") String token) {
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				fileNameChecklist.setGuid(guid);
+			}
+			
+			if((!fileNameChecklist.getGuid().isEmpty()) && (fileNameChecklist.getGuid() !=null) && (fileNameChecklist.getClient_id() != 0) && fileNameChecklist.getAudit_type_id() !=0){
+				
+					int addcount = advancedservice.addFileNameChecklist(fileNameChecklist);
+					return new ResponseEntity<Integer>(addcount, HttpStatus.CREATED);
+				}else {
+					
+					return new ResponseEntity<>(new GoAuditsException("Values should not be null,empty or zero"), HttpStatus.EXPECTATION_FAILED);
+				}
+				
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+
+	@RequestMapping(value = "/filename/getchecklist", method = RequestMethod.POST)
+	public ResponseEntity<?> getFilenameChecklist(@RequestBody FileNameChecklist fileNameChecklist,
+			@RequestHeader(name = "Authorization") String token) {
+
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				fileNameChecklist.setGuid(guid);
+				fileNameChecklist.setUid(uid);
+			}
+			List<FileNameChecklist> fnChecklist = advancedservice.getFilenameChecklist(fileNameChecklist);
+			return new ResponseEntity<List<FileNameChecklist>>(fnChecklist, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+
+	}
+
+	@RequestMapping(value = "/filename/updatechecklist", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateFilenameChecklist(@RequestBody FileNameChecklist fileNameChecklist,
+			@RequestHeader(name = "Authorization") String token) {
+
+		try {
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				String guid = Utils.getGuid(token);
+				String uid = Utils.getUid(token);
+				fileNameChecklist.setGuid(guid);
+				fileNameChecklist.setUid(uid);
+			}
+			
+			if((!fileNameChecklist.getGuid().isEmpty()) && (fileNameChecklist.getGuid() !=null) && (fileNameChecklist.getClient_id() != 0) && fileNameChecklist.getAudit_type_id() !=0){
+				int addorupdatecount = advancedservice.updateFilenameChecklist(fileNameChecklist);
+
+				return new ResponseEntity<Integer>(addorupdatecount, HttpStatus.CREATED);
+			}else {
+				
+				return new ResponseEntity<>(new GoAuditsException("Values should not be null,empty or zero"), HttpStatus.EXPECTATION_FAILED);
+			}
+			
+			
+		} catch (Exception e) {
+			
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
 }

@@ -18,6 +18,7 @@ import com.goaudits.business.entity.Broadcast;
 import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.CustomFieldList;
 import com.goaudits.business.entity.Customfields;
+import com.goaudits.business.entity.FileNameChecklist;
 import com.goaudits.business.entity.GroupAudit;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
@@ -226,5 +227,22 @@ public interface AdvancedMapper {
 	@Select("SELECT FIELD_VALUE FROM GA_CUSTOMFIELDVALUES_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_TYPE_ID=#{audit_type_id} AND FIELD_NAME=#{field_name} ")
 	List<Customfields> getCustomfieldvalues(Customfields customfields);
 
+	@Insert("INSERT INTO `GA_PDF_FILENAME_FORMAT_MT` (`GUID`, `CLIENT_ID`, `AUDIT_TYPE_ID`, `REPORT_ID_ENABLED`,`CLIENT_NAME_ENABLED`, `CHECKLIST_NAME_ENABLED`, `STORE_NAME_ENABLED`, `AUDIT_DATE_ENBALED`, `CUSTOM_FIELD_ENABLED`, `CUSTOM_FIELD_NAME`,`LOCATION_CODE_ENABLED`) values (#{guid},#{client_id},#{audit_type_id},#{report_id_enabled},#{client_name_enabled},#{checklist_name_enabled},#{store_name_enabled},#{audit_date_enabled},#{custom_field_enabled},#{custom_field_name},#{location_code_enabled})")
+	int addFileNameChecklist(FileNameChecklist fnchecklist);
+
+	@Select("SELECT * FROM GA_PDF_FILENAME_FORMAT_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_TYPE_ID=#{audit_type_id} ")
+	List<FileNameChecklist> getFilenameChecklist(FileNameChecklist fileNameChecklist);
+
+	
+	@Select("SELECT COUNT(*) FROM GA_PDF_FILENAME_FORMAT_MT WHERE GUID = #{guid} AND CLIENT_ID = #{client_id} AND AUDIT_TYPE_ID = #{audit_type_id}")
+	int isFileNameChecklistExist(FileNameChecklist fileNameChecklist);
+
+	@Insert(value = "{CALL GA_PDF_UPDATE_FILENAME_FORMAT( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
+			+ "#{report_id_enabled, mode=IN, jdbcType=INTEGER},#{client_name_enabled, mode=IN, jdbcType=INTEGER},"
+			+ "#{checklist_name_enabled, mode=IN, jdbcType=INTEGER},#{store_name_enabled, mode=IN, jdbcType=INTEGER} ,"
+			+ "#{audit_date_enabled, mode=IN, jdbcType=INTEGER},#{location_code_enabled, mode=IN, jdbcType=INTEGER},"
+			+ "#{custom_field_enabled, mode=IN, jdbcType=INTEGER},#{custom_field_name, mode=IN, jdbcType=VARCHAR} )}")
+	@Options(statementType = StatementType.CALLABLE)
+	int updateFileNameChecklist(FileNameChecklist fileNameChecklist);
 	
 }

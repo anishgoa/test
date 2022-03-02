@@ -13,6 +13,7 @@ import com.goaudits.business.entity.Broadcast;
 import com.goaudits.business.entity.Company;
 import com.goaudits.business.entity.CustomFieldList;
 import com.goaudits.business.entity.Customfields;
+import com.goaudits.business.entity.FileNameChecklist;
 import com.goaudits.business.entity.GroupAudit;
 import com.goaudits.business.entity.Location;
 import com.goaudits.business.entity.LocationTags;
@@ -565,4 +566,24 @@ public class AdvancedSericeImpl implements AdvancedService {
 		return advancedmapper.getCustomfieldvalues(customfields);
 	}
 
+	
+	@Override
+	public int addFileNameChecklist(FileNameChecklist fileNameChecklist) {
+			
+		return advancedmapper.addFileNameChecklist(fileNameChecklist);
+	
+	}
+
+	@Override
+	public List<FileNameChecklist> getFilenameChecklist(FileNameChecklist fileNameChecklist) {
+		// TODO Auto-generated method stub
+		return advancedmapper.getFilenameChecklist(fileNameChecklist);
+	}
+
+
+	@Override
+	public int updateFilenameChecklist(FileNameChecklist fileNameChecklist) {
+		advancedmapper.updateFileNameChecklist(fileNameChecklist);
+		return 1;
+	}
 }

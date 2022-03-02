@@ -9,6 +9,7 @@ import com.goaudits.business.entity.AuditWorkFlow;
 import com.goaudits.business.entity.Broadcast;
 import com.goaudits.business.entity.CustomFieldList;
 import com.goaudits.business.entity.Customfields;
+import com.goaudits.business.entity.FileNameChecklist;
 import com.goaudits.business.entity.GroupAudit;
 import com.goaudits.business.entity.LocationTags;
 import com.goaudits.business.entity.Personseen;
@@ -110,4 +111,10 @@ public interface AdvancedService {
 
 	List<Customfields> getCustomfieldvalues(Customfields customfields);
 
+	int addFileNameChecklist(FileNameChecklist fileNameChecklist);
+
+	List<FileNameChecklist> getFilenameChecklist(FileNameChecklist fileNameChecklist);
+
+	int updateFilenameChecklist(FileNameChecklist fileNameChecklist);
 }
+

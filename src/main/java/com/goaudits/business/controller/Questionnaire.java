@@ -182,7 +182,7 @@ public class Questionnaire {
 			}
 			if (QuestionnaireService.isGroupExist(group)) {
 				return new ResponseEntity<>(
-						new GoAuditsException("Please provide a different group name, this one already exists"),
+						new GoAuditsException("Please provide a different subsection name, this one already exists"),
 						HttpStatus.CONFLICT);
 			}
 
@@ -218,8 +218,8 @@ public class Questionnaire {
 
 			}
 			return new ResponseEntity<>(
-					new GoAuditsException("Please provide a different group name, this one already exists"),
-					HttpStatus.NOT_FOUND);
+					new GoAuditsException("Please provide a different subsection name, this one already exists"),
+					HttpStatus.CONFLICT);
 		} catch (Exception e) {
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}

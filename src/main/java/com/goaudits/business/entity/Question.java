@@ -120,6 +120,7 @@ public class Question implements Serializable {
     private boolean copy=false;
     private String copyques_no;
     private String failed_choice;
+    private String default_value;
 	private List<Choice> choiceList = new ArrayList<Choice>();
 	private List<Choice> sublist = new ArrayList<Choice>();
 	private List<Quesactionfield> questionactfldlist = new ArrayList<Quesactionfield>();
@@ -1086,6 +1087,14 @@ public class Question implements Serializable {
 
 	public void setFailed_choice(String failed_choice) {
 		this.failed_choice = failed_choice;
+	}
+
+	public String getDefault_value() {
+		return default_value;
+	}
+
+	public void setDefault_value(String default_value) {
+		this.default_value = default_value;
 	}
 	
 	

@@ -31,7 +31,7 @@ public class QuestionVo {
 	private String question_order;
 	private String default_choice_text;
 	private String choice_type;
-	
+
 	private String tag_id;
 	private String tag_code;
 	private String tag_description;
@@ -116,24 +116,24 @@ public class QuestionVo {
 	private int image_id;
 	private String qcomments;
 	private int audits_count;
-	private int addedquestion_order=0;
-    byte[] binaryimage;
+	private int addedquestion_order = 0;
+	byte[] binaryimage;
 	private int parent_question_no;
 	private int parent_choice_pat_id;
 	private int parent_choice_id;
-    private String section_name;
+	private String section_name;
 	private String section_help;
 	private String help_color;
 	private boolean is_help_bold;
 	private boolean is_help_italic;
 	private boolean help_text_position;
 	private boolean grpacive;
-	private boolean secactive; 
+	private boolean secactive;
 	String default_score_percent;
 	private int group_order;
-	private int  score_type;
+	private int score_type;
 	private String failed_choice;
-
+	private String default_value;
 	private List<Choice> choiceList = new ArrayList<Choice>();
 	private List<Choice> sublist = new ArrayList<Choice>();
 	private List<Quesactionfield> questionactfldlist = new ArrayList<Quesactionfield>();
@@ -141,7 +141,6 @@ public class QuestionVo {
 	private List<Actioncount> questactcountlist = new ArrayList<Actioncount>();
 	private List<Questionimage> questimagelist = new ArrayList<Questionimage>();
 
-	
 	public String getQcomments() {
 		return qcomments;
 	}
@@ -261,8 +260,6 @@ public class QuestionVo {
 	public void setSublist(List<Choice> sublist) {
 		this.sublist = sublist;
 	}
-
-
 
 	/**
 	 * @return the conditional_choice_pat_id
@@ -916,8 +913,6 @@ public class QuestionVo {
 		this.question_weight = question_weight;
 	}
 
-
-
 	/**
 	 * @return the default_choice_id
 	 */
@@ -1312,6 +1307,12 @@ public class QuestionVo {
 		this.failed_choice = failed_choice;
 	}
 
+	public String getDefault_value() {
+		return default_value;
+	}
 
-	
+	public void setDefault_value(String default_value) {
+		this.default_value = default_value;
+	}
+
 }

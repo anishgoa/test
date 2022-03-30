@@ -127,7 +127,8 @@ public interface QuestionnaireMapper {
 			+ "#{active, mode=IN, jdbcType=BOOLEAN},#{default_choice_id, mode=IN, jdbcType=INTEGER},#{ismandatory, mode=IN, jdbcType=BOOLEAN},#{image_mandatory, mode=IN, jdbcType=BOOLEAN},#{comment_mandatory, mode=IN, jdbcType=BOOLEAN},#{tag_id, mode=IN, jdbcType=VARCHAR},#{question_help, mode=IN, jdbcType=VARCHAR},"
 			+ "#{isactionplan_mandatory, mode=IN, jdbcType=BOOLEAN},#{auto_fail, mode=IN, jdbcType=VARCHAR},#{question_type, mode=IN, jdbcType=INTEGER},#{image_position, mode=IN, jdbcType=BOOLEAN},#{action_enabled, mode=IN, jdbcType=BOOLEAN},#{email_enabled, mode=IN, jdbcType=BOOLEAN},#{action_choices, mode=IN, jdbcType=BOOLEAN},#{email_choices, mode=IN, jdbcType=BOOLEAN},#{critical_email_list, mode=IN, jdbcType=VARCHAR},"
 			+ "#{is_parent_question, mode=IN, jdbcType=BOOLEAN},#{is_sub_question, mode=IN, jdbcType=BOOLEAN},#{no_score, mode=IN, jdbcType=BOOLEAN},#{temp_min, mode=IN, jdbcType=VARCHAR},#{temp_max, mode=IN, jdbcType=VARCHAR},#{vchoice_type, mode=IN, jdbcType=VARCHAR},#{temp_unit, mode=IN, jdbcType=VARCHAR},#{is_multichoice, mode=IN, jdbcType=BOOLEAN},#{oldtagid, mode=IN, jdbcType=BOOLEAN},"
-			+ "#{picture_layout, mode=IN, jdbcType=VARCHAR},#{comment_choices, mode=IN, jdbcType=VARCHAR},#{image_choices, mode=IN, jdbcType=VARCHAR},#{question_text_color, mode=IN, jdbcType=VARCHAR},#{addedquestion_order, mode=IN, jdbcType=INTEGER},#{failed_choice, mode=IN, jdbcType=VARCHAR},#{default_value, mode=IN, jdbcType=VARCHAR})}")
+			+ "#{picture_layout, mode=IN, jdbcType=VARCHAR},#{comment_choices, mode=IN, jdbcType=VARCHAR},#{image_choices, mode=IN, jdbcType=VARCHAR},#{question_text_color, mode=IN, jdbcType=VARCHAR},#{addedquestion_order, mode=IN, jdbcType=INTEGER},#{failed_choice, mode=IN, jdbcType=VARCHAR},"
+			+ "#{default_value, mode=IN, jdbcType=VARCHAR},#{action_default_value, mode=IN, jdbcType=VARCHAR})}")
 	@Options(statementType = StatementType.CALLABLE)
 	int addquest(Question ques);
 

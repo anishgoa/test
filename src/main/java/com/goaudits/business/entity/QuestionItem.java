@@ -118,6 +118,7 @@ public class QuestionItem {
 	private String failed_choice;
 	byte[] binaryimage;
 	private String default_value;
+	private String action_default_value;
 	private List<ChoiceItem> choiceList = new ArrayList<ChoiceItem>();
 	private List<ParentChoice> sublist = new ArrayList<ParentChoice>();
 	private List<Quesactionfield> questionactfldlist = new ArrayList<Quesactionfield>();
@@ -1139,6 +1140,14 @@ public class QuestionItem {
 
 	public void setDefault_value(String default_value) {
 		this.default_value = default_value;
+	}
+
+	public String getAction_default_value() {
+		return action_default_value;
+	}
+
+	public void setAction_default_value(String action_default_value) {
+		this.action_default_value = action_default_value;
 	}
 
 

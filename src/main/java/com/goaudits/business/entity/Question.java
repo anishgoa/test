@@ -121,12 +121,14 @@ public class Question implements Serializable {
     private String copyques_no;
     private String failed_choice;
     private String default_value;
+    private String action_default_value;
 	private List<Choice> choiceList = new ArrayList<Choice>();
 	private List<Choice> sublist = new ArrayList<Choice>();
 	private List<Quesactionfield> questionactfldlist = new ArrayList<Quesactionfield>();
 	private List<Questactimage> questactimglist = new ArrayList<Questactimage>();
 	private List<Actioncount> questactcountlist = new ArrayList<Actioncount>();
 	private List<Questionimage> questimagelist = new ArrayList<Questionimage>();
+	
 
 	
 	public String getQcomments() {
@@ -1095,6 +1097,14 @@ public class Question implements Serializable {
 
 	public void setDefault_value(String default_value) {
 		this.default_value = default_value;
+	}
+
+	public String getAction_default_value() {
+		return action_default_value;
+	}
+
+	public void setAction_default_value(String action_default_value) {
+		this.action_default_value = action_default_value;
 	}
 	
 	

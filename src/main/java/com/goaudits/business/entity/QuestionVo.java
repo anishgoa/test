@@ -134,6 +134,7 @@ public class QuestionVo {
 	private int score_type;
 	private String failed_choice;
 	private String default_value;
+	 private String action_default_value;
 	private List<Choice> choiceList = new ArrayList<Choice>();
 	private List<Choice> sublist = new ArrayList<Choice>();
 	private List<Quesactionfield> questionactfldlist = new ArrayList<Quesactionfield>();
@@ -1313,6 +1314,14 @@ public class QuestionVo {
 
 	public void setDefault_value(String default_value) {
 		this.default_value = default_value;
+	}
+
+	public String getAction_default_value() {
+		return action_default_value;
+	}
+
+	public void setAction_default_value(String action_default_value) {
+		this.action_default_value = action_default_value;
 	}
 
 }

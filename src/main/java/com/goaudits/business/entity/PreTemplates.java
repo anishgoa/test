@@ -2,19 +2,28 @@ package com.goaudits.business.entity;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Pattern;
+
 import org.springframework.stereotype.Repository;
+
+import com.goaudits.business.util.Utils;
 
 
 @Repository
 public class PreTemplates implements Serializable{
 	 private static final long serialVersionUID = 1L;
+	 
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String client_id;
 	private int audit_group_id;
 	private int audit_type_id;
 	private int pre_client_id;
 	private int pre_audit_type_id;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	 private String pre_audit_type_name;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String guid;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String uid;
 	private boolean validate;
 

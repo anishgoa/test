@@ -1,14 +1,20 @@
 package com.goaudits.business.entity;
 
+import javax.validation.constraints.Pattern;
+
 import org.springframework.stereotype.Repository;
+
+import com.goaudits.business.util.Utils;
 
 @Repository
 public class Reportref {
 	String client_id;
 	String audit_id;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String guid;
 	int min;
 	int max;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String search;
 	public String getClient_id() {
 		return client_id;

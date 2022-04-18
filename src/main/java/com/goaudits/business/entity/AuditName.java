@@ -4,27 +4,41 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Pattern;
 
 import org.springframework.stereotype.Repository;
+
+import com.goaudits.business.util.Utils;
 
 @Repository
 public class AuditName implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String guid;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String client_id;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String client_name;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String audit_group_id;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String audit_group_name;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String audit_type_id;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String audit_type_name;
     private String inputLogo;
     private boolean active;
     private String logo;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String uid;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String signature1_label;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String signature2_label;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String signature3_label;
     private boolean sign1_flag;
     private boolean sign2_flag;
@@ -32,13 +46,16 @@ public class AuditName implements Serializable {
     private boolean is_man_sign1;
     private boolean is_man_sign2;
     private boolean is_man_sign3;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String group_id;
     private int images_peraudit;
     private int images_perquestion;
     private int pl_code;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String person_seen;
     private boolean person_seen_mandatory;
     private boolean showif_optional;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String audit_type_title;
     private int sort_order;
     private int drag_index;
@@ -46,8 +63,10 @@ public class AuditName implements Serializable {
     private boolean image_required = true;
     private boolean hide_signature_app;
     private int count;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String last_modified;
     private boolean isdelete;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     private String description;
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
 	private List<Location> strarry = new ArrayList<Location>();

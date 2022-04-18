@@ -3,22 +3,38 @@ package com.goaudits.business.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Pattern;
+
 import org.springframework.stereotype.Repository;
+
+import com.goaudits.business.util.Utils;
 
 @Repository
 public class Personseen {
 
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String guid;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String uid;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String client_id;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String audit_type_ids;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String store_ids;
-	String person_name, person_email;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	String person_name;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	String person_email;
 	boolean active;
 	int audit_type_id, store_id;
 	int id = 0;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String client_name, audit_type_name, store_name;
-	String fromemail, fromclient_id;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	String fromclient_id;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	String fromemail;
 
 	private List<Company> clientarr = new ArrayList<Company>();
 	private List<AuditName> audarry = new ArrayList<AuditName>();

@@ -4,13 +4,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Pattern;
+
 import org.springframework.stereotype.Repository;
+
+import com.goaudits.business.util.Utils;
 
 @Repository
 public class FileNameChecklist implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String guid;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String uid;
 	private int client_id;
 	private int audit_type_id;
@@ -21,6 +27,7 @@ public class FileNameChecklist implements Serializable{
 	private int audit_date_enabled;
 	private int location_code_enabled;
 	private int custom_field_enabled;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String custom_field_name;
 	
 	public String getGuid() {

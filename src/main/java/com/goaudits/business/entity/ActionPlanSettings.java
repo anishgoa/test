@@ -1,19 +1,28 @@
 package com.goaudits.business.entity;
 
+import javax.validation.constraints.Pattern;
+
 import org.springframework.stereotype.Repository;
+
+import com.goaudits.business.util.Utils;
 
 @Repository
 public class ActionPlanSettings {
+	
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String guid;
 	int client_id;
 	int audit_group_id;
 	int audit_type_id;
 	int priority_id=0;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String priority_name;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String priority_color;
 	int default_due_days;
 	boolean active;
 	boolean make_default;
+	
 	public String getGuid() {
 		return guid;
 	}

@@ -2,25 +2,35 @@ package com.goaudits.business.entity;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Pattern;
+
 import org.springframework.stereotype.Repository;
+
+import com.goaudits.business.util.Utils;
 
 @Repository
 public class Quesactionfield implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String guid;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String uid;
 	private int client_id;
 	private int store_id;
 	private int audit_group_id;
 	private int audit_type_id;
 	private int  question_no;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String audit_date;
 	private int seq_no;
 	int field_id;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String field_name;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String field_type;
 	boolean active;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String field_value;
 	boolean is_mandatory;
 	

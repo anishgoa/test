@@ -2,26 +2,36 @@ package com.goaudits.business.entity;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Pattern;
+
 import org.springframework.stereotype.Repository;
+
+import com.goaudits.business.util.Utils;
 
 @Repository
 public class SectionGroupClone implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String guid;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String uid;
 	private int client_id;
 	private int audit_group_id;
 	private int audit_type_id;
 	private int section_id;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String section_help;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String help_color;
 	private boolean is_help_bold;
 	private boolean is_help_italic;
 	private boolean help_text_position;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String new_section_name;
 	private int group_id;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String new_group_name;
 	/**
 	 * @return the guid

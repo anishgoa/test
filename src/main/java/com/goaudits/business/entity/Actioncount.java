@@ -2,22 +2,50 @@ package com.goaudits.business.entity;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Pattern;
+
 import org.springframework.stereotype.Repository;
+
+import com.goaudits.business.util.Utils;
 
 @Repository
 public class Actioncount  implements Serializable{
 	private static final long serialVersionUID = 1L;
+	
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String opencount;
+    
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String inprogresscount;
+    
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String submitforapprovalcount;
+    
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String closedcount;
+    
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String rejectedcount;
+    
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String opentext;
+    
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String inprogresstext;
+    
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String submitforapprovaltext;
+    
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String closedtext;
+    
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String rejectedtext;
+    
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String duedatecount;
+    
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String duedatetext;
 	
 	

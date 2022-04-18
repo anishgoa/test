@@ -38,6 +38,8 @@ public class Utils {
 	private static String jwtSecret = "goaconsoleSecretKey";
 
 	private static int workload = 6;
+	
+	 public static final String  VALIDATION_REGEX =  "^((?![\\=]).)*$";
 
 	public static byte[] Base64ToBytes(String imageString) throws IOException {
 		Base64.Decoder decoder = Base64.getDecoder();

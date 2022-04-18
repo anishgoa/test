@@ -3,19 +3,26 @@ package com.goaudits.business.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Pattern;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.goaudits.business.util.Utils;
 
 public class GroupItem {
 	
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String guid;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String uid;
 	private int client_id;
 	private int audit_group_id;
 	private int audit_type_id;
 	private int section_id;
 	private int group_id;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String group_name = null;
 	private boolean active;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String audit_token;
 	private int group_order;
 	

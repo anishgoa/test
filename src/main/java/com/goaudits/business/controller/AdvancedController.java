@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +60,7 @@ public class AdvancedController {
 	}
 
 	@RequestMapping(value = "/addpersonseen", method = RequestMethod.POST)
-	public ResponseEntity<?> addoreditPersonSenn(@RequestBody Personseen pseen,
+	public ResponseEntity<?> addoreditPersonSenn(@Valid @RequestBody Personseen pseen,
 			@RequestHeader(name = "Authorization") String token) {
 
 		List<LinkedHashMap> validatelist = advancedservice.validateaddPersonSeen(pseen);
@@ -90,7 +92,7 @@ public class AdvancedController {
 	}
 
 	@RequestMapping(value = "/editpersonseen", method = RequestMethod.POST)
-	public ResponseEntity<?> editPersonSenn(@RequestBody Personseen pseen,
+	public ResponseEntity<?> editPersonSenn(@Valid @RequestBody Personseen pseen,
 			@RequestHeader(name = "Authorization") String token) {
 
 		List<LinkedHashMap> validatelist = advancedservice.validateeditPersonSeen(pseen);
@@ -141,7 +143,7 @@ public class AdvancedController {
 	}
 
 	@RequestMapping(value = "addtagcategory", method = RequestMethod.POST)
-	public ResponseEntity<?> addCategory(@RequestBody LocationTags loct,
+	public ResponseEntity<?> addCategory(@Valid @RequestBody LocationTags loct,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -179,7 +181,7 @@ public class AdvancedController {
 	}
 
 	@RequestMapping(value = "addtag", method = RequestMethod.POST)
-	public ResponseEntity<?> addTag(@RequestBody LocationTags loct,
+	public ResponseEntity<?> addTag(@Valid @RequestBody LocationTags loct,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -313,7 +315,7 @@ public class AdvancedController {
 	}
 
 	@RequestMapping(value = "/workflow/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addScheduleaudit(@RequestBody AuditWorkFlow AuditWorkFlow,
+	public ResponseEntity<?> addScheduleaudit(@Valid @RequestBody AuditWorkFlow AuditWorkFlow,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -336,7 +338,7 @@ public class AdvancedController {
 	}
 
 	@RequestMapping(value = "/workflow/edit", method = RequestMethod.POST)
-	public ResponseEntity<?> editScheduleaudit(@RequestBody AuditWorkFlow AuditWorkFlow,
+	public ResponseEntity<?> editScheduleaudit(@Valid @RequestBody AuditWorkFlow AuditWorkFlow,
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -426,7 +428,7 @@ public class AdvancedController {
 	}
 
 	@RequestMapping(value = "/customfields/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addCustomFields(@RequestBody Customfields customfields,
+	public ResponseEntity<?> addCustomFields(@Valid @RequestBody Customfields customfields,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -473,7 +475,7 @@ public class AdvancedController {
 	}
 
 	@RequestMapping(value = "/customfields/update", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateCustomfields(@RequestBody Customfields customfields,
+	public ResponseEntity<?> updateCustomfields(@Valid @RequestBody Customfields customfields,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -521,7 +523,7 @@ public class AdvancedController {
 	}
 
 	@RequestMapping(value = "/addactionplansetngs", method = RequestMethod.POST)
-	public ResponseEntity<?> addActionPlanSetngs(@RequestBody ActionPlanSettings ActionPlanSettings,
+	public ResponseEntity<?> addActionPlanSetngs(@Valid @RequestBody ActionPlanSettings ActionPlanSettings,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -598,7 +600,7 @@ public class AdvancedController {
 	 * @return
 	 */
 	@RequestMapping(value = "/reporttag/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addReportTag(@RequestBody Tag tag, @RequestHeader(name = "Authorization") String token) {
+	public ResponseEntity<?> addReportTag(@Valid @RequestBody Tag tag, @RequestHeader(name = "Authorization") String token) {
 
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -632,7 +634,7 @@ public class AdvancedController {
 	 * @return
 	 */
 	@RequestMapping(value = "/reporttag/update", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateReportTag(@RequestBody Tag tag,
+	public ResponseEntity<?> updateReportTag(@Valid @RequestBody Tag tag,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -700,7 +702,7 @@ public class AdvancedController {
 	}
 
 	@RequestMapping(value = "/groupaudit/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addGroupAudit(@RequestBody GroupAudit GroupAudit,
+	public ResponseEntity<?> addGroupAudit(@Valid @RequestBody GroupAudit GroupAudit,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -809,7 +811,7 @@ public class AdvancedController {
 	}
 
 	@RequestMapping(value = "/broadcast/add", method = RequestMethod.POST)
-	public ResponseEntity<?> publishAdd(@RequestBody Broadcast broadcast,
+	public ResponseEntity<?> publishAdd(@Valid @RequestBody Broadcast broadcast,
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -849,7 +851,7 @@ public class AdvancedController {
 	}
 	
 	@RequestMapping(value = "/filename/addchecklist", method = RequestMethod.POST)
-	public ResponseEntity<?> addFileNameChecklist(@RequestBody FileNameChecklist fileNameChecklist,
+	public ResponseEntity<?> addFileNameChecklist(@Valid @RequestBody FileNameChecklist fileNameChecklist,
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -896,7 +898,7 @@ public class AdvancedController {
 	}
 
 	@RequestMapping(value = "/filename/updatechecklist", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateFilenameChecklist(@RequestBody FileNameChecklist fileNameChecklist,
+	public ResponseEntity<?> updateFilenameChecklist(@Valid @RequestBody FileNameChecklist fileNameChecklist,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {

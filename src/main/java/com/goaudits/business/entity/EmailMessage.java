@@ -1,12 +1,20 @@
 package com.goaudits.business.entity;
 
+
+import javax.validation.constraints.Pattern;
+
 import org.springframework.stereotype.Repository;
+
+import com.goaudits.business.util.Utils;
 
 @Repository
 public class EmailMessage {
 
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String message_variables;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	private String message_name;
+	
 	public String getMessage_variables() {
 		return message_variables;
 	}

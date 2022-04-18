@@ -2,6 +2,9 @@ package com.goaudits.business.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +30,9 @@ import com.goaudits.business.entity.SectionItem;
 import com.goaudits.business.entity.Tag;
 import com.goaudits.business.entity.User;
 import com.goaudits.business.service.QuestionnaireService;
+import com.goaudits.business.service.S3Service;
 import com.goaudits.business.util.GoAuditsException;
 import com.goaudits.business.util.Utils;
-import com.goaudits.business.service.S3Service;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -86,7 +89,7 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/section/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addSection(@RequestBody Section section,
+	public ResponseEntity<?> addSection(@Valid @RequestBody Section section,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -115,7 +118,7 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/section/update", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateSection(@RequestBody Section section,
+	public ResponseEntity<?> updateSection(@Valid @RequestBody Section section,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -170,7 +173,7 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/group/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addGroup(@RequestBody Group group, @RequestHeader(name = "Authorization") String token) {
+	public ResponseEntity<?> addGroup(@Valid @RequestBody Group group, @RequestHeader(name = "Authorization") String token) {
 
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -198,7 +201,7 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/group/update", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateGroup(@RequestBody Group group,
+	public ResponseEntity<?> updateGroup(@Valid @RequestBody Group group,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -295,7 +298,7 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/question/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addQuestion(@RequestBody List<Question> question,
+	public ResponseEntity<?> addQuestion(@Valid @RequestBody List<Question> question,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -334,7 +337,7 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/question/update", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateQuestion(@RequestBody List<Question> question,
+	public ResponseEntity<?> updateQuestion(@Valid @RequestBody List<Question> question,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -373,7 +376,7 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/question/changechoice", method = RequestMethod.POST)
-	public ResponseEntity<?> changeConditinalChoice(@RequestBody Question question,
+	public ResponseEntity<?> changeConditinalChoice(@Valid @RequestBody Question question,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -398,7 +401,7 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/question/changecondchoice", method = RequestMethod.POST)
-	public ResponseEntity<?> chngeConditinalChoice(@RequestBody Question question,
+	public ResponseEntity<?> chngeConditinalChoice(@Valid @RequestBody Question question,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -441,7 +444,7 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/question/order", method = RequestMethod.POST)
-	public ResponseEntity<?> questionOrder(@RequestBody QuestionOrder questionOrder,
+	public ResponseEntity<?> questionOrder(@Valid @RequestBody QuestionOrder questionOrder,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -470,7 +473,7 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/group/order", method = RequestMethod.POST)
-	public ResponseEntity<?> groupOrder(@RequestBody GroupOrder grouporder,
+	public ResponseEntity<?> groupOrder(@Valid @RequestBody GroupOrder grouporder,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -491,7 +494,7 @@ public class Questionnaire {
 	}
 
 	@RequestMapping(value = "/customchoice/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addCustomchoice(@RequestBody List<Choice> choice,
+	public ResponseEntity<?> addCustomchoice(@Valid @RequestBody List<Choice> choice,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -686,7 +689,7 @@ public class Questionnaire {
 		}
 
 	@RequestMapping(value = "/section/clone", method = RequestMethod.POST)
-	public ResponseEntity<?> cloneSection(@RequestBody SectionGroupClone section, Section section1, Group group,
+	public ResponseEntity<?> cloneSection(@Valid @RequestBody SectionGroupClone section, Section section1, Group group,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {

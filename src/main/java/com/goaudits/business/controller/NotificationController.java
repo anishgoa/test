@@ -2,6 +2,9 @@ package com.goaudits.business.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.goaudits.business.entity.Notification;
 import com.goaudits.business.service.NotificationService;
 import com.goaudits.business.util.GoAuditsException;
@@ -27,7 +31,7 @@ public class NotificationController {
 	
 
 	@RequestMapping(value = "createactiontasknotification", method = RequestMethod.POST)
-	public ResponseEntity<?> createActionTaskNotification(@RequestBody Notification Notification,@RequestHeader(name = "Authorization") String token
+	public ResponseEntity<?> createActionTaskNotification(@Valid @RequestBody Notification Notification,@RequestHeader(name = "Authorization") String token
 ) {
 		
 		try {
@@ -51,7 +55,7 @@ public class NotificationController {
 	
 	
 	@RequestMapping(value = "editactionnotification", method = RequestMethod.POST)
-	public ResponseEntity<?> editActionTaskNotification(@RequestBody Notification Notification,@RequestHeader(name = "Authorization") String token
+	public ResponseEntity<?> editActionTaskNotification(@Valid @RequestBody Notification Notification,@RequestHeader(name = "Authorization") String token
 ) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -72,7 +76,7 @@ public class NotificationController {
 	
 	
 	@RequestMapping(value = "createactionsummarynotification", method = RequestMethod.POST)
-	public ResponseEntity<?> createActionSummaryNotification(@RequestBody Notification Notification,@RequestHeader(name = "Authorization") String token
+	public ResponseEntity<?> createActionSummaryNotification(@Valid @RequestBody Notification Notification,@RequestHeader(name = "Authorization") String token
 ) {		
 				
 		try {
@@ -134,7 +138,7 @@ public class NotificationController {
 	}
 	
 	@RequestMapping(value = "createauditnotification", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuditNotification(@RequestBody Notification Notification,@RequestHeader(name = "Authorization") String token
+	public ResponseEntity<?> createAuditNotification(@Valid @RequestBody Notification Notification,@RequestHeader(name = "Authorization") String token
 ) {
 		
 		try {
@@ -157,7 +161,7 @@ public class NotificationController {
 	}
 	
 	@RequestMapping(value = "editauditnotification", method = RequestMethod.POST)
-	public ResponseEntity<?> editAusitNotification(@RequestBody Notification Notification,@RequestHeader(name = "Authorization") String token
+	public ResponseEntity<?> editAusitNotification(@Valid @RequestBody Notification Notification,@RequestHeader(name = "Authorization") String token
 ) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {

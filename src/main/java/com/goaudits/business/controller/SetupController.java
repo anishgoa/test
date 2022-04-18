@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -38,6 +39,7 @@ import com.goaudits.business.entity.Section;
 import com.goaudits.business.service.SetupService;
 import com.goaudits.business.util.GoAuditsException;
 import com.goaudits.business.util.Utils;
+import com.goaudits.business.entity.PatternCheck;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -126,7 +128,7 @@ public class SetupController {
 	}
 
 	@RequestMapping(value = "/company/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addCompany(@RequestBody Company company,
+	public ResponseEntity<?> addCompany(@Valid @RequestBody Company company,
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -168,7 +170,7 @@ public class SetupController {
 	}
 
 	@RequestMapping(value = "/company/update", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateCompany(@RequestBody Company company,
+	public ResponseEntity<?> updateCompany(@Valid @RequestBody Company company,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -331,7 +333,7 @@ public class SetupController {
 //	}
 
 	@RequestMapping(value = "/company/order", method = RequestMethod.POST)
-	public ResponseEntity<?> addAuditType(@RequestBody Company company,
+	public ResponseEntity<?> addAuditType(@Valid @RequestBody Company company,
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -352,7 +354,7 @@ public class SetupController {
 	}
 
 	@RequestMapping(value = "/location/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addLocation(@RequestBody Location location,
+	public ResponseEntity<?> addLocation(@Valid @RequestBody Location location,
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -386,7 +388,7 @@ public class SetupController {
 	}
 
 	@RequestMapping(value = "/location/update", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateLocation(@RequestBody Location location,
+	public ResponseEntity<?> updateLocation(@Valid @RequestBody Location location,
 			@RequestHeader(name = "Authorization") String token) {
 
 		try {
@@ -482,7 +484,7 @@ public class SetupController {
 	}
 
 	@RequestMapping(value = "/auditname/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addAuditType(@RequestBody AuditName auditname,
+	public ResponseEntity<?> addAuditType(@Valid @RequestBody AuditName auditname,
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -512,7 +514,7 @@ public class SetupController {
 	}
 
 	@RequestMapping(value = "/auditname/order", method = RequestMethod.POST)
-	public ResponseEntity<?> reOrderAuditName(@RequestBody AuditName auditname,
+	public ResponseEntity<?> reOrderAuditName(@Valid @RequestBody AuditName auditname,
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -533,7 +535,7 @@ public class SetupController {
 	}
 
 	@RequestMapping(value = "/auditname/update", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateAuditName(@RequestBody AuditName auditname,
+	public ResponseEntity<?> updateAuditName(@Valid @RequestBody AuditName auditname,
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -568,7 +570,7 @@ public class SetupController {
 	}
 
 	@RequestMapping(value = "/cloneauditname", method = RequestMethod.POST)
-	public ResponseEntity<?> cloneAuditname(@RequestBody PreTemplates PreTemplates,
+	public ResponseEntity<?> cloneAuditname(@Valid @RequestBody PreTemplates PreTemplates,
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -614,7 +616,7 @@ public class SetupController {
 	}
 
 	@RequestMapping(value = "/addscorerange", method = RequestMethod.POST)
-	public ResponseEntity<?> getScoreRange(@RequestBody List<ScoreRange> scorerange,
+	public ResponseEntity<?> getScoreRange(@Valid @RequestBody List<ScoreRange> scorerange,
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -653,7 +655,7 @@ public class SetupController {
 	}
 
 	@RequestMapping(value = "/emailtemplate/update", method = RequestMethod.POST)
-	public ResponseEntity<?> updateEmailTemplate(@RequestBody EmailTemplate emailTemplate,
+	public ResponseEntity<?> updateEmailTemplate(@Valid @RequestBody EmailTemplate emailTemplate,
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -693,7 +695,7 @@ public class SetupController {
 	}
 
 	@RequestMapping(value = "/report/update", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateReport(@RequestBody Report report,
+	public ResponseEntity<?> updateReport(@Valid @RequestBody Report report,
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -794,7 +796,7 @@ public class SetupController {
 	}
 
 	@RequestMapping(value = "/pretemplate/add", method = RequestMethod.POST)
-	public ResponseEntity<?> addpreTemplate(@RequestBody PreTemplates PreTemplates,
+	public ResponseEntity<?> addpreTemplate(@Valid @RequestBody PreTemplates PreTemplates,
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -852,7 +854,7 @@ public class SetupController {
 	}
 
 	@RequestMapping(value = "/createdguided", method = RequestMethod.POST)
-	public ResponseEntity<?> createguidedSetup(@RequestBody GuidedSetup gudsetp, Company cmp,
+	public ResponseEntity<?> createguidedSetup(@Valid @RequestBody GuidedSetup gudsetp, Company cmp,
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if (token != null && token != "" && !token.isEmpty()) {
@@ -1023,4 +1025,16 @@ public class SetupController {
 		}
 	}
 
+	@RequestMapping(value = "/test", method = RequestMethod.POST)
+	public ResponseEntity<?> addPatternVariable(@Valid @RequestBody  PatternCheck patternCheck) {
+		try {
+			
+			 int addedCount =setupservice.addPatternVariable(patternCheck);
+				return new ResponseEntity<Integer>(addedCount, HttpStatus.CREATED);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
 }

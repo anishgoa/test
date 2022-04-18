@@ -1,18 +1,26 @@
 package com.goaudits.business.entity;
 
 import java.io.Serializable;
+
+import javax.validation.constraints.Pattern;
+
 import org.springframework.stereotype.Repository;
+
+import com.goaudits.business.util.Utils;
 
 @Repository
 public class Questionimage implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
 	String image;
     byte[] binaryimage;
     String image_path;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     String image_thumbnail;
     int isdeleted;
     int client_id;
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
     String image_public_id;
     int image_id;
     int audit_type_id;

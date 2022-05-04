@@ -13,26 +13,26 @@ import com.goaudits.business.util.Utils;
 
 @Repository
 public class LocationTags {
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String guid;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String uid;
 	int category_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String category_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String category_desription;
 	boolean active;
 	int tag_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String tag_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String client_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String store_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String selcategory_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String seltag_id;
 	int  category_type_id;
 	

@@ -24,21 +24,16 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
                                                                   HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
 
-        Map<String, Object> body = new LinkedHashMap<>();
-       // body.put("timestamp", new Date());
-        body.put("status", HttpStatus.CONFLICT);
+     	String error=ex.getBindingResult().getFieldErrors().stream().map(err -> err.getDefaultMessage())
+    			.collect(java.util.stream.Collectors.joining("---- "));
 
-        //Get all errors
-        List<String> errors = ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .map(x -> x.getDefaultMessage())
-                .collect(Collectors.toList());
+    			        return new  ResponseEntity<>(
+    							new com.goaudits.business.util.GoAuditsException(
+    									error.split("----")[0]),
+    							HttpStatus.CONFLICT);
+    			        
+    			        
+    			    }
 
-        body.put("errors", errors);
-
-        return new ResponseEntity<>(body, headers, HttpStatus.CONFLICT);
-
-    }
 
 }

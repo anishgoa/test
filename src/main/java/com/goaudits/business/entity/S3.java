@@ -9,31 +9,31 @@ import com.goaudits.business.util.Utils;
 @Repository
 public class S3 {
 	
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String file_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String timestamp;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String signature;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String client_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String audit_type_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String question_no;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String client_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String page;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String folderpath;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String audit_type_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String uid;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String guid;
 
 	public String getFolderpath() {

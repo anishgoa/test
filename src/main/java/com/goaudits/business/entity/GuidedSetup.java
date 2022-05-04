@@ -10,26 +10,26 @@ import com.goaudits.business.util.Utils;
 public class GuidedSetup {
 	
 	int id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String company_name;
 	String logo;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String bussiness;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String template;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String goal;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String launch;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String guid;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String uid;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String no_of_licenses;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String number;
 	boolean walkthrough;
 	

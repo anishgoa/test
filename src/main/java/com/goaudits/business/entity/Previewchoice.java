@@ -12,20 +12,20 @@ public class Previewchoice  implements Serializable {
 	
 private static final long serialVersionUID = 1L;
 
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String guid;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String uid;
 	private int client_id;
 	private int audit_group_id=1;
 	private int audit_type_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String choice_text1;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String choice_text2;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String choice_text3;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String choice_text4;
 	public String getGuid() {
 		return guid;

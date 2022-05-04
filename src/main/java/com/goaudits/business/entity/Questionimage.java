@@ -12,15 +12,15 @@ import com.goaudits.business.util.Utils;
 public class Questionimage implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String image;
     byte[] binaryimage;
     String image_path;
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     String image_thumbnail;
     int isdeleted;
     int client_id;
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     String image_public_id;
     int image_id;
     int audit_type_id;

@@ -10,9 +10,9 @@ import com.goaudits.business.util.Utils;
 @Repository
 public class EmailMessage {
 
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String message_variables;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String message_name;
 	
 	public String getMessage_variables() {

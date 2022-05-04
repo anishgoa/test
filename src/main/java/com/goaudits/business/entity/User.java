@@ -10,56 +10,56 @@ import com.goaudits.business.util.Utils;
 
 @Repository
 public class User {
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String user_name;
 	private String usr_pwd;
 	private String authToken;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String uid;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String guid;
 	private boolean super_user;
 	private int role_id;
 	private boolean publish_access;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String reg_token;
 	private boolean active;
 	private Date last_modified;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String updated_by;
 	private boolean new_user;
 	private int login_count;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String first_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String last_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String reg_platform;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String reg_device;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String logo;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String role_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String group_name;
 	private int group_id;
 	private boolean b2b;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String grp_logo;
 	private byte[] grp_binary;
 	private int user_count;
 	private int role_type_code;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     private String grace_period_days;
     private boolean bypass_flag;
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     private String name;
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     private String max_license_date;
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     private String expiry_date;
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     private String license_type;
     private int days_remaining;
     private int renewal_notification_days;

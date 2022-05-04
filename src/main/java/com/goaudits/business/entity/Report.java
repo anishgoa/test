@@ -15,45 +15,45 @@ public class Report implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String guid;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String uid;
 	private int client_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String client_name;
 	private int audit_group_id=1;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String audit_group_name;
 	private int audit_type_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String audit_type_name;	
 	private int template_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String template_name;
 	private boolean active;	
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     private String report_path;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     private String description=null;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     private String  exe_summary=null;
     private byte[] report_logo=null;
     private String reportlogo=null;
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     private String  confidentiality;
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     private String  client_displayname;
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     private String template_desc;
     private int   is_customizable;
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     private String template_params_id;
     private String leftlogo;
     private byte[] leftlogobi;
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     private String template_descrition;
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     private String show_edit;
     
     List<ReportImage> reportImageList=new ArrayList<ReportImage>();

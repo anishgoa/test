@@ -40,6 +40,8 @@ public class Utils {
 	private static int workload = 6;
 	
 	 public static final String  VALIDATION_REGEX =  "^((?![\\=]).)*$";
+	 
+	 public static final String  Validation_Message =  "Special character = is not allowed";
 
 	public static byte[] Base64ToBytes(String imageString) throws IOException {
 		Base64.Decoder decoder = Base64.getDecoder();

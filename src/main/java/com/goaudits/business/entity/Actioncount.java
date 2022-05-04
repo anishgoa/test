@@ -12,40 +12,40 @@ import com.goaudits.business.util.Utils;
 public class Actioncount  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String opencount;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String inprogresscount;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String submitforapprovalcount;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String closedcount;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String rejectedcount;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String opentext;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String inprogresstext;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String submitforapprovaltext;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String closedtext;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String rejectedtext;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String duedatecount;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String duedatetext;
 	
 	

@@ -9,15 +9,15 @@ import com.goaudits.business.util.Utils;
 @Repository
 public class ActionPlanSettings {
 	
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String guid;
 	int client_id;
 	int audit_group_id;
 	int audit_type_id;
 	int priority_id=0;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String priority_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message = "Special character = is not allowed")
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String priority_color;
 	int default_due_days;
 	boolean active;

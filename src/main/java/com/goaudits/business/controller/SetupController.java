@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
 import com.goaudits.business.entity.ActionPlanAssignee;
 import com.goaudits.business.entity.AuditName;
 import com.goaudits.business.entity.Company;
@@ -39,7 +40,6 @@ import com.goaudits.business.entity.Section;
 import com.goaudits.business.service.SetupService;
 import com.goaudits.business.util.GoAuditsException;
 import com.goaudits.business.util.Utils;
-import com.goaudits.business.entity.PatternCheck;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -1025,16 +1025,5 @@ public class SetupController {
 		}
 	}
 
-	@RequestMapping(value = "/test", method = RequestMethod.POST)
-	public ResponseEntity<?> addPatternVariable(@Valid @RequestBody  PatternCheck patternCheck) {
-		try {
-			
-			 int addedCount =setupservice.addPatternVariable(patternCheck);
-				return new ResponseEntity<Integer>(addedCount, HttpStatus.CREATED);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
-		}
-	}
 }

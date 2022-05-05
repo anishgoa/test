@@ -58,7 +58,7 @@ public class DemoServiceImpl implements DemoServiceInterface {
 
 	@Override
 	public List<DemoAudits> getManageAuditsListv1(DemoAudits audits) {
-		List<DemoAudits> auditslist = demoMapper.getManageAuditsListv2(audits);
+		List<DemoAudits> auditslist = demoMapper.getManageAuditsListv1(audits);
 
 		String pattern = "yyyy-MM-dd";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);

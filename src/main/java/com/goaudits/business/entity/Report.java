@@ -57,6 +57,7 @@ public class Report implements Serializable{
     @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
     private String show_edit;
     
+    @Valid
     List<ReportImage> reportImageList=new ArrayList<ReportImage>();
 	public String getTemplate_desc() {
 		return template_desc;

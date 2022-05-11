@@ -107,7 +107,6 @@ public class QuestionVo {
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String status_color;
 	private boolean isapproval_required;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String token;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String extend_duedate;
@@ -124,6 +123,7 @@ public class QuestionVo {
 	private String assignedto_dept;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String assignedto_person;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String ext_admin_comments;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String ext_log;
@@ -209,7 +209,7 @@ public class QuestionVo {
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String default_value;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
-	 private String action_default_value;
+	private String action_default_value;
 	@Valid
 	private List<Choice> choiceList = new ArrayList<Choice>();
 	@Valid

@@ -23,7 +23,6 @@ public class GroupItem {
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String group_name = null;
 	private boolean active;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String audit_token;
 	private int group_order;
 	

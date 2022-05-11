@@ -27,6 +27,7 @@ public class Question implements Serializable {
 	private int section_id;
 	private int group_id;
 	private int question_no;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String question_text;
 	private int choice_pat_id;
 	private double available_score;
@@ -89,7 +90,6 @@ public class Question implements Serializable {
 	private String action_taken;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String action_taken_date;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private boolean isactionplan_mandatory;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String auto_fail;
@@ -108,7 +108,6 @@ public class Question implements Serializable {
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String status_color;
 	private boolean isapproval_required;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String token;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String extend_duedate;

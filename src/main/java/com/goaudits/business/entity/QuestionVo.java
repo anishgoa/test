@@ -3,6 +3,7 @@ package com.goaudits.business.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.stereotype.Repository;
@@ -179,7 +180,6 @@ public class QuestionVo {
 	private String image_public_id;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String image_thumbnail;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String image;
 	private int image_id;
 	private String qcomments;
@@ -210,11 +210,17 @@ public class QuestionVo {
 	private String default_value;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	 private String action_default_value;
+	@Valid
 	private List<Choice> choiceList = new ArrayList<Choice>();
+	@Valid
 	private List<Choice> sublist = new ArrayList<Choice>();
+	@Valid
 	private List<Quesactionfield> questionactfldlist = new ArrayList<Quesactionfield>();
+	@Valid
 	private List<Questactimage> questactimglist = new ArrayList<Questactimage>();
+	@Valid
 	private List<Actioncount> questactcountlist = new ArrayList<Actioncount>();
+	@Valid
 	private List<Questionimage> questimagelist = new ArrayList<Questionimage>();
 
 	public String getQcomments() {

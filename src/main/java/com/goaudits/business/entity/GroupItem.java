@@ -3,6 +3,7 @@ package com.goaudits.business.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,6 +29,7 @@ public class GroupItem {
 	
 	@JsonIgnore
 	private boolean inactiveq=true;
+	@Valid
 	private List<QuestionItem> QuestionList = new ArrayList<QuestionItem>();
 	
 	public GroupItem(QuestionVo p) {

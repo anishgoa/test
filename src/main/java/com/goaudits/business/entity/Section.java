@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.stereotype.Repository;
@@ -44,6 +45,7 @@ public class Section implements Serializable{
 	private boolean is_help_italic;
 	private boolean help_text_position;
 	
+	@Valid
 	private List<Group> GroupList = new ArrayList<Group>();
 	
 	

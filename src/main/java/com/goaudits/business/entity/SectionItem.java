@@ -3,6 +3,7 @@ package com.goaudits.business.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import com.goaudits.business.util.Utils;
@@ -39,6 +40,7 @@ public class SectionItem {
 	private boolean is_help_italic;
 	private boolean help_text_position;
 	
+	@Valid
 	private List<GroupItem> GroupList = new ArrayList<GroupItem>();
 
 	public SectionItem(QuestionVo n) {

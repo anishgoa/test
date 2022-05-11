@@ -3,6 +3,7 @@ package com.goaudits.business.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.stereotype.Repository;
@@ -30,6 +31,7 @@ public class Choice {
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String choice_colour;
 	int  score_type;
+	@Valid
 	private List<Choice> choiceList = new ArrayList<Choice>();
  	
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
@@ -49,6 +51,7 @@ public class Choice {
 	int created_choice_id;
 	boolean is_custom;
 	
+	@Valid
 	private List<Question> questionlist = new ArrayList<Question>();
 	
 	

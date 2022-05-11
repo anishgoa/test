@@ -3,6 +3,7 @@ package com.goaudits.business.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.stereotype.Repository;
@@ -20,7 +21,6 @@ public class Company {
 	private String client_name;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String submit_button_text;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String inputLogo;
 	private boolean active;
 	private String logo;
@@ -38,7 +38,9 @@ public class Company {
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String last_modified;
 	private boolean isdelete;
-	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
+	@Valid
+	private List< ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
+	@Valid
 	private List<AuditName> audarry = new ArrayList<AuditName>();
 
 

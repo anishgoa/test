@@ -27,7 +27,6 @@ public class Questactimage implements Serializable{
 	private byte[] action_thumbnail;
 	private byte[] action_imagebi=null;
 	int image_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String action_image;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String  capture_time;

@@ -29,6 +29,9 @@ public class CustomFieldList {
 	private String active;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String field_value;
+	private boolean show_app_list;
+	
+	
 	/**
 	 * @return the guid
 	 */
@@ -154,6 +157,12 @@ public class CustomFieldList {
 	}
 	public void setField_value(String field_value) {
 		this.field_value = field_value;
+	}
+	public boolean isShow_app_list() {
+		return show_app_list;
+	}
+	public void setShow_app_list(boolean show_app_list) {
+		this.show_app_list = show_app_list;
 	}
 	
 	

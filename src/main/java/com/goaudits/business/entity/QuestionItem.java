@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.beans.BeanUtils;
@@ -106,7 +107,6 @@ public class QuestionItem {
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String status_color;
 	private boolean isapproval_required;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String token;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String extend_duedate;
@@ -178,7 +178,6 @@ public class QuestionItem {
 	private String image_public_id;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String image_thumbnail;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String image;
 	private int image_id;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
@@ -192,11 +191,17 @@ public class QuestionItem {
 	private String default_value;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String action_default_value;
+	@Valid
 	private List<ChoiceItem> choiceList = new ArrayList<ChoiceItem>();
+	@Valid
 	private List<ParentChoice> sublist = new ArrayList<ParentChoice>();
+	@Valid
 	private List<Quesactionfield> questionactfldlist = new ArrayList<Quesactionfield>();
+	@Valid
 	private List<Questactimage> questactimglist = new ArrayList<Questactimage>();
+	@Valid
 	private List<Actioncount> questactcountlist = new ArrayList<Actioncount>();
+	@Valid
 	private List<Questionimage> questimagelist = new ArrayList<Questionimage>();
 
 	public QuestionItem(QuestionVo p) {

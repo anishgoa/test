@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.stereotype.Repository;
@@ -68,8 +69,9 @@ public class Location implements Serializable {
 	String sort;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String order;
-	
+	@Valid
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
+	@Valid
 	private List<LocationTags> tagslist = new ArrayList<LocationTags>();
 
 	public String getPostcode() {

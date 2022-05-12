@@ -3,6 +3,7 @@ package com.goaudits.business.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,12 +23,12 @@ public class GroupItem {
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String group_name = null;
 	private boolean active;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String audit_token;
 	private int group_order;
 	
 	@JsonIgnore
 	private boolean inactiveq=true;
+	@Valid
 	private List<QuestionItem> QuestionList = new ArrayList<QuestionItem>();
 	
 	public GroupItem(QuestionVo p) {

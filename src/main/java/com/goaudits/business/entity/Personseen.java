@@ -3,6 +3,7 @@ package com.goaudits.business.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.stereotype.Repository;
@@ -36,7 +37,9 @@ public class Personseen {
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String fromemail;
 
+	@Valid
 	private List<Company> clientarr = new ArrayList<Company>();
+	@Valid
 	private List<AuditName> audarry = new ArrayList<AuditName>();
 
 	public String getGuid() {

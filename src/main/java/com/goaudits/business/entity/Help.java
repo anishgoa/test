@@ -12,7 +12,6 @@ public class Help {
 	String sub_page_id;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String description;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String help_link;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String title;

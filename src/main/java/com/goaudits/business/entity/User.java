@@ -21,7 +21,6 @@ public class User {
 	private boolean super_user;
 	private int role_id;
 	private boolean publish_access;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String reg_token;
 	private boolean active;
 	private Date last_modified;
@@ -37,7 +36,6 @@ public class User {
 	private String reg_platform;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String reg_device;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String logo;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String role_name;
@@ -45,7 +43,6 @@ public class User {
 	private String group_name;
 	private int group_id;
 	private boolean b2b;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String grp_logo;
 	private byte[] grp_binary;
 	private int user_count;

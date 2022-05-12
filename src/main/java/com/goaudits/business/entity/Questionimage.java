@@ -12,7 +12,6 @@ import com.goaudits.business.util.Utils;
 public class Questionimage implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String image;
     byte[] binaryimage;
     String image_path;

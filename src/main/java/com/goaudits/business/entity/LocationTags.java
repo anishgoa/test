@@ -3,6 +3,7 @@ package com.goaudits.business.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.stereotype.Repository;
@@ -35,7 +36,7 @@ public class LocationTags {
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	String seltag_id;
 	int  category_type_id;
-	
+	@Valid
 	List<LocationTags> tagsList=new  ArrayList<LocationTags>();
 	
 	

@@ -3,6 +3,7 @@ package com.goaudits.business.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import com.goaudits.business.util.Utils;
@@ -28,6 +29,7 @@ public class ParentChoice {
 	String choice_colour;
 	int  score_type;
 	private int question_no;
+	@Valid
 	private List<ParentChoice> choiceList = new ArrayList<ParentChoice>();
  	
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
@@ -47,6 +49,7 @@ public class ParentChoice {
 	int created_choice_id;
 	boolean is_custom;
 
+	@Valid
 	private List<QuestionItem> questionlist = new ArrayList<QuestionItem>();
 	
 	

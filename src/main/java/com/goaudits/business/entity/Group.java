@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.stereotype.Repository;
@@ -27,11 +28,11 @@ public class Group implements Serializable{
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String group_name = null;
 	private boolean active;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String audit_token;
 	
 	@JsonIgnore
 	private boolean inactiveq=true;
+	@Valid
 	private List<Question> QuestionList = new ArrayList<Question>();
 	
 	

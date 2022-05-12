@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.stereotype.Repository;
@@ -35,7 +36,9 @@ public class EmailTemplate implements Serializable {
 	private String email_sub;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String email_body;
+	@Valid
 	List<EmailSubject> emailSubjectList = new ArrayList<EmailSubject>();
+	@Valid
 	List<EmailMessage> emailMessageList = new ArrayList<EmailMessage>();
 	
 

@@ -3,6 +3,7 @@ package com.goaudits.business.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.stereotype.Repository;
@@ -106,7 +107,6 @@ public class QuestionVo {
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String status_color;
 	private boolean isapproval_required;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String token;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String extend_duedate;
@@ -123,6 +123,7 @@ public class QuestionVo {
 	private String assignedto_dept;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String assignedto_person;
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String ext_admin_comments;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String ext_log;
@@ -179,7 +180,6 @@ public class QuestionVo {
 	private String image_public_id;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String image_thumbnail;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String image;
 	private int image_id;
 	private String qcomments;
@@ -209,12 +209,18 @@ public class QuestionVo {
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String default_value;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
-	 private String action_default_value;
+	private String action_default_value;
+	@Valid
 	private List<Choice> choiceList = new ArrayList<Choice>();
+	@Valid
 	private List<Choice> sublist = new ArrayList<Choice>();
+	@Valid
 	private List<Quesactionfield> questionactfldlist = new ArrayList<Quesactionfield>();
+	@Valid
 	private List<Questactimage> questactimglist = new ArrayList<Questactimage>();
+	@Valid
 	private List<Actioncount> questactcountlist = new ArrayList<Actioncount>();
+	@Valid
 	private List<Questionimage> questimagelist = new ArrayList<Questionimage>();
 
 	public String getQcomments() {

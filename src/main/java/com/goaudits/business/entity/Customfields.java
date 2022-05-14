@@ -26,6 +26,7 @@ public class Customfields implements Serializable {
 	private String field_value;
 	private boolean pactive;
 	private boolean isdelete;
+	private boolean show_app_list;
 	private List<Customfields> customfieldslist = new ArrayList<Customfields>();
 
 	public String getField_value() {
@@ -156,6 +157,14 @@ public class Customfields implements Serializable {
 
 	public void setIsdelete(boolean isdelete) {
 		this.isdelete = isdelete;
+	}
+
+	public boolean isShow_app_list() {
+		return show_app_list;
+	}
+
+	public void setShow_app_list(boolean show_app_list) {
+		this.show_app_list = show_app_list;
 	}
 
 }

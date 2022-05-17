@@ -30,8 +30,6 @@ public class CustomFieldList {
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String field_value;
 	private boolean show_app_list;
-	
-	
 	/**
 	 * @return the guid
 	 */

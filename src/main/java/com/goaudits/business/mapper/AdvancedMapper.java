@@ -147,7 +147,6 @@ public interface AdvancedMapper {
 
 	@Insert(value = "{ CALL SP_GA_UPDATE_CUSTOMFIELDS_DET_PV2( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER}, "
 			+ "#{audit_type_id, mode=IN, jdbcType=VARCHAR}, #{field_name, mode=IN, jdbcType=VARCHAR}, #{field_label, mode=IN, jdbcType=VARCHAR}, #{field_type, mode=IN, jdbcType=VARCHAR}, #{pactive, mode=IN, jdbcType=BOOLEAN},#{show_app_list, mode=IN, jdbcType=BOOLEAN} ) }")
-	@Options(statementType = StatementType.CALLABLE)
 	int addCustomfields(Customfields customfields);
 
 	@Select(value = "{ CALL SP_GA_GETREPORTTAGLIST_DET( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=VARCHAR})}")

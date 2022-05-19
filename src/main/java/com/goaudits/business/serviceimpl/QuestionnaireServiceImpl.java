@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cloudinary.Cloudinary;
@@ -40,6 +43,8 @@ import com.goaudits.business.util.Utils;
 @Service
 public class QuestionnaireServiceImpl implements QuestionnaireService {
 
+	private final Logger log = LogManager.getLogger(getClass().getName());
+	
 	@Autowired
 	QuestionnaireMapper questionnairemapper;
 
@@ -260,6 +265,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 								choice.getCreated_choice_id() + ""));
 					} catch (Exception e) {
 						e.printStackTrace();
+						log.error("Error catched", e);
 					}
 				}
 
@@ -351,6 +357,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 							qimage.setBinaryimage(quesimage);
 						} catch (IOException e) {
 							e.printStackTrace();
+							log.error("Error catched", e);
 						}
 					}
 
@@ -485,6 +492,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 								choice.getCreated_choice_id() + ""));
 					} catch (Exception e) {
 						e.printStackTrace();
+						log.error("Error catched", e);
 					}
 				}
 
@@ -549,6 +557,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 								cloudinary.uploader().destroy(img.getImage_public_id(), ObjectUtils.emptyMap());
 							} catch (IOException e) {
 								e.printStackTrace();
+								log.error("Error catched", e);
 							}
 						}
 
@@ -573,6 +582,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 								qimage.setBinaryimage(quesimage);
 							} catch (IOException e) {
 								e.printStackTrace();
+								log.error("Error catched", e);
 							}
 						}
 
@@ -755,6 +765,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 					} catch (IOException e) {
 
 						e.printStackTrace();
+						log.error("Error catched", e);
+						
 					}
 
 				}
@@ -763,6 +775,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			return secList;
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 		}
 		return null;
 	}

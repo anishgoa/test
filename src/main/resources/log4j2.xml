@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+ 
+    <Properties>
+        <Property name="LOG_PATTERN">[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</Property>
+    </Properties>
+ 
+    <Appenders>
+ 
+        <Console name="Console"  target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+    
+    <RollingFile name="errorLog" 
+    fileName="//var/log/tomcat9/portal-error.log"
+      filePattern="//var/log/tomcat9/portal-error-%d{yyyy-MM-dd}-%i.log" >
+      <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+      <PatternLayout pattern="${LOG_PATTERN}"/>
+      <Policies>
+        <SizeBasedTriggeringPolicy size="250MB" />
+      </Policies>
+      <DefaultRolloverStrategy max="10"/>
+    </RollingFile>
+     
+     <RollingFile name="allLogs" fileName="//var/log/tomcat9/portal.log"
+      filePattern="//var/log/tomcat9/portal-%d{yyyy-MM-dd}-%i.log" >
+      <LevelRangeFilter minLevel="ERROR" maxLevel="ALL" onMatch="ACCEPT" onMismatch="DENY"/>
+      <PatternLayout pattern="${LOG_PATTERN}"/>
+      <Policies>
+        <SizeBasedTriggeringPolicy size="250MB" />
+      </Policies>
+      <DefaultRolloverStrategy max="10"/>
+    </RollingFile>
+    </Appenders>
+ 
+    <Loggers>
+         
+        <Logger name="com.goaudits.business" additivity="false">
+          <AppenderRef ref="errorLog" />
+          <AppenderRef ref="allLogs"  />
+        </Logger>
+                 
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="errorLog" />
+             <AppenderRef ref="allLogs"  />
+        </Root>
+ 
+    </Loggers>
+ 
+</Configuration>

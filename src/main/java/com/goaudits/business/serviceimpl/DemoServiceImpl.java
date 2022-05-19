@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import com.goaudits.business.service.DemoServiceInterface;
 
 @Service
 public class DemoServiceImpl implements DemoServiceInterface {
+	
+	private final Logger log = LogManager.getLogger(getClass().getName());
 
 	@Autowired
 	DemoAuditsMapper demoMapper;
@@ -44,6 +48,7 @@ public class DemoServiceImpl implements DemoServiceInterface {
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				log.error("Error catched", e);
 			}
 
 			simpleDateFormat2 = new SimpleDateFormat("dd, MMM yyyy");
@@ -72,6 +77,7 @@ public class DemoServiceImpl implements DemoServiceInterface {
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				log.error("Error catched", e);
 			}
 
 			simpleDateFormat2 = new SimpleDateFormat("dd, MMM yyyy");

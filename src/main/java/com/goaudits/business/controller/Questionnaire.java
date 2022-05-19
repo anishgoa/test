@@ -2,6 +2,9 @@ package com.goaudits.business.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +39,8 @@ import com.goaudits.business.service.S3Service;
 @RequestMapping("/api/setup")
 public class Questionnaire {
 
+	private final Logger log = LogManager.getLogger(getClass().getName());
+	
 	@Autowired
 	QuestionnaireService QuestionnaireService;
 
@@ -58,6 +63,7 @@ public class Questionnaire {
 			return new ResponseEntity<List<Section>>(sectionlist, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 
@@ -81,6 +87,7 @@ public class Questionnaire {
 			return new ResponseEntity<List<Section>>(sectionlist, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -110,6 +117,7 @@ public class Questionnaire {
 			sectionList.add(section);
 			return new ResponseEntity<List<Section>>(sectionList, HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -137,6 +145,7 @@ public class Questionnaire {
 					new GoAuditsException("Please provide a different section name, this one already exists"),
 					HttpStatus.CONFLICT);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -165,6 +174,7 @@ public class Questionnaire {
 			sectionList.add(section);
 			return new ResponseEntity<List<Section>>(sectionList, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -193,6 +203,7 @@ public class Questionnaire {
 
 			return new ResponseEntity<List<Group>>(groupList, HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -221,6 +232,7 @@ public class Questionnaire {
 					new GoAuditsException("Please provide a different subsection name, this one already exists"),
 					HttpStatus.CONFLICT);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -249,6 +261,7 @@ public class Questionnaire {
 			groupList.add(group);
 			return new ResponseEntity<List<Group>>(groupList, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -265,6 +278,7 @@ public class Questionnaire {
 			return new ResponseEntity<List<Choice>>(choicepatternlist, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -290,6 +304,7 @@ public class Questionnaire {
 			return new ResponseEntity<List<SectionItem>>(sectionList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -329,6 +344,7 @@ public class Questionnaire {
 			s3List.add(params);
 			return new ResponseEntity<List<S3>>(s3List, HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -368,6 +384,7 @@ public class Questionnaire {
 			s3List.add(params);
 			return new ResponseEntity<List<S3>>(s3List, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -393,6 +410,7 @@ public class Questionnaire {
 			QuestionList.add(question);
 			return new ResponseEntity<List<Question>>(QuestionList, HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -418,6 +436,7 @@ public class Questionnaire {
 			QuestionList.add(question);
 			return new ResponseEntity<List<Question>>(QuestionList, HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -436,6 +455,7 @@ public class Questionnaire {
 			List<Questionimage> questionImagelist = QuestionnaireService.getQuestionImage(question);
 			return new ResponseEntity<List<Questionimage>>(questionImagelist, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -465,6 +485,7 @@ public class Questionnaire {
 				return new ResponseEntity<List<QuestionOrder>>(qOrderList, HttpStatus.OK);
 			}
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -486,6 +507,7 @@ public class Questionnaire {
 			qOrderList.add(grouporder);
 			return new ResponseEntity<List<GroupOrder>>(qOrderList, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -509,6 +531,7 @@ public class Questionnaire {
 			choice.get(0).setChoice_pat_id(choice_pat_id);
 			return new ResponseEntity<List<Choice>>(choice, HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -538,6 +561,7 @@ public class Questionnaire {
 
 			return new ResponseEntity<List<Question>>(QuestionList, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -558,6 +582,7 @@ public class Questionnaire {
 			return new ResponseEntity<List<Tag>>(taglist, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -577,6 +602,7 @@ public class Questionnaire {
 			return new ResponseEntity<List<Previewchoice>>(previewchoicelist, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -598,6 +624,7 @@ public class Questionnaire {
 			return new ResponseEntity<List<Integer>>(auditList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -614,6 +641,7 @@ public class Questionnaire {
 			return new ResponseEntity<List<User>>(Adminslist, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -636,6 +664,7 @@ public class Questionnaire {
 			return new ResponseEntity<List<Integer>>(imgcount, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -663,6 +692,7 @@ public class Questionnaire {
 			return new ResponseEntity<S3>(params, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -681,6 +711,7 @@ public class Questionnaire {
 		return new ResponseEntity<List<String>>(flag, HttpStatus.OK);
 		}catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 		}
@@ -723,6 +754,7 @@ public class Questionnaire {
 			List<SectionGroupClone> sectionlist = QuestionnaireService.cloneSection(section);
 			return new ResponseEntity<List<SectionGroupClone>>(sectionlist, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 
@@ -742,6 +774,7 @@ public class Questionnaire {
 			failflag.add(flag);
 			return new ResponseEntity<List<Boolean>>(failflag, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 

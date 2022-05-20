@@ -14,7 +14,7 @@
  -->
 		<RollingFile name="errorLog"
 			fileName="//var/log/tomcat9/portal-error.log"
-			filePattern="//var/log/tomcat9/portal-error-%d{dd-MM-yyyy}-%i.log">
+			filePattern="//var/log/tomcat9/portal-error-%d{dd-MM-yyyy}-%i.log.gz">
 			<LevelRangeFilter minLevel="ERROR" maxLevel="ERROR"
 				onMatch="ACCEPT" onMismatch="DENY" />
 			<PatternLayout pattern="${LOG_PATTERN}" />
@@ -27,7 +27,7 @@
  -->
 		<RollingFile name="allLogs"
 			fileName="//var/log/tomcat9/portal.log"
-			filePattern="//var/log/tomcat9/portal-%d{dd-MM-yyyy}-%i.log">
+			filePattern="//var/log/tomcat9/portal-%d{dd-MM-yyyy}-%i.log.gz">
 			<LevelRangeFilter minLevel="ERROR" maxLevel="ALL"
 				onMatch="ACCEPT" onMismatch="DENY" />
 			<PatternLayout pattern="${LOG_PATTERN}" />

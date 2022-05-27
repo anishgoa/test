@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +40,7 @@ import com.goaudits.business.util.Utils;
 
 @Service
 public class SetupServiceImpl implements SetupService {
+	private final Logger log = LogManager.getLogger(getClass().getName());
 
 	@Autowired
 	SetupMapper setupmapper;
@@ -82,6 +85,7 @@ public class SetupServiceImpl implements SetupService {
 				company.setLogo_binary(clientimage);
 			} catch (IOException e) {
 				e.printStackTrace();
+				log.error("Error catched", e);
 			}
 		}
 
@@ -117,6 +121,7 @@ public class SetupServiceImpl implements SetupService {
 				company.setLogo_binary(clientimage);
 			} catch (IOException e) {
 				e.printStackTrace();
+				log.error("Error catched", e);
 			}
 		}
 
@@ -452,6 +457,7 @@ public class SetupServiceImpl implements SetupService {
 				report.setReport_logo(byteimage);
 			} catch (IOException e) {
 				e.printStackTrace();
+				log.error("Error catched", e);
 			}
 		}
 
@@ -462,6 +468,7 @@ public class SetupServiceImpl implements SetupService {
 				report.setLeftlogobi(byteimage);
 			} catch (IOException e) {
 				e.printStackTrace();
+				log.error("Error catched", e);
 			}
 		}
 
@@ -603,6 +610,7 @@ public class SetupServiceImpl implements SetupService {
 						} catch (IOException e) {
 
 							e.printStackTrace();
+							log.error("Error catched", e);
 						}
 
 					}

@@ -30,6 +30,7 @@ public class S3Controller {
 
 		int migrate = s3Service.MigrateimagesFollowup();
 		return new ResponseEntity<Integer>(migrate, HttpStatus.ACCEPTED);
+		
 	}
 
 	@RequestMapping(value = "goaudits/auditimagesmigrate/{guid}", method = RequestMethod.GET)

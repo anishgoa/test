@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -48,6 +50,8 @@ import com.goaudits.business.util.Utils;
 @RequestMapping("/api/setup")
 public class SetupController {
 
+	private final Logger log = LogManager.getLogger(getClass().getName());
+	
 	@Autowired
 	SetupService setupservice;
 
@@ -67,6 +71,7 @@ public class SetupController {
 			return new ResponseEntity<List<Company>>(companyList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -86,6 +91,7 @@ public class SetupController {
 			return new ResponseEntity<List<Location>>(locationList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 
@@ -106,6 +112,7 @@ public class SetupController {
 			return new ResponseEntity<List<Location>>(locationList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -125,6 +132,7 @@ public class SetupController {
 			return new ResponseEntity<List<AuditName>>(auditNameList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -166,6 +174,7 @@ public class SetupController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 //			System.out.println("Something went wrong" );
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
@@ -200,6 +209,7 @@ public class SetupController {
 					HttpStatus.CONFLICT);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -221,6 +231,7 @@ public class SetupController {
 			return new ResponseEntity<List<Company>>(companyList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -250,6 +261,7 @@ public class SetupController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -270,6 +282,7 @@ public class SetupController {
 			return new ResponseEntity<List<ActionPlanAssignee>>(assigneeList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -290,6 +303,7 @@ public class SetupController {
 			return new ResponseEntity<List<ActionPlanAssignee>>(assigneeList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -309,6 +323,7 @@ public class SetupController {
 			return new ResponseEntity<List<ActionPlanAssignee>>(assigneeList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -351,6 +366,7 @@ public class SetupController {
 			return new ResponseEntity<List<Company>>(companyList, HttpStatus.CREATED);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -379,12 +395,14 @@ public class SetupController {
 					locationList.add(location);
 					return new ResponseEntity<List<Location>>(locationList, HttpStatus.CREATED);
 				} catch (Exception e) {
+					log.error("Error catched", e);
 					return new ResponseEntity<>(new GoAuditsException("Something went wrong"),
 							HttpStatus.EXPECTATION_FAILED);
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -409,6 +427,7 @@ public class SetupController {
 					locationList.add(location);
 					return new ResponseEntity<List<Location>>(locationList, HttpStatus.OK);
 				} catch (Exception e) {
+					log.error("Error catched", e);
 					return new ResponseEntity<>(new GoAuditsException("Something went wrong"),
 							HttpStatus.EXPECTATION_FAILED);
 				}
@@ -419,6 +438,7 @@ public class SetupController {
 					HttpStatus.CONFLICT);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -441,6 +461,7 @@ public class SetupController {
 			return new ResponseEntity<List<Location>>(locationList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -462,6 +483,7 @@ public class SetupController {
 			return new ResponseEntity<List<LocationTags>>(actionlist, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -481,6 +503,7 @@ public class SetupController {
 			return new ResponseEntity<List<LocationTags>>(tagsList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -511,6 +534,7 @@ public class SetupController {
 			return new ResponseEntity<List<AuditName>>(auditNameList, HttpStatus.CREATED);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -532,6 +556,7 @@ public class SetupController {
 			return new ResponseEntity<List<AuditName>>(auditNameList, HttpStatus.CREATED);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -567,6 +592,7 @@ public class SetupController {
 					HttpStatus.CONFLICT);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -595,6 +621,7 @@ public class SetupController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -613,6 +640,7 @@ public class SetupController {
 			return new ResponseEntity<List<ScoreRange>>(scorerangeList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -632,6 +660,7 @@ public class SetupController {
 			return new ResponseEntity<List<ScoreRange>>(scorerange, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -652,6 +681,7 @@ public class SetupController {
 			return new ResponseEntity<List<EmailTemplate>>(emailTemplateList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -672,6 +702,7 @@ public class SetupController {
 			emailList.add(emailTemplate);
 			return new ResponseEntity<List<EmailTemplate>>(emailList, HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 
 		}
@@ -692,6 +723,7 @@ public class SetupController {
 			return new ResponseEntity<List<Report>>(reportList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -712,6 +744,7 @@ public class SetupController {
 			reportList.add(report);
 			return new ResponseEntity<List<Report>>(reportList, HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -729,6 +762,7 @@ public class SetupController {
 			return new ResponseEntity<List<Report>>(reportList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -741,6 +775,7 @@ public class SetupController {
 			return new ResponseEntity<List<Company>>(templateslist, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -753,6 +788,7 @@ public class SetupController {
 			return new ResponseEntity<List<AuditName>>(auditnamelist, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -764,6 +800,7 @@ public class SetupController {
 			return new ResponseEntity<List<AuditName>>(auditnamelist, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -779,6 +816,7 @@ public class SetupController {
 			return new ResponseEntity<List<Company>>(companyList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -793,6 +831,7 @@ public class SetupController {
 			return new ResponseEntity<List<Section>>(sectionlist, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -822,6 +861,7 @@ public class SetupController {
 			templatesList.add(PreTemplates);
 			return new ResponseEntity<List<PreTemplates>>(templatesList, HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -832,6 +872,7 @@ public class SetupController {
 			List<GuidedSetup> dataList = setupservice.getGuidedSetupdata();
 			return new ResponseEntity<List<GuidedSetup>>(dataList, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -851,6 +892,7 @@ public class SetupController {
 			return new ResponseEntity<List<Integer>>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -886,6 +928,7 @@ public class SetupController {
 			return new ResponseEntity<List<GuidedSetup>>(arr, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -904,6 +947,7 @@ public class SetupController {
 			return new ResponseEntity<List<Boolean>>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -922,6 +966,7 @@ public class SetupController {
 			return new ResponseEntity<List<Boolean>>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -941,6 +986,7 @@ public class SetupController {
 			return new ResponseEntity<List<Location>>(locationList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -960,6 +1006,7 @@ public class SetupController {
 			return new ResponseEntity<List<AuditName>>(auditNameList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -978,6 +1025,7 @@ public class SetupController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -1003,6 +1051,7 @@ public class SetupController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -1023,6 +1072,7 @@ public class SetupController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}

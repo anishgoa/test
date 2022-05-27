@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -25,7 +27,7 @@ import com.goaudits.business.util.Utils;
 @EnableAutoConfiguration
 public class NotificationController {
 
-	
+	private final Logger log = LogManager.getLogger(getClass().getName());
 	@Autowired
 	private NotificationService NotificationService;
 	
@@ -47,6 +49,7 @@ public class NotificationController {
 			NotiList.add(Notification);
 			return new ResponseEntity<List<Notification>>(NotiList, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ),
 					HttpStatus.EXPECTATION_FAILED);
 		}
@@ -68,6 +71,7 @@ public class NotificationController {
 			NotiList.add(Notification);
 			return new ResponseEntity<List<Notification>>(NotiList, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ),
 					HttpStatus.EXPECTATION_FAILED);
 		}
@@ -91,6 +95,7 @@ public class NotificationController {
 			List<Notification> NotiList=new ArrayList<Notification>();
 			return new ResponseEntity<List<Notification>>(NotiList, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ),
 					HttpStatus.EXPECTATION_FAILED);
 		}
@@ -110,6 +115,7 @@ public class NotificationController {
 		
 			return new ResponseEntity<List<Notification>>(notificationlist, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ),
 					HttpStatus.EXPECTATION_FAILED);
 		}
@@ -132,6 +138,7 @@ public class NotificationController {
 			List<Notification> NotiList=new ArrayList<Notification>();
 			return new ResponseEntity<List<Notification>>(NotiList, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ),
 					HttpStatus.EXPECTATION_FAILED);
 		}
@@ -154,6 +161,7 @@ public class NotificationController {
 			NotiList.add(Notification);
 			return new ResponseEntity<List<Notification>>(NotiList, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ),
 					HttpStatus.EXPECTATION_FAILED);
 		}
@@ -174,6 +182,7 @@ public class NotificationController {
 			NotiList.add(Notification);
 			return new ResponseEntity<List<Notification>>(NotiList, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong" ),
 					HttpStatus.EXPECTATION_FAILED);
 		}

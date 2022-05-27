@@ -2,6 +2,8 @@ package com.goaudits.business.controller;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,8 @@ import com.goaudits.business.util.Utils;
 @RequestMapping("/api/demo")
 public class DemoApi {
 
+	private final Logger log = LogManager.getLogger(getClass().getName());
+	
 	@Autowired
 	DemoServiceInterface demoService;
 
@@ -47,6 +51,7 @@ public class DemoApi {
 			return new ResponseEntity<List<DemoAudits>>(auditsList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -66,6 +71,7 @@ public class DemoApi {
 			return new ResponseEntity<List<DemoAudits>>(auditsList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("Error catched", e);
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}

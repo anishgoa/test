@@ -11,6 +11,8 @@ import com.goaudits.business.service.S3Service;
 import com.goaudits.business.util.Constants;
 import com.goaudits.business.util.Utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.File;
@@ -26,6 +28,8 @@ import javax.servlet.http.HttpSession;
 
 @Service
 public class S3ServiceImpl implements S3Service {
+	
+	private final Logger log = LogManager.getLogger(getClass().getName());
 	
 	@Autowired
 	DatabaseConfig dbConfig;
@@ -159,6 +163,7 @@ public class S3ServiceImpl implements S3Service {
 
 				} catch (IOException e) {
 					e.printStackTrace();
+					log.error("Error catched", e);
 				}
 
 			}
@@ -209,6 +214,7 @@ public class S3ServiceImpl implements S3Service {
 
 				} catch (IOException e) {
 					e.printStackTrace();
+					log.error("Error catched", e);
 				}
 
 			}
@@ -270,6 +276,7 @@ public class S3ServiceImpl implements S3Service {
 				} catch (IOException e) {
 
 					e.printStackTrace();
+					log.error("Error catched", e);
 				}
 
 			}
@@ -337,6 +344,7 @@ public class S3ServiceImpl implements S3Service {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				log.error("Error catched", e);
 			}
 
 		}

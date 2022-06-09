@@ -13,9 +13,9 @@ import com.goaudits.business.util.Utils;
 import com.google.gson.Gson;
 
 public class QuestionItem {
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String guid;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String uid;
 	private int client_id;
 	private int store_id;
@@ -24,121 +24,121 @@ public class QuestionItem {
 	private int section_id;
 	private int group_id;
 	private int question_no;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String question_text;
 	private int choice_pat_id;
 	private double available_score;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String question_help;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String question_weight;
 	private boolean active;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String default_choice_id;
 	private boolean ismandatory;
 	private boolean image_mandatory;
 	private boolean comment_mandatory;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String question_order;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String default_choice_text;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String choice_type;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String tag_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String tag_code;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String tag_description;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String passing_level;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String sort_order;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String choice_text1;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String choice_text2;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String choice_text3;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String choice_text4;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String failed_choice_id;
 	private boolean notification_type;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String critical_email_list;
 	private boolean notification_enabled;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String comments;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String due_date;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String priority;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String audit_date;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String seq_no;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String status;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String status_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String status_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String action_taken;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String action_taken_date;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private boolean isactionplan_mandatory;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String auto_fail;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String assignedto_email;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String client_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String audit_type_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String store_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String over_due_color;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String priority_color;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String status_color;
 	private boolean isapproval_required;
 	private String token;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String extend_duedate;
 	private boolean extend_flag;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String assignedto_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String display_code;
 	private boolean imageflag;
 	private int question_type;
 	private boolean image_position;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String ext_comments;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String assignedto_dept;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String assignedto_person;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String ext_admin_comments;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String ext_log;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String reassign_comments;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String approved_duedate;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String actual_due_date;
 	private boolean action_enabled;
 	private boolean email_enabled;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String action_choices;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String email_choices;
 	private boolean no_score;
 	private int conditionalchoice;
@@ -146,50 +146,50 @@ public class QuestionItem {
 	private int choice_id;
 	private boolean is_parent_question;
 	private boolean is_sub_question;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String conditional_choice_pat_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String conditional_choiceid;
 	private boolean conditionalflag;
 	private boolean conditionnew;
 	private int oldchoiceid;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String selectedadmins;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String temp_min;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String temp_max;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String vchoice_type;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String temp_unit;
 	private boolean is_multichoice;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String oldtagid;
 	private int picture_layout;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String comment_choices;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String image_choices;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String question_text_color;
 	private String image_path;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String image_public_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String image_thumbnail;
 	private String image;
 	private int image_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String qcomments;
 	private int audits_count;
 	private int addedquestion_order = 0;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String failed_choice;
 	byte[] binaryimage;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String default_value;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String action_default_value;
 	@Valid
 	private List<ChoiceItem> choiceList = new ArrayList<ChoiceItem>();

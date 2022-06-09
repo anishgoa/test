@@ -15,11 +15,11 @@ public class Questionimage implements Serializable{
 	String image;
     byte[] binaryimage;
     String image_path;
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
     String image_thumbnail;
     int isdeleted;
     int client_id;
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
     String image_public_id;
     int image_id;
     int audit_type_id;

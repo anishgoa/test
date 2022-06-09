@@ -13,17 +13,17 @@ import com.goaudits.business.util.Utils;
 public class PreTemplates implements Serializable{
 	 private static final long serialVersionUID = 1L;
 	 
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String client_id;
 	private int audit_group_id;
 	private int audit_type_id;
 	private int pre_client_id;
 	private int pre_audit_type_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	 private String pre_audit_type_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String guid;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String uid;
 	private boolean validate;
 

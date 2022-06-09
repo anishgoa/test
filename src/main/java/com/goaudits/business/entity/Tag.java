@@ -14,27 +14,27 @@ import com.goaudits.business.util.Utils;
 public class Tag implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String guid;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String uid;
 	private int client_id;
 	private int audit_group_id;
 	private int audit_type_id;
 	private int id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String tag_code;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String tag_description;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String passing_level;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String sort_order;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String tagids;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String audit_type_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String client_name;
 	@Valid
 	private List<Tag> reportTagList = new ArrayList<Tag>();

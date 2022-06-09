@@ -15,59 +15,58 @@ import com.goaudits.business.util.Utils;
 public class Location implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String guid;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String client_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String client_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String store_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String store_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String latitude;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String longitude;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String radius;
 	private boolean active;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String address;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String uid;
 	private String logo;
 	private int group_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String to_email;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String cc_email;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String storemgr_email;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String location_code;
 	private int pl_code;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String time_zone;
 	private byte[] logo_binary;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String map_address;
 	int offset = 0;
 	int limit = 10;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
 	private String tags;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String postcode;
 	private boolean gps_location_filter_enabled; 
 	private boolean isdelete;
 	int min;
 	int max;
 	int count;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String search_item;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String sort;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String order;
 	@Valid
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();

@@ -10,41 +10,41 @@ import com.goaudits.business.util.Utils;
 
 public class ParentChoice {
 
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String guid;
 	int choice_pat_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String choice_pattern;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String choice_type;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String choice_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String default_score_percent;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String active;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String choice_text;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String choice_colour;
 	int  score_type;
 	private int question_no;
 	@Valid
 	private List<ParentChoice> choiceList = new ArrayList<ParentChoice>();
  	
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String choice_text1;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String choice_text2;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String choice_text3;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String choice_text4;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String short_text;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String image_mandatory;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String comment_mandatory;
 	int created_choice_id;
 	boolean is_custom;

@@ -14,9 +14,9 @@ import com.goaudits.business.util.Utils;
 public class FileNameChecklist implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String guid;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String uid;
 	private int client_id;
 	private int audit_type_id;
@@ -27,7 +27,7 @@ public class FileNameChecklist implements Serializable{
 	private int audit_date_enabled;
 	private int location_code_enabled;
 	private int custom_field_enabled;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	private String custom_field_name;
 	
 	public String getGuid() {

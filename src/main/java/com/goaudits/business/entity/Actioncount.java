@@ -12,40 +12,40 @@ import com.goaudits.business.util.Utils;
 public class Actioncount  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String opencount;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String inprogresscount;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String submitforapprovalcount;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String closedcount;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String rejectedcount;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String opentext;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String inprogresstext;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String submitforapprovaltext;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String closedtext;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String rejectedtext;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String duedatecount;
     
-    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message )
+    @Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String duedatetext;
 	
 	

@@ -43,6 +43,7 @@ public class Customfields implements Serializable {
 	private boolean pactive;
 	private boolean isdelete;
 	private boolean show_app_list;
+	@Valid
 	private List<Customfields> customfieldslist = new ArrayList<Customfields>();
 
 	public String getField_value() {

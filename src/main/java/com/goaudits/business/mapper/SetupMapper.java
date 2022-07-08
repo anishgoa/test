@@ -286,7 +286,7 @@ public interface SetupMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	List<AuditName> getAuditNamesByCompanys(AuditName auditname);
 
-    @Select("SELECT * FROM GA_QUESTIONPHOTO_MT WHERE GUID=#{guid} AND CLIENT_ID=#{client_id} AND AUDIT_TYPE_ID=#{pre_audit_type_id}")
+    @Select("SELECT * FROM GA_QUESTIONPHOTO_MT WHERE GUID=#{guid} AND CLIENT_ID=#{pre_client_id} AND AUDIT_TYPE_ID=#{pre_audit_type_id}")
 	List<Questactimage> getQuestionPhotos(PreTemplates preTemplates);
 
 

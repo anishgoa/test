@@ -44,7 +44,7 @@ import com.goaudits.business.util.Utils;
 public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 	private final Logger log = LogManager.getLogger(getClass().getName());
-	
+
 	@Autowired
 	QuestionnaireMapper questionnairemapper;
 
@@ -528,7 +528,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 			}
 			questionnairemapper.addquestscores(ques.getGuid(), ques.getClient_id(), 1, ques.getAudit_type_id(),
 					ques.getQuestion_no(), ques.getChoice_pat_id(), "0", "0", 0, "000");
-			
+
 			String tag_id[] = null;
 			String oldtagid = null;
 			if (ques.getTag_id() != null) {
@@ -766,7 +766,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 						e.printStackTrace();
 						log.error("Error catched", e);
-						
+
 					}
 
 				}
@@ -793,87 +793,172 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	@Override
 	public List<SectionItem> getQuestionList(Section audit) {
 
+		List<SectionItem> sectionItemList = null;
 		List<QuestionVo> questionList = questionnairemapper.getQuestionsList(audit); // query to be done
 
-		List<SectionItem> sectionItemList = questionList.stream().map(n -> new SectionItem(n)).distinct()
-				.collect(Collectors.toList());
+		if (audit.isActive()) {
 
-		for (SectionItem sectionItem : sectionItemList) {
-
-			List<GroupItem> groupItemList = questionList.stream()
-					.filter(p -> p.getSection_id() == sectionItem.getSection_id() && p.getGroup_name()!=null).map(p -> new GroupItem(p)).distinct()
+			sectionItemList = questionList.stream().filter(p-> p.isSecactive()).map(n -> new SectionItem(n)).distinct()
 					.collect(Collectors.toList());
 
-//			System.out.println(groupItemList);
+			for (SectionItem sectionItem : sectionItemList) {
 
-			for (GroupItem groupItem : groupItemList) {
+				List<GroupItem> groupItemList = questionList.stream()
+						.filter(p -> p.getSection_id() == sectionItem.getSection_id() && p.getGroup_name() != null 
+						&& p.isGrpacive())
+						.map(p -> new GroupItem(p)).distinct().collect(Collectors.toList());
 
-				List<QuestionItem> questionItemList = questionList.stream()
-						.filter(p -> p.getSection_id() == groupItem.getSection_id()
-								&& p.getGroup_id() == groupItem.getGroup_id() && !p.isIs_sub_question()
-								&& p.getQuestion_text() != null)
-						.map(p -> new QuestionItem(p)).distinct().collect(Collectors.toList());
+				for (GroupItem groupItem : groupItemList) {
+
+					List<QuestionItem> questionItemList = questionList.stream()
+							.filter(p -> p.getSection_id() == groupItem.getSection_id()
+									&& p.getGroup_id() == groupItem.getGroup_id() && !p.isIs_sub_question()
+									&& p.getQuestion_text() != null && p.isActive())
+							.map(p -> new QuestionItem(p)).distinct().collect(Collectors.toList());
 
 //				System.out.println("Question List => " + questionItemList);
 
-				for (QuestionItem questionItem : questionItemList) {
-					List<ChoiceItem> choiceItemList = questionList.stream()
-							.filter(q -> q.getSection_id() == groupItem.getSection_id()
-									&& q.getGroup_id() == groupItem.getGroup_id()
-									&& q.getQuestion_no() == questionItem.getQuestion_no()
-									&& q.getChoice_pat_id() == questionItem.getChoice_pat_id())
-							.map(q -> new ChoiceItem(q)).distinct().collect(Collectors.toList());
-					questionItem.getChoiceList().addAll(choiceItemList);
+					for (QuestionItem questionItem : questionItemList) {
+						List<ChoiceItem> choiceItemList = questionList.stream()
+								.filter(q -> q.getSection_id() == groupItem.getSection_id()
+										&& q.getGroup_id() == groupItem.getGroup_id()
+										&& q.getQuestion_no() == questionItem.getQuestion_no()
+										&& q.getChoice_pat_id() == questionItem.getChoice_pat_id())
+								.map(q -> new ChoiceItem(q)).distinct().collect(Collectors.toList());
+						questionItem.getChoiceList().addAll(choiceItemList);
 
-					for (ChoiceItem chs : choiceItemList) {
-						List<ParentChoice> subChoicelist = questionList.stream()
-								.filter(q -> q.getSection_id() == questionItem.getSection_id()
-										&& q.getGroup_id() == questionItem.getGroup_id()
-										&& q.getParent_question_no() == questionItem.getQuestion_no()
-										&& q.getParent_choice_pat_id() == chs.getChoice_pat_id()
-										&& q.getParent_choice_id() == Integer.parseInt(chs.getChoice_id())
-										&& q.isIs_sub_question())
-								.map(q -> new ParentChoice(chs)).distinct().collect(Collectors.toList());
+						for (ChoiceItem chs : choiceItemList) {
+							List<ParentChoice> subChoicelist = questionList.stream()
+									.filter(q -> q.getSection_id() == questionItem.getSection_id()
+											&& q.getGroup_id() == questionItem.getGroup_id()
+											&& q.getParent_question_no() == questionItem.getQuestion_no()
+											&& q.getParent_choice_pat_id() == chs.getChoice_pat_id()
+											&& q.getParent_choice_id() == Integer.parseInt(chs.getChoice_id())
+											&& q.isIs_sub_question())
+									.map(q -> new ParentChoice(chs)).distinct().collect(Collectors.toList());
 
-						Set<ParentChoice> subChoicelist1 = subChoicelist.stream().collect(Collectors
-								.toCollection(() -> new TreeSet<>(Comparator.comparing(ParentChoice::getChoice_id))));
+							Set<ParentChoice> subChoicelist1 = subChoicelist.stream().collect(Collectors.toCollection(
+									() -> new TreeSet<>(Comparator.comparing(ParentChoice::getChoice_id))));
 
-						for (ParentChoice sub : subChoicelist1) {
-							List<QuestionItem> questionlist = questionList.stream()
-									.filter(p -> p.getSection_id() == groupItem.getSection_id()
-											&& p.getGroup_id() == groupItem.getGroup_id()
-											&& p.getParent_question_no() == questionItem.getQuestion_no()
-											&& p.getParent_choice_pat_id() == sub.getChoice_pat_id()
-											&& p.getParent_choice_id() == Integer.parseInt(sub.getChoice_id())
-											&& p.isIs_sub_question())
-									.map(p -> new QuestionItem(p)).distinct().collect(Collectors.toList());
+							for (ParentChoice sub : subChoicelist1) {
+								List<QuestionItem> questionlist = questionList.stream()
+										.filter(p -> p.getSection_id() == groupItem.getSection_id()
+												&& p.getGroup_id() == groupItem.getGroup_id()
+												&& p.getParent_question_no() == questionItem.getQuestion_no()
+												&& p.getParent_choice_pat_id() == sub.getChoice_pat_id()
+												&& p.getParent_choice_id() == Integer.parseInt(sub.getChoice_id())
+												&& p.isIs_sub_question())
+										.map(p -> new QuestionItem(p)).distinct().collect(Collectors.toList());
 
-							for (QuestionItem questionItem1 : questionlist) {
-								List<ChoiceItem> choiceItemList1 = questionList.stream()
-										.filter(q -> q.getSection_id() == groupItem.getSection_id()
-												&& q.getGroup_id() == groupItem.getGroup_id()
-												&& q.getQuestion_no() == questionItem1.getQuestion_no()
-												&& q.getChoice_pat_id() == questionItem1.getChoice_pat_id())
-										.map(q -> new ChoiceItem(q)).distinct().collect(Collectors.toList());
+								for (QuestionItem questionItem1 : questionlist) {
+									List<ChoiceItem> choiceItemList1 = questionList.stream()
+											.filter(q -> q.getSection_id() == groupItem.getSection_id()
+													&& q.getGroup_id() == groupItem.getGroup_id()
+													&& q.getQuestion_no() == questionItem1.getQuestion_no()
+													&& q.getChoice_pat_id() == questionItem1.getChoice_pat_id())
+											.map(q -> new ChoiceItem(q)).distinct().collect(Collectors.toList());
 
-								questionItem1.getChoiceList().addAll(choiceItemList1);
+									questionItem1.getChoiceList().addAll(choiceItemList1);
+
+								}
+								sub.getQuestionlist().addAll(questionlist);
 
 							}
-							sub.getQuestionlist().addAll(questionlist);
+
+							questionItem.getSublist().addAll(subChoicelist1);
 
 						}
-
-						questionItem.getSublist().addAll(subChoicelist1);
+						// sublist
 
 					}
-					// sublist
 
+					groupItem.getQuestionList().addAll(questionItemList);
 				}
-
-				groupItem.getQuestionList().addAll(questionItemList);
+				sectionItem.getGroupList().addAll(groupItemList);
 			}
-			sectionItem.getGroupList().addAll(groupItemList);
 		}
+		else {
+
+			sectionItemList = questionList.stream().filter(p-> !p.isSecactive() || (!p.isGrpacive() || !p.isActive())).map(n -> new SectionItem(n)).distinct()
+					.collect(Collectors.toList());
+
+			for (SectionItem sectionItem : sectionItemList) {
+
+				List<GroupItem> groupItemList = questionList.stream()
+						.filter(p -> p.getSection_id() == sectionItem.getSection_id() && p.getGroup_name() != null 
+						&& (!p.isSecactive() || !p.isActive() || !p.isGrpacive()))
+						.map(p -> new GroupItem(p)).distinct().collect(Collectors.toList());
+
+				for (GroupItem groupItem : groupItemList) {
+
+					List<QuestionItem> questionItemList = questionList.stream()
+							.filter(p -> p.getSection_id() == groupItem.getSection_id()
+									&& p.getGroup_id() == groupItem.getGroup_id() && !p.isIs_sub_question()
+									&& p.getQuestion_text() != null && (!p.isSecactive() || !p.isActive() ||  !p.isGrpacive()))
+							.map(p -> new QuestionItem(p)).distinct().collect(Collectors.toList());
+
+//				System.out.println("Question List => " + questionItemList);
+
+					for (QuestionItem questionItem : questionItemList) {
+						List<ChoiceItem> choiceItemList = questionList.stream()
+								.filter(q -> q.getSection_id() == groupItem.getSection_id()
+										&& q.getGroup_id() == groupItem.getGroup_id()
+										&& q.getQuestion_no() == questionItem.getQuestion_no()
+										&& q.getChoice_pat_id() == questionItem.getChoice_pat_id())
+								.map(q -> new ChoiceItem(q)).distinct().collect(Collectors.toList());
+						questionItem.getChoiceList().addAll(choiceItemList);
+
+						for (ChoiceItem chs : choiceItemList) {
+							List<ParentChoice> subChoicelist = questionList.stream()
+									.filter(q -> q.getSection_id() == questionItem.getSection_id()
+											&& q.getGroup_id() == questionItem.getGroup_id()
+											&& q.getParent_question_no() == questionItem.getQuestion_no()
+											&& q.getParent_choice_pat_id() == chs.getChoice_pat_id()
+											&& q.getParent_choice_id() == Integer.parseInt(chs.getChoice_id())
+											&& q.isIs_sub_question())
+									.map(q -> new ParentChoice(chs)).distinct().collect(Collectors.toList());
+
+							Set<ParentChoice> subChoicelist1 = subChoicelist.stream().collect(Collectors.toCollection(
+									() -> new TreeSet<>(Comparator.comparing(ParentChoice::getChoice_id))));
+
+							for (ParentChoice sub : subChoicelist1) {
+								List<QuestionItem> questionlist = questionList.stream()
+										.filter(p -> p.getSection_id() == groupItem.getSection_id()
+												&& p.getGroup_id() == groupItem.getGroup_id()
+												&& p.getParent_question_no() == questionItem.getQuestion_no()
+												&& p.getParent_choice_pat_id() == sub.getChoice_pat_id()
+												&& p.getParent_choice_id() == Integer.parseInt(sub.getChoice_id())
+												&& p.isIs_sub_question())
+										.map(p -> new QuestionItem(p)).distinct().collect(Collectors.toList());
+
+								for (QuestionItem questionItem1 : questionlist) {
+									List<ChoiceItem> choiceItemList1 = questionList.stream()
+											.filter(q -> q.getSection_id() == groupItem.getSection_id()
+													&& q.getGroup_id() == groupItem.getGroup_id()
+													&& q.getQuestion_no() == questionItem1.getQuestion_no()
+													&& q.getChoice_pat_id() == questionItem1.getChoice_pat_id())
+											.map(q -> new ChoiceItem(q)).distinct().collect(Collectors.toList());
+
+									questionItem1.getChoiceList().addAll(choiceItemList1);
+
+								}
+								sub.getQuestionlist().addAll(questionlist);
+
+							}
+
+							questionItem.getSublist().addAll(subChoicelist1);
+
+						}
+						// sublist
+
+					}
+
+					groupItem.getQuestionList().addAll(questionItemList);
+				}
+				sectionItem.getGroupList().addAll(groupItemList);
+			}
+		}
+		
 
 		return sectionItemList;
 	}

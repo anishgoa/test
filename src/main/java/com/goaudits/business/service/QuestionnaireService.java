@@ -91,6 +91,10 @@ public interface QuestionnaireService {
 
 	boolean getFailedChoiceFlag(String guid);
 
+	List<Group> getGroups(Group grp);
+
+	List<Question> getAllQuestions(Group grp);
+
 
 
 }

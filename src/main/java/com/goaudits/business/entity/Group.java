@@ -29,7 +29,8 @@ public class Group implements Serializable{
 	private String group_name = null;
 	private boolean active;
 	private String audit_token;
-	
+	private String min;
+	private String max;
 	@JsonIgnore
 	private boolean inactiveq=true;
 	@Valid
@@ -114,6 +115,18 @@ public class Group implements Serializable{
 	 */
 	public void setInactiveq(boolean inactiveq) {
 		this.inactiveq = inactiveq;
+	}
+	public String getMin() {
+		return min;
+	}
+	public void setMin(String min) {
+		this.min = min;
+	}
+	public String getMax() {
+		return max;
+	}
+	public void setMax(String max) {
+		this.max = max;
 	}
 
 	

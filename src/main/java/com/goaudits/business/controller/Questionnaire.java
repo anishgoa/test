@@ -784,5 +784,39 @@ public class Questionnaire {
 
 	}
 	
+	@RequestMapping(value = "/question/sections", method = RequestMethod.POST)
+	public ResponseEntity<?> getSections(@RequestBody Section sec) {
+		try {
+		List<Section> sectionlist = QuestionnaireService.getSections(sec);
+		return new ResponseEntity<List<Section>>(sectionlist, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("Error catched", e);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+	
+	@RequestMapping(value = "/question/groups", method = RequestMethod.POST)
+	public ResponseEntity<?> getGroups(@RequestBody Group grp) {
+		try {
+		List<Group> grouplist = QuestionnaireService.getGroups(grp);
+		return new ResponseEntity<List<Group>>(grouplist, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("Error catched", e);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+	@RequestMapping(value = "/question/allQuestions", method = RequestMethod.POST)
+	public ResponseEntity<?> getAllQuestions(@RequestBody Group grp) {
+		try {
+		List<Question> questionsList = QuestionnaireService.getAllQuestions(grp);
+		return new ResponseEntity<List<Question>>(questionsList, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("Error catched", e);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
 	
 }

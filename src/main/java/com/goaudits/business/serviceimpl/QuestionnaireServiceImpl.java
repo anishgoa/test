@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.goaudits.business.entity.Choice;
@@ -971,6 +972,46 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	@Override
 	public boolean getFailedChoiceFlag(String guid) {
 		return questionnairemapper.getFailedChoiceFlag(guid);
+	}
+
+	@Override
+	public List<Group> getGroups(Group grp) {
+		// TODO Auto-generated method stub
+		return questionnairemapper.getGroups(grp);
+	}
+
+	@Override
+	public List<Question> getAllQuestions(Group grp) {
+		// TODO Auto-generated method stub
+		List<Question> QuestionList = questionnairemapper.getallQuestions(grp);
+
+		for (Question ques : QuestionList) {
+			List<Choice> choicelist = questionnairemapper.getchoicesforquestion(grp.getGuid(),
+					ques.getClient_id(), ques.getAudit_group_id(), ques.getAudit_type_id(),
+					ques.getQuestion_no(), ques.getChoice_pat_id());
+			ques.getChoiceList().addAll(choicelist);
+
+			List<Choice> chlist = questionnairemapper.getParentChoice(ques);
+			for (Choice c : chlist) {
+				ques.setConditional_choiceid(c.getChoice_id());
+				List<Question> QuestionList1 = questionnairemapper.getallsubQuestions(ques);
+				for (Question ques1 : QuestionList1) {
+
+					List<Choice> choicelist4 = questionnairemapper.getchoicesforquestion(ques1.getGuid(),
+							ques1.getClient_id(), ques1.getAudit_group_id(), ques1.getAudit_type_id(),
+							ques1.getQuestion_no(), ques1.getChoice_pat_id());
+					ques1.getChoiceList().addAll(choicelist4);
+				}
+
+				c.getQuestionlist().addAll(QuestionList1);
+
+			}
+
+			ques.getSublist().addAll(chlist);
+
+		}
+		grp.getQuestionList().addAll(QuestionList);
+		return QuestionList;
 	}
 
 }

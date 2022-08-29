@@ -29,7 +29,7 @@ import com.goaudits.business.entity.User;
 @Mapper
 public interface QuestionnaireMapper {
 
-	@Select(value = "{CALL SP_GA_GETSECTION_DET_PV3( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER},#{audit_group_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER} )}")
+	@Select(value = "{CALL SP_GA_GETSECTION_DET_PV3( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER},#{audit_group_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER}, #{active, mode=IN, jdbcType=BOOLEAN} )}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<Section> getSections(Section section);
 
@@ -83,7 +83,7 @@ public interface QuestionnaireMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	List<Group> getallGroups(Section sec);
 
-	@Select(value = "{CALL SP_GA_GETQUESTION_DET_PV3( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER},#{audit_group_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER}, #{section_id, mode=IN, jdbcType=INTEGER}, #{group_id, mode=IN, jdbcType=INTEGER},#{inactiveq, mode=IN, jdbcType=BOOLEAN} ,"
+	@Select(value = "{CALL SP_GA_GETQUESTION_DET_PV3( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER},#{audit_group_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER}, #{section_id, mode=IN, jdbcType=INTEGER}, #{group_id, mode=IN, jdbcType=INTEGER},#{active, mode=IN, jdbcType=BOOLEAN} ,"
 			+ "#{min, mode=IN, jdbcType=INTEGER},#{max, mode=IN, jdbcType=INTEGER})}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<Question> getallQuestions(Group group);
@@ -264,8 +264,25 @@ public interface QuestionnaireMapper {
 	int deleteQuestionImage(Questactimage q);
 
 	@Select(value = "{CALL SP_GA_GETGROUP_DET_PV2(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
-			+ "#{section_id, mode=IN, jdbcType=INTEGER})}")
+			+ "#{section_id, mode=IN, jdbcType=INTEGER}, #{active, mode=IN, jdbcType=BOOLEAN})}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<Group> getGroups(Group grp);
+
+	@Select(value = "{CALL SP_GA_GETSECTION_DET_DIS_PV3( #{guid, mode=IN, jdbcType=BINARY},#{uid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER},#{audit_group_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER} )}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Section> getSectionsDisbaled(Section section);
+
+	@Select(value = "{CALL SP_GA_GETGROUP_DET_DIS_PV2(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
+			+ "#{section_id, mode=IN, jdbcType=INTEGER})}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Group> getGroupsDisabled(Group grp);
+	
+	@Select(value = "{CALL SP_GA_GETQUESTION_DET_DIS_PV3( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER},#{audit_group_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER}, #{section_id, mode=IN, jdbcType=INTEGER}, #{group_id, mode=IN, jdbcType=INTEGER},"
+			+ "#{min, mode=IN, jdbcType=INTEGER},#{max, mode=IN, jdbcType=INTEGER})}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Question> getallQuestionsdisbaled(Group group);
+	
+
+
 	
 }

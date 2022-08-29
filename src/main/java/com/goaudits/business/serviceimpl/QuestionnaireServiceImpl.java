@@ -88,8 +88,12 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 	@Override
 	public List<Section> getSections(Section section) {
-
-		return questionnairemapper.getSections(section);
+		if(section.isActive()) {
+			return questionnairemapper.getSections(section);
+		}else {
+			return questionnairemapper.getSectionsDisbaled(section);
+		}
+		
 	}
 
 	@Override
@@ -977,13 +981,25 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	@Override
 	public List<Group> getGroups(Group grp) {
 		// TODO Auto-generated method stub
-		return questionnairemapper.getGroups(grp);
+		List<Group> grouplist;
+		if(grp.isActive()) {
+			grouplist= questionnairemapper.getGroups(grp);
+		}else {
+			grouplist= questionnairemapper.getGroupsDisabled(grp);
+		}
+		return grouplist;
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public List<Question> getAllQuestions(Group grp) {
 		// TODO Auto-generated method stub
-		List<Question> QuestionList = questionnairemapper.getallQuestions(grp);
+		List<Question> QuestionList ; 
+		if(grp.isActive()) {
+			QuestionList= questionnairemapper.getallQuestions(grp);
+		}else {
+			QuestionList =questionnairemapper.getallQuestionsdisbaled(grp);
+		}
 
 		for (Question ques : QuestionList) {
 			List<Choice> choicelist = questionnairemapper.getchoicesforquestion(grp.getGuid(),

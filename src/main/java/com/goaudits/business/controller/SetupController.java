@@ -38,6 +38,7 @@ import com.goaudits.business.entity.Menu;
 import com.goaudits.business.entity.PreTemplates;
 import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.Reportref;
+import com.goaudits.business.entity.ScheduleDefTim;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.Section;
 import com.goaudits.business.service.SetupService;
@@ -168,6 +169,8 @@ public class SetupController {
 				company.setClient_id(comp.getClient_id());
 				company.setLogo(comp.getLogo());
 				company.setLast_modified(comp.getLast_modified());
+				company.setStart_time(comp.getStart_time());
+				company.setEnd_time(comp.getEnd_time());
 				companyList.add(company);
 				return new ResponseEntity<List<Company>>(companyList, HttpStatus.CREATED);
 
@@ -1077,5 +1080,24 @@ public class SetupController {
 		}
 	}
 
+	@RequestMapping(value = "/schedule/time", method = RequestMethod.POST)
+	public ResponseEntity<?> getDefaultTime(@RequestBody ScheduleDefTim ScheduleDefTim,
+			@RequestHeader(name = "Authorization") String token) {
+		try {
+			String guid = "";
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				guid = Utils.getGuid(token);
+				ScheduleDefTim.setGuid(guid);
+//				String uid = Utils.getUid(token);
+			}
+			List<ScheduleDefTim> repList = setupservice.getScheduleDefTime(ScheduleDefTim);
+			return new ResponseEntity<List<ScheduleDefTim>>(repList, HttpStatus.OK);
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("Error catched", e);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
 }

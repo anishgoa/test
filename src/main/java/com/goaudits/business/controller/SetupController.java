@@ -169,8 +169,6 @@ public class SetupController {
 				company.setClient_id(comp.getClient_id());
 				company.setLogo(comp.getLogo());
 				company.setLast_modified(comp.getLast_modified());
-				company.setStart_time(comp.getStart_time());
-				company.setEnd_time(comp.getEnd_time());
 				companyList.add(company);
 				return new ResponseEntity<List<Company>>(companyList, HttpStatus.CREATED);
 

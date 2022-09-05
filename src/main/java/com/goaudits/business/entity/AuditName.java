@@ -73,7 +73,8 @@ public class AuditName implements Serializable {
 	private List<ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
     @Valid
 	private List<Location> strarry = new ArrayList<Location>();
-
+    private String start_time;
+    private String end_time;
 
 	public int getDrag_index() {
 		return drag_index;
@@ -397,6 +398,22 @@ public class AuditName implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getStart_time() {
+		return start_time;
+	}
+
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
+	}
+
+	public String getEnd_time() {
+		return end_time;
+	}
+
+	public void setEnd_time(String end_time) {
+		this.end_time = end_time;
 	}
 	
 	

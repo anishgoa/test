@@ -42,7 +42,8 @@ public class Company {
 	private List< ActionPlanAssignee> actionlist = new ArrayList<ActionPlanAssignee>();
 	@Valid
 	private List<AuditName> audarry = new ArrayList<AuditName>();
-
+    private String start_time;
+    private String end_time;
 
 	public List<ActionPlanAssignee> getActionlist() {
 		return actionlist;
@@ -214,6 +215,22 @@ public class Company {
 	 */
 	public void setIsdelete(boolean isdelete) {
 		this.isdelete = isdelete;
+	}
+
+	public String getStart_time() {
+		return start_time;
+	}
+
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
+	}
+
+	public String getEnd_time() {
+		return end_time;
+	}
+
+	public void setEnd_time(String end_time) {
+		this.end_time = end_time;
 	}
 
 

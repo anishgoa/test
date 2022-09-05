@@ -14,6 +14,7 @@ import com.goaudits.business.entity.Menu;
 import com.goaudits.business.entity.PreTemplates;
 import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.Reportref;
+import com.goaudits.business.entity.ScheduleDefTim;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.Section;
 
@@ -128,6 +129,8 @@ public interface SetupService {
 	public List<Help> getHelplist(String id);
 
 	public List<Reportref> getReportRef(Reportref Reportref);
+
+	public List<ScheduleDefTim> getScheduleDefTime(ScheduleDefTim scheduleDefTim);
 
 	
 }

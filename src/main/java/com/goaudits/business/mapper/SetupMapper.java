@@ -31,6 +31,7 @@ import com.goaudits.business.entity.Question;
 import com.goaudits.business.entity.Report;
 import com.goaudits.business.entity.ReportImage;
 import com.goaudits.business.entity.Reportref;
+import com.goaudits.business.entity.ScheduleDefTim;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.Section;
 import com.goaudits.business.entity.User;
@@ -66,7 +67,7 @@ public interface SetupMapper {
 
 	@Transactional(rollbackFor = Exception.class)
 	@Select(value = "{ CALL SP_GA_UPDATE_CLIENT_DET_PV3( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER}, #{client_name, mode=IN, jdbcType=VARCHAR },"
-			+ "#{submit_button_text, mode=IN, jdbcType=VARCHAR }, #{logo, mode=IN, jdbcType=LONGVARCHAR }, #{active, mode=IN, jdbcType=BOOLEAN },#{logo_binary, mode=IN, jdbcType=BOOLEAN },#{uid, mode=IN, jdbcType=BINARY},#{short_name,mode=IN, jdbcType=VARCHAR} )}")
+			+ "#{submit_button_text, mode=IN, jdbcType=VARCHAR }, #{logo, mode=IN, jdbcType=LONGVARCHAR }, #{active, mode=IN, jdbcType=BOOLEAN },#{logo_binary, mode=IN, jdbcType=BOOLEAN },#{uid, mode=IN, jdbcType=BINARY},#{short_name,mode=IN, jdbcType=VARCHAR},#{start_time,mode=IN,jdbcType=VARCHAR},#{end_time,mode=IN,jdbcType=VARCHAR} )}")
 	Company addOrUpdateCompany(Company company);
 
 	@Select("SELECT count(*) FROM GA_CLIENT_MT WHERE GUID=#{guid} AND CLIENT_NAME=#{client_name} AND CLIENT_ID!=#{client_id}")
@@ -123,7 +124,7 @@ public interface SetupMapper {
 	@Select(value = "{ CALL SP_GA_UPDATE_AUDITTYPE_DET_PV3( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER},#{audit_group_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=VARCHAR },"
 			+ "#{audit_type_name, mode=IN, jdbcType=VARCHAR },#{logo, mode=IN, jdbcType=LONGVARCHAR }, #{active, mode=IN, jdbcType=BOOLEAN },#{uid,mode=IN,jdbcType=BOOLEAN},"
 			+ "#{signature1_label, mode=IN, jdbcType=VARCHAR },#{signature2_label, mode=IN, jdbcType=VARCHAR },#{signature3_label, mode=IN, jdbcType=VARCHAR },#{sign1_flag,mode=IN,jdbcType=BOOLEAN},#{sign2_flag,mode=IN,jdbcType=BOOLEAN},#{sign3_flag,mode=IN,jdbcType=BOOLEAN},"
-			+ "#{is_man_sign1,mode=IN,jdbcType=BOOLEAN},#{is_man_sign2,mode=IN,jdbcType=BOOLEAN},#{is_man_sign3,mode=IN,jdbcType=BOOLEAN},#{person_seen,mode=IN,jdbcType=VARCHAR},#{person_seen_mandatory,mode=IN,jdbcType=BOOLEAN},#{showif_optional,mode=IN,jdbcType=BOOLEAN},#{audit_type_title,mode=IN,jdbcType=VARCHAR},#{hide_signature_app,mode=IN,jdbcType=BOOLEAN})}")
+			+ "#{is_man_sign1,mode=IN,jdbcType=BOOLEAN},#{is_man_sign2,mode=IN,jdbcType=BOOLEAN},#{is_man_sign3,mode=IN,jdbcType=BOOLEAN},#{person_seen,mode=IN,jdbcType=VARCHAR},#{person_seen_mandatory,mode=IN,jdbcType=BOOLEAN},#{showif_optional,mode=IN,jdbcType=BOOLEAN},#{audit_type_title,mode=IN,jdbcType=VARCHAR},#{hide_signature_app,mode=IN,jdbcType=BOOLEAN},#{start_time,mode=IN,jdbcType=VARCHAR},#{end_time,mode=IN,jdbcType=VARCHAR})}")
 	AuditName insertUpdateAuditName(AuditName auditname);
 
 	@Update(value = "{CALL SP_GA_UPDATE_AUDITTYPE_ORDER_DET(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{drag_index, mode=IN, jdbcType=INTEGER},"
@@ -309,4 +310,8 @@ public interface SetupMapper {
     @Select(value = "{ CALL SP_GA_GETAUDITID_DET(#{guid, mode=IN, jdbcType=VARCHAR},#{client_id, mode=IN, jdbcType=VARCHAR},#{min, mode=IN, jdbcType=VARCHAR},#{max, mode=IN, jdbcType=VARCHAR},#{search, mode=IN, jdbcType=VARCHAR}) }")
 	@Options(statementType = StatementType.CALLABLE)
     List<Reportref> getReportRef(Reportref Reportref);
+
+    @Select(value = "{ CALL SP_GA_GETSCHEDULE_DEFAULT_TIME(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER}) }")
+	@Options(statementType = StatementType.CALLABLE)
+	List<ScheduleDefTim> getScheduleDefTime(ScheduleDefTim scheduleDefTim);
 }

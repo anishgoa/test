@@ -73,13 +73,13 @@ public interface QuestionnaireMapper {
 
 	
 	@Select(value = "{CALL SP_GA_GETGROUP_DET_PV2(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
-			+ "#{section_id, mode=IN, jdbcType=INTEGER})}")
+			+ "#{section_id, mode=IN, jdbcType=INTEGER},#{inactiveq, mode=IN, jdbcType=BOOLEAN})}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<Group> getallGroupspre(Group grp);
 
 	
 	@Select(value = "{CALL SP_GA_GETGROUP_DET_PV2(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
-			+ "#{section_id, mode=IN, jdbcType=INTEGER})}")
+			+ "#{section_id, mode=IN, jdbcType=INTEGER},#{inactiveq, mode=IN, jdbcType=BOOLEAN})}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<Group> getallGroups(Section sec);
 
@@ -281,6 +281,10 @@ public interface QuestionnaireMapper {
 			+ "#{min, mode=IN, jdbcType=INTEGER},#{max, mode=IN, jdbcType=INTEGER})}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<Question> getallQuestionsdisbaled(Group group);
+	
+	@Select(value = "{CALL SP_GA_GETQUESTION_DET_PV2( #{guid, mode=IN, jdbcType=BINARY}, #{client_id, mode=IN, jdbcType=INTEGER},#{audit_group_id, mode=IN, jdbcType=INTEGER}, #{audit_type_id, mode=IN, jdbcType=INTEGER}, #{section_id, mode=IN, jdbcType=INTEGER}, #{group_id, mode=IN, jdbcType=INTEGER},#{active, mode=IN, jdbcType=BOOLEAN})}")
+	@Options(statementType = StatementType.CALLABLE)
+	List<Question> getallQuestionsv2(Group group);
 	
 
 

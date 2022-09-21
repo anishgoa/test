@@ -220,7 +220,7 @@ public interface SetupMapper {
 	List<Section> getPreSections(Section section);
 
 	@Select(value = "{CALL SP_GA_GETGROUP_DET_PV2(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER}, #{audit_group_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER},"
-			+ "#{section_id, mode=IN, jdbcType=INTEGER})}")
+			+ "#{section_id, mode=IN, jdbcType=INTEGER},#{inactiveq, mode=IN, jdbcType=BOOLEAN})}")
 	@Options(statementType = StatementType.CALLABLE)
 	List<Group> getallGroups(Group group);
 

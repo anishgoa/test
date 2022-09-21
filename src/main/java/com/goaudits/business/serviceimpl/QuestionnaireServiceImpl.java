@@ -68,7 +68,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
 			for (Group grp : Grouplist) {
 				group.setGroup_id(grp.getGroup_id());
-				List<Question> QuestionList = questionnairemapper.getallQuestions(group);
+				List<Question> QuestionList = questionnairemapper.getallQuestionsv2(group);
 
 				for (Question ques : QuestionList) {
 					List<Choice> choicelist = questionnairemapper.getchoicesforquestion(group.getGuid(),

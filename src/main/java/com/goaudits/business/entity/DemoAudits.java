@@ -88,6 +88,7 @@ public class DemoAudits {
 	boolean auto_fail;
 	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
 	String refnos;
+	int totalcount;
 //	private List<Customfields> Customfieldslist = new ArrayList<Customfields>();
 //	private List<Location> strarry = new ArrayList<Location>();
 	
@@ -409,6 +410,12 @@ public class DemoAudits {
 	}
 	public void setRefnos(String refnos) {
 		this.refnos = refnos;
+	}
+	public int getTotalcount() {
+		return totalcount;
+	}
+	public void setTotalcount(int totalcount) {
+		this.totalcount = totalcount;
 	}
 	
 	

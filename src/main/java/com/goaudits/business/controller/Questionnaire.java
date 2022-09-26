@@ -78,7 +78,7 @@ public class Questionnaire {
 			@RequestHeader(name = "Authorization") String token) {
 		try {
 			if(section.getGuid().equals("1e3bff8b-746f-4e58-b72f-361afc0aca50")) {
-				
+				section.setActive(true);
 			}
 			else if (token != null && token != "" && !token.isEmpty()) {
 				token = token.replace("Bearer ", "");

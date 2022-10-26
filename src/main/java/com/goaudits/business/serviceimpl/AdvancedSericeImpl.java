@@ -287,11 +287,14 @@ public class AdvancedSericeImpl implements AdvancedService {
 		for (int i = 0; i < locations.length; i++) {
 			for (int j = 0; j < auditnames.length; j++) {
 				for (int k = 0; k < assignees.length; k++) {
-					String uuid = String.valueOf(Utils.generateUID());
-					auditWorkFlow.setUuid(uuid);
-					advancedmapper.addAuditWorkFlow(auditWorkFlow.getGuid(), auditWorkFlow.getClient_id(), locations[i],
-							auditnames[j], assignees[k], auditWorkFlow.isWorkflow_type(), auditWorkFlow.getUuid(),
-							auditWorkFlow.isSignature_required());
+					if (!(locations[i].equals("0") || auditnames[j].equals("0") || assignees[k].equals("0"))) {
+
+						String uuid = String.valueOf(Utils.generateUID());
+						auditWorkFlow.setUuid(uuid);
+						advancedmapper.addAuditWorkFlow(auditWorkFlow.getGuid(), auditWorkFlow.getClient_id(),
+								locations[i], auditnames[j], assignees[k], auditWorkFlow.isWorkflow_type(),
+								auditWorkFlow.getUuid(), auditWorkFlow.isSignature_required());
+					}
 				}
 			}
 		}
@@ -313,9 +316,11 @@ public class AdvancedSericeImpl implements AdvancedService {
 				for (int k = 0; k < assignees.length; k++) {
 					String uuid = String.valueOf(Utils.generateUID());
 					auditWorkFlow.setUuid(uuid);
-					advancedmapper.addAuditWorkFlow(auditWorkFlow.getGuid(), auditWorkFlow.getClient_id(), locations[i],
-							auditnames[j], assignees[k], auditWorkFlow.isWorkflow_type(), auditWorkFlow.getUuid(),
-							auditWorkFlow.isSignature_required());
+					if (!(locations[i].equals("0") || auditnames[j].equals("0") || assignees[k].equals("0"))) {
+						advancedmapper.addAuditWorkFlow(auditWorkFlow.getGuid(), auditWorkFlow.getClient_id(),
+								locations[i], auditnames[j], assignees[k], auditWorkFlow.isWorkflow_type(),
+								auditWorkFlow.getUuid(), auditWorkFlow.isSignature_required());
+					}
 				}
 
 			}
@@ -566,12 +571,11 @@ public class AdvancedSericeImpl implements AdvancedService {
 		return advancedmapper.getCustomfieldvalues(customfields);
 	}
 
-	
 	@Override
 	public int addFileNameChecklist(FileNameChecklist fileNameChecklist) {
-			
+
 		return advancedmapper.addFileNameChecklist(fileNameChecklist);
-	
+
 	}
 
 	@Override
@@ -579,7 +583,6 @@ public class AdvancedSericeImpl implements AdvancedService {
 		// TODO Auto-generated method stub
 		return advancedmapper.getFilenameChecklist(fileNameChecklist);
 	}
-
 
 	@Override
 	public int updateFilenameChecklist(FileNameChecklist fileNameChecklist) {

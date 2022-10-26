@@ -1038,7 +1038,7 @@ public class SetupController {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 			headers.setContentType(MediaType.APPLICATION_JSON);
-			headers.setBearerAuth("dG9rOmRkMjg2MjA3X2ZlMzJfNDUwY185NzQ2XzY1NjBiNDhkNjVmMzoxOjA=");
+			headers.setBearerAuth("dG9rOjYyMDdkY2NmX2FkZTdfNDFmZF84OWNlXzVmOTNiMDFkNjQwZjoxOjA=");
 			RestTemplate restTemplate = new RestTemplate();
 			HttpEntity<?> requestEntity = new HttpEntity<>(null, headers);
 			for (Help p : menuList) {

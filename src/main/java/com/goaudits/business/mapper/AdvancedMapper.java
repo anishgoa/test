@@ -125,7 +125,7 @@ public interface AdvancedMapper {
 	List<Customfields> getAllCustomfields(@Param("guid") String guid, @Param("uid") String uid,
 			@Param("client_id") String client_id);
 
-	@Select(value = "{ CALL GA_SP_PORTAL_GET_CUSTOMFIELDS_MT( #{guid, mode=IN, jdbcType=BINARY}, #{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER} ) }")
+	@Select(value = "{ CALL GA_SP_PORTAL_GET_CUSTOMFIELDS_MT_V2( #{guid, mode=IN, jdbcType=BINARY}, #{uid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{active, mode=IN, jdbcType=BOOLEAN} ) }")
 	@Options(statementType = StatementType.CALLABLE)
 	List<CustomFieldList> getCustomFieldsList(AuditName audit);
 

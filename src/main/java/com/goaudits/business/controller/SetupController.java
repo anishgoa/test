@@ -1053,7 +1053,7 @@ public class SetupController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error("Error catched", e);
-			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.OK);
 		}
 	}
 

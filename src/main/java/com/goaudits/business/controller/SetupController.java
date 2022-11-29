@@ -1038,7 +1038,7 @@ public class SetupController {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 			headers.setContentType(MediaType.APPLICATION_JSON);
-			headers.setBearerAuth("dG9rOjYyMDdkY2NmX2FkZTdfNDFmZF84OWNlXzVmOTNiMDFkNjQwZjoxOjA=");
+			headers.setBearerAuth("dG9rOjk2YWJlMzM0XzM4NWZfNDY1OF9hM2YxX2M1MGM1ODYxOTVjOToxOjA=");
 			RestTemplate restTemplate = new RestTemplate();
 			HttpEntity<?> requestEntity = new HttpEntity<>(null, headers);
 			for (Help p : menuList) {
@@ -1053,7 +1053,7 @@ public class SetupController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error("Error catched", e);
-			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.OK);
 		}
 	}
 

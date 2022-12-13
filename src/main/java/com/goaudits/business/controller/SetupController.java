@@ -41,6 +41,7 @@ import com.goaudits.business.entity.Reportref;
 import com.goaudits.business.entity.ScheduleDefTim;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.Section;
+import com.goaudits.business.entity.User;
 import com.goaudits.business.service.SetupService;
 import com.goaudits.business.util.GoAuditsException;
 import com.goaudits.business.util.Utils;
@@ -1098,4 +1099,26 @@ public class SetupController {
 			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
+	
+	@RequestMapping(value = "/all/users", method = RequestMethod.GET)
+	public ResponseEntity<?> getDefaultTime(@RequestHeader(name = "Authorization") String token) {
+		try {
+			String guid = "";
+			if (token != null && token != "" && !token.isEmpty()) {
+				token = token.replace("Bearer ", "");
+				guid = Utils.getGuid(token);
+			}
+			List<User> repList = setupservice.getUsersList(guid);
+			return new ResponseEntity<List<User>>(repList, HttpStatus.OK);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("Error catched", e);
+			return new ResponseEntity<>(new GoAuditsException("Something went wrong"), HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+	
+	
+	
+	
 }

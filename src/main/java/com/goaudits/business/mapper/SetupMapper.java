@@ -314,4 +314,8 @@ public interface SetupMapper {
     @Select(value = "{ CALL SP_GA_GETSCHEDULE_DEFAULT_TIME(#{guid, mode=IN, jdbcType=BINARY},#{client_id, mode=IN, jdbcType=INTEGER},#{audit_type_id, mode=IN, jdbcType=INTEGER}) }")
 	@Options(statementType = StatementType.CALLABLE)
 	List<ScheduleDefTim> getScheduleDefTime(ScheduleDefTim scheduleDefTim);
+
+
+    @Select("SELECT FIRST_NAME,LAST_NAME,USER_NAME FROM GA_USERDET_MT WHERE GUID=#{guid}")
+	List<User> getUsersList(String guid);
 }

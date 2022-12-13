@@ -34,6 +34,7 @@ import com.goaudits.business.entity.Reportref;
 import com.goaudits.business.entity.ScheduleDefTim;
 import com.goaudits.business.entity.ScoreRange;
 import com.goaudits.business.entity.Section;
+import com.goaudits.business.entity.User;
 import com.goaudits.business.mapper.SetupMapper;
 import com.goaudits.business.service.SetupService;
 import com.goaudits.business.util.Constants;
@@ -688,6 +689,12 @@ public class SetupServiceImpl implements SetupService {
 	public List<ScheduleDefTim> getScheduleDefTime(ScheduleDefTim scheduleDefTim) {
 		// TODO Auto-generated method stub
 		return setupmapper.getScheduleDefTime(scheduleDefTim);
+	}
+
+	@Override
+	public List<User> getUsersList(String guid) {
+		// TODO Auto-generated method stub
+		return setupmapper.getUsersList(guid);
 	}
 
 }

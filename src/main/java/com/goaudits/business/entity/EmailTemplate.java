@@ -15,30 +15,28 @@ import com.goaudits.business.util.Utils;
 public class EmailTemplate implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
+	
 	private String guid;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
+	
 	private String uid;
 	private int client_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
+	
 	private String client_name;
 	private int audit_group_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
+	
 	private String audit_group_name;
 	private int audit_type_id;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
+	
 	private String audit_type_name;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
+	
 	private String to_email;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
+	
 	private String cc_email;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
+	
 	private String email_sub;
-	@Pattern(regexp = Utils.VALIDATION_REGEX, message =Utils.Validation_Message,flags = Pattern.Flag.DOTALL)
+	
 	private String email_body;
-	@Valid
 	List<EmailSubject> emailSubjectList = new ArrayList<EmailSubject>();
-	@Valid
 	List<EmailMessage> emailMessageList = new ArrayList<EmailMessage>();
 	
 
